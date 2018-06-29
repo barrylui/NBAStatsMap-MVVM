@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:id="@+id/team_stats_layout"
+    android:padding="0dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity" >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/team1_recyclerview"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="3dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/team2_recyclerview"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_above="@id/team1_recyclerview" />
+
+    <com.github.mikephil.charting.charts.RadarChart
+        android:id="@+id/radarchart"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/threepointRankTextView"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:text="3-POINT"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"
+        android:layout_above="@id/team2_recyclerview"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/freethrowRankTextView"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:text="FREE THROW"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@id/threepointRankTextView"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reboundsRankTextView"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:text="REBOUNDS"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"
+        android:layout_above="@id/freethrowRankTextView"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/assistsRankTextView"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:text="ASSIST"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"
+        android:layout_above="@id/reboundsRankTextView"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/defensiveRankTextView"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:text="DEFENSE"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"
+        android:layout_above="@id/assistsRankTextView"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/offensiveRankTextView"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:text="OFFENSE"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/defensiveRankTextView"
+        android:layout_marginBottom="4dp"/>
+
+
+
+
+
+</RelativeLayout>

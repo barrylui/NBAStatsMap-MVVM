@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">NBA STATS MAP</string>
+    <string name="team">TEAM</string>
+    <string name="player">PLAYER</string>
+    <string name="leaders">LEADERS</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
