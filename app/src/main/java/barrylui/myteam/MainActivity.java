@@ -8,15 +8,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.MenuItem;
+import android.view.View;
 
 import barrylui.myteam.Leaders.LeagueLeadersFragment;
 import barrylui.myteam.PlayerStats.PlayerStatsFragment;
 import barrylui.myteam.TeamStats.TeamStatsFragment;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements SplashLoadingFragment.DataLoadedLaunchApplication {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+    private BottomNavigationView navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +27,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        loadFragment(new TeamStatsFragment());
+        navigation.setVisibility(View.GONE);
+        loadFragment(new SplashLoadingFragment());
+        //loadFragment(new TeamStatsFragment());
     }
 
 
@@ -59,7 +63,12 @@ public class MainActivity extends AppCompatActivity {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
+        //transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public void dataLoadLaunchApplication(){
+        navigation.setVisibility(View.VISIBLE);
+        loadFragment(new TeamStatsFragment());
     }
 }

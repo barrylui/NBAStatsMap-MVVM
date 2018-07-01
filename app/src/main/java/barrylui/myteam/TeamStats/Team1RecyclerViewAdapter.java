@@ -1,7 +1,6 @@
 package barrylui.myteam.TeamStats;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
@@ -39,10 +37,12 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
     @Override
     public void onBindViewHolder(final Team1ViewHolder viewHolder, final int position) {
         final int logoimage = (Integer)mDataset.get(position).get("image");
-        final Team1ViewHolder currentViewHolder = viewHolder;
         viewHolder.teamPicture.setImageResource(logoimage);
-        viewHolder.teamPicture.setAlpha(.4f);
-        viewHolder.linearLayout.setBackgroundResource(R.color.blackshade);
+        viewHolder.teamPicture.setAlpha(.5f);
+
+        final Team1ViewHolder currentViewHolder = viewHolder;
+        //viewHolder.linearLayout.setBackgroundResource(R.color.blackTan);
+        viewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -50,8 +50,9 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
                 //Checks if item was previously selected, if so clear selector
                 if(viewHolderStack.isEmpty()==false){
                     Team1ViewHolder previousViewHolder = viewHolderStack.pop();
-                    previousViewHolder.teamPicture.setAlpha(.4f);
-                    previousViewHolder.linearLayout.setBackgroundResource(R.color.blackshade);
+                    previousViewHolder.teamPicture.setAlpha(.5f);
+                    previousViewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
+                    //previousViewHolder.linearLayout.setBackgroundResource(R.color.blackTan);
                 }
                 //Highlight team selected and call endpoint for data
                 //Call for team's data
@@ -59,7 +60,7 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
                 //Perform binary search for team's data
                 viewHolderStack.push(currentViewHolder);
                 currentViewHolder.teamPicture.setAlpha(1f);
-                currentViewHolder.linearLayout.setBackgroundColor(Color.LTGRAY);
+                currentViewHolder.linearLayout.setBackgroundResource(R.color.blacklightcomp);
             }
         });
     }

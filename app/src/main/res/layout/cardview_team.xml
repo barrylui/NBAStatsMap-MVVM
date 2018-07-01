@@ -8,16 +8,18 @@
     android:gravity="center_vertical"
     android:orientation="horizontal"
     tools:ignore="UseCompoundDrawables"
-    android:paddingTop="2dp"
-    android:paddingBottom="2dp">
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp">
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/teamLogo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 </LinearLayout>

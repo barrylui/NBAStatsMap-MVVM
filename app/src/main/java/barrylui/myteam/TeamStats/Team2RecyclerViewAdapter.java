@@ -1,7 +1,6 @@
 package barrylui.myteam.TeamStats;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,19 +39,19 @@ public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2Recycler
         final int logoimage = (Integer)mDataset.get(position).get("image");
         final Team2ViewHolder currentViewHolder = viewHolder;
         viewHolder.teamPicture.setImageResource(logoimage);
-        viewHolder.teamPicture.setAlpha(.4f);
-        viewHolder.linearLayout.setBackgroundResource(R.color.blackshade);
+        viewHolder.teamPicture.setAlpha(.5f);
+        viewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
 
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 if(viewHolderStack.isEmpty()==false){
                     Team2ViewHolder previousViewHolder = viewHolderStack.pop();
-                    previousViewHolder.teamPicture.setAlpha(.4f);
-                    previousViewHolder.linearLayout.setBackgroundResource(R.color.blackshade);
+                    previousViewHolder.teamPicture.setAlpha(.5f);
+                    previousViewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
                 }
                 currentViewHolder.teamPicture.setAlpha(1f);
-                currentViewHolder.linearLayout.setBackgroundColor(Color.LTGRAY);
+                currentViewHolder.linearLayout.setBackgroundResource(R.color.blacklightcomp);
                 viewHolderStack.push(currentViewHolder);
             }
         });

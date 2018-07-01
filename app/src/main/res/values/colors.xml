@@ -8,8 +8,11 @@
     <color name="white">#ffffff</color>
     <color name="blackgrey">#7F7E7E</color>
     <color name="othergrey">#464646</color>
-    <color name="blackshade">#1A1919</color>
+    <color name="blackTan">#1A1919</color>
+    <color name="blackDarkShade">#211a23</color>
     <color name="darkGray">#A9A9A9</color>
+    <color name="blackgraycomp">#464646</color>
+    <color name="blacklightcomp">#7F7E7E</color>
     <color name="colorBucksPrimary">#004A1A</color>
     <color name="colorBullsPrimary">#C91542</color>
     <color name="colorCavaliersPrimary">#6F263D</color>
