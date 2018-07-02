@@ -21,6 +21,7 @@ import com.github.mikephil.charting.data.RadarDataSet;
 import java.util.ArrayList;
 
 import barrylui.myteam.MainActivity;
+import barrylui.myteam.TeamDataNBA.NBAPlayerDataSingleton;
 import barrylui.myteam.TeamDataNBA.NBATeamAssetsData;
 import barrylui.myteam.R;
 import barrylui.myteam.TeamDataNBA.NBATeamDataSingleton;
@@ -160,11 +161,15 @@ public class TeamStatsFragment extends Fragment {
         radarChart.invalidate();
 
 
-        if(NBATeamDataSingleton.getInstance().getTeamDataMap().isEmpty()==true){
-            Toast.makeText(getActivity(),"Empty", Toast.LENGTH_LONG).show();
+        if(NBATeamDataSingleton.getInstance().getTeamDataMap().isEmpty()==true && NBAPlayerDataSingleton.getInstance().getPlayerDataMap().isEmpty()==true){
+            Toast.makeText(getActivity(),"Team data and Player data are empty", Toast.LENGTH_LONG).show();
+        } else if(NBATeamDataSingleton.getInstance().getTeamDataMap().isEmpty()==false&&NBAPlayerDataSingleton.getInstance().getPlayerDataMap().isEmpty()==true){
+            Toast.makeText(getActivity(),"Team data is loaded and Player data is Empty", Toast.LENGTH_LONG).show();
+        } else if (NBATeamDataSingleton.getInstance().getTeamDataMap().isEmpty()==true&&NBAPlayerDataSingleton.getInstance().getPlayerDataMap().isEmpty()==false){
+            Toast.makeText(getActivity(),"Team data is empty and Player data is loaded", Toast.LENGTH_LONG).show();
         }
         else {
-            Toast.makeText(getActivity(),"Data loaded", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(),"All data is loaded", Toast.LENGTH_LONG).show();
         }
         return view;
 

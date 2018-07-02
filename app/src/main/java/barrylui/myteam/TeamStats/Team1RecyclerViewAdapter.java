@@ -55,7 +55,7 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
                     previousViewHolder.teamPicture.setAlpha(.3f);
                     //previousViewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
                 }
-                //Highlight team selected and call endpoint for data
+                //Highlight team selected
                 //Call for team's data
                 //Call for all teams data and load into array
                 //Perform binary search for team's data

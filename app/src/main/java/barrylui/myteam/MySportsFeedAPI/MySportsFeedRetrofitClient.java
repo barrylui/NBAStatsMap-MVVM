@@ -7,7 +7,9 @@ import java.util.HashMap;
 
 import barrylui.myteam.InternetUtilities.BasicAuthInterceptor;
 import barrylui.myteam.MainActivity;
+import barrylui.myteam.MySportsFeedAPI.MySportsFeedPlayerStatsModel.PlayerStats;
 import barrylui.myteam.MySportsFeedAPI.MySportsFeedTeamStats.TeamData;
+import barrylui.myteam.TeamDataNBA.NBAPlayerDataSingleton;
 import barrylui.myteam.TeamDataNBA.NBATeamDataSingleton;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -38,6 +40,45 @@ public class MySportsFeedRetrofitClient {
         return retrofit;
     }
 
+    public static void getPlayerData(){
+        MySportsFeedAPIService mySportsFeedAPIService = MySportsFeedRetrofitClient.getInstance().create(MySportsFeedAPIService.class);
+        Call<PlayerStats> call = mySportsFeedAPIService.getAllPlayerStats();
+        call.enqueue(new Callback<PlayerStats>() {
+            @Override
+            public void onResponse(Call<PlayerStats> call, Response<PlayerStats> response) {
+                Log.d(TAG, "onResponse: 200");
+                int numberOfNBAPlayers = response.body().getCumulativeplayerstats().getPlayerstatsentry().size();
+                for(int i =0; i<numberOfNBAPlayers; i++){
+                    HashMap<String, Double> playerStatsMap = new HashMap<>();
+                    Double ppg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getPtsPerGame().getText());
+                    Double apg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getAstPerGame().getText());
+                    Double rpg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getRebPerGame().getText());
+                    Double spg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getStlPerGame().getText());
+                    Double bpg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getBlkPerGame().getText());
+                    Double ftm = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getFtMade().getText());
+                    Double fta = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getFtAtt().getText());
+                    Double ftpercent = (ftm/fta)*100;
+
+                    playerStatsMap.put("Scoring", ppg);
+                    playerStatsMap.put("Assists", apg);
+                    playerStatsMap.put("Rebounding",rpg);
+                    playerStatsMap.put("Steals", spg);
+                    playerStatsMap.put("Blocks", bpg );
+                    playerStatsMap.put("FTPercent",ftpercent);
+
+                    String playerName = response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getPlayer().getFirstName() + " " +
+                            response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getPlayer().getLastName();
+
+                    NBAPlayerDataSingleton.getInstance().getPlayerDataMap().put(playerName, playerStatsMap);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PlayerStats> call, Throwable t) {
+                Log.d(TAG, "something went wrong" + t.getMessage());
+            }
+        });
+    }
     //Fetches JSON data for stats of all 30 NBA Teams
     //Stores relevant data in Singleton Hashmap class
     public static void getTeamData(){
