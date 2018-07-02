@@ -1,21 +1,30 @@
 package barrylui.myteam;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import java.util.HashMap;
+
+import barrylui.myteam.MySportsFeedAPI.MySportsFeedRetrofitClient;
+
 public class SplashLoadingFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static int DISPLAY_TIME = 4000;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    HashMap<String , HashMap<String, ?>> teamStatsHashMap = new HashMap<>();
+
 
 
 
@@ -57,18 +66,26 @@ public class SplashLoadingFragment extends Fragment {
 
         final DataLoadedLaunchApplication mListener = (DataLoadedLaunchApplication)getContext();
         View rootView = inflater.inflate(R.layout.fragment_splash_loading, container, false);
-        RelativeLayout relativeLayout = (RelativeLayout)rootView.findViewById(R.id.splashscreen);
-        relativeLayout.setOnClickListener(new View.OnClickListener() {
+
+        //Fetches JSON data for stats of all 30 NBA Teams
+        //Stores relevant data in Singleton Hashmap class
+        MySportsFeedRetrofitClient.getTeamData();
+        //Displays splash screen for 4 seconds while the the JSON file is fetched
+        Handler mHandler = new Handler();
+        Runnable mRunnable = new Runnable() {
             @Override
-            public void onClick(View v) {
+            public void run() {
+                //launches application
                 mListener.dataLoadLaunchApplication();
             }
-        });
+        };
+        mHandler.postDelayed(mRunnable, DISPLAY_TIME);
         return rootView;
 
     }
 
 
+    //interface to communicate with parent activity to start the application
     public interface DataLoadedLaunchApplication {
         public void dataLoadLaunchApplication();
     }

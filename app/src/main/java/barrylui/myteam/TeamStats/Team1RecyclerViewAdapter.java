@@ -34,25 +34,26 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
         return new Team1ViewHolder(playerView);
     }
 
+
     @Override
     public void onBindViewHolder(final Team1ViewHolder viewHolder, final int position) {
         final int logoimage = (Integer)mDataset.get(position).get("image");
         viewHolder.teamPicture.setImageResource(logoimage);
-        viewHolder.teamPicture.setAlpha(.5f);
+        viewHolder.teamPicture.setAlpha(.3f);
 
         final Team1ViewHolder currentViewHolder = viewHolder;
-        //viewHolder.linearLayout.setBackgroundResource(R.color.blackTan);
         viewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
 
-                //Checks if item was previously selected, if so clear selector
+
+
+                //moves cursor to item selected
                 if(viewHolderStack.isEmpty()==false){
                     Team1ViewHolder previousViewHolder = viewHolderStack.pop();
-                    previousViewHolder.teamPicture.setAlpha(.5f);
-                    previousViewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
-                    //previousViewHolder.linearLayout.setBackgroundResource(R.color.blackTan);
+                    previousViewHolder.teamPicture.setAlpha(.3f);
+                    //previousViewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
                 }
                 //Highlight team selected and call endpoint for data
                 //Call for team's data
@@ -60,7 +61,7 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
                 //Perform binary search for team's data
                 viewHolderStack.push(currentViewHolder);
                 currentViewHolder.teamPicture.setAlpha(1f);
-                currentViewHolder.linearLayout.setBackgroundResource(R.color.blacklightcomp);
+                //currentViewHolder.linearLayout.setBackgroundResource(R.color.blacklightcomp);
             }
         });
     }

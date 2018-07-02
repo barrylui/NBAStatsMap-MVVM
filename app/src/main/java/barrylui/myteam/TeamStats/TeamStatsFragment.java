@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.RadarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -18,9 +20,10 @@ import com.github.mikephil.charting.data.RadarDataSet;
 
 import java.util.ArrayList;
 
-import barrylui.myteam.TeamDataNBA.NBATeamData;
+import barrylui.myteam.MainActivity;
+import barrylui.myteam.TeamDataNBA.NBATeamAssetsData;
 import barrylui.myteam.R;
-
+import barrylui.myteam.TeamDataNBA.NBATeamDataSingleton;
 
 
 public class TeamStatsFragment extends Fragment {
@@ -34,7 +37,7 @@ public class TeamStatsFragment extends Fragment {
     private String mParam2;
     private RecyclerView team1Menu;
     private RecyclerView team2Menu;
-    private NBATeamData nbaTeamData = new NBATeamData();
+    private NBATeamAssetsData nbaTeamData = new NBATeamAssetsData();
     LinearLayoutManager aLayoutManager;
     LinearLayoutManager bLayoutManager;
     private Team1RecyclerViewAdapter team1Adapter = null;
@@ -80,10 +83,14 @@ public class TeamStatsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_team_stats, container, false);
-        radarChart = (RadarChart)view.findViewById(R.id.radarchart);
 
+
+        //Bind views
+        radarChart = (RadarChart)view.findViewById(R.id.radarchart);
         team1Menu = (RecyclerView)view.findViewById(R.id.team1_recyclerview);
         team2Menu = (RecyclerView)view.findViewById(R.id.team2_recyclerview);
+
+        //Setup both recycler views
         team1Menu.setHasFixedSize(false);
         team2Menu.setHasFixedSize(false);
 
@@ -94,10 +101,15 @@ public class TeamStatsFragment extends Fragment {
 
         team1Adapter = new Team1RecyclerViewAdapter(getActivity(), nbaTeamData.getTeamsList());
         team2Adapter = new Team2RecyclerViewAdapter(getActivity(), nbaTeamData.getTeamsList());
+
         team1Menu.setAdapter(team1Adapter);
         team2Menu.setAdapter(team2Adapter);
+
         team1Adapter.notifyDataSetChanged();
         team2Adapter.notifyDataSetChanged();
+
+
+        //Set up Blank Radar Chart
 
 
         //Label axis on radar chart
@@ -109,7 +121,7 @@ public class TeamStatsFragment extends Fragment {
         labels.add("FT%");
         labels.add("3PT SCORING");
 
-
+        //Input blank data for blank chart
         ArrayList<Entry> entry1 = new ArrayList<>();
 
         entry1.add(new Entry(0,0));
@@ -147,48 +159,15 @@ public class TeamStatsFragment extends Fragment {
         radarChart.notifyDataSetChanged();
         radarChart.invalidate();
 
+
+        if(NBATeamDataSingleton.getInstance().getTeamDataMap().isEmpty()==true){
+            Toast.makeText(getActivity(),"Empty", Toast.LENGTH_LONG).show();
+        }
+        else {
+            Toast.makeText(getActivity(),"Data loaded", Toast.LENGTH_LONG).show();
+        }
         return view;
 
 
     }
-/*
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
-    */
 }

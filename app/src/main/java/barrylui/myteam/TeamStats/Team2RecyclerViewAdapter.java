@@ -39,7 +39,7 @@ public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2Recycler
         final int logoimage = (Integer)mDataset.get(position).get("image");
         final Team2ViewHolder currentViewHolder = viewHolder;
         viewHolder.teamPicture.setImageResource(logoimage);
-        viewHolder.teamPicture.setAlpha(.5f);
+        viewHolder.teamPicture.setAlpha(.3f);
         viewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
 
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener(){
@@ -47,11 +47,11 @@ public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2Recycler
             public void onClick(View v){
                 if(viewHolderStack.isEmpty()==false){
                     Team2ViewHolder previousViewHolder = viewHolderStack.pop();
-                    previousViewHolder.teamPicture.setAlpha(.5f);
-                    previousViewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
+                    previousViewHolder.teamPicture.setAlpha(.3f);
+                    //previousViewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
                 }
                 currentViewHolder.teamPicture.setAlpha(1f);
-                currentViewHolder.linearLayout.setBackgroundResource(R.color.blacklightcomp);
+                //currentViewHolder.linearLayout.setBackgroundResource(R.color.blacklightcomp);
                 viewHolderStack.push(currentViewHolder);
             }
         });
