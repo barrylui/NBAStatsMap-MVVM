@@ -18,7 +18,7 @@ import barrylui.myteam.PlayerStats.PlayerStatsFragment;
 import barrylui.myteam.TeamStats.TeamStatsFragment;
 
 
-public class MainActivity extends AppCompatActivity implements SplashLoadingFragment.FetchDataAndLaunch, Serializable, SplashLoadingFragment.DataDidNotLoad {
+public class MainActivity extends AppCompatActivity implements SplashLoadingFragment.FetchDataAndLaunch, Serializable, SplashLoadingFragment.CallOnFinish {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
@@ -90,9 +90,8 @@ public class MainActivity extends AppCompatActivity implements SplashLoadingFrag
         loadFragment(teanStatsFragment);
     }
 
-    //If JSON data could not be fetched display the DataFetchErrorFragment
-    public void dataDidNotLoad(){
-        navigation.setVisibility(View.GONE);
-        loadFragment(new DataFetchErrorFragment());
+    //If JSON data could not be fetched close the application
+    public void callOnFinish(){
+        finish();
     }
 }

@@ -67,7 +67,7 @@ public class NBATeamAssetsData {
         teamsList.add(createTeam("PHX", R.drawable.ic_sunslogo, R.color.colorSunsPrimary));
         teamsList.add(createTeam("OKL", R.drawable.ic_thunderlogo, R.color.colorThunderPrimary));
         teamsList.add(createTeam("POR", R.drawable.ic_trailblazerslogo, R.color.colorTrailblazersPrimary));
-        teamsList.add(createTeam("MIN", R.drawable.ic_timberwolveslogo, R.color.colorTimberwolvesPrimary));
+        teamsList.add(createTeam("MIN", R.drawable.ic_timberwolveslogo, R.color.colorTimberwolvesText));
         teamsList.add(createTeam("GSW", R.drawable.ic_warriorslogo, R.color.colorWarriorsPrimary));
         teamsList.add(createTeam("WAS", R.drawable.ic_wizardslogo, R.color.colorWizardsPrimary));
 

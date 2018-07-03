@@ -272,44 +272,52 @@ public class TeamStatsFragment extends Fragment {
                 // Use values to bind to RadarChart
                 // Use values to bind to Ranking textViews
 
+                int textColor = getResources().getColor(teamStatsObject.getColor());
+                if (textColor == (Integer)getResources().getColor(R.color.colorPelicansPrimary)){
+                    textColor = getResources().getColor(R.color.colorPelicansText);
+                }
+                if(textColor == (Integer)getResources().getColor(R.color.colorJazzPrimary)){
+                    textColor = getResources().getColor(R.color.colorJazzText);
+                }
+
 
                 //Bind available raw values to views and change fields to team colors
                 team1OffenseValue.setText(String.valueOf(teamStatsObject.getPpg()));
-                team1OffenseValue.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team1OffenseValue.setTextColor(textColor);
 
-                team1OffenseRank.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team1OffenseRank.setTextColor(textColor);
 
                 team1DefenseValue.setText(String.valueOf(teamStatsObject.getOppg()));
-                team1DefenseValue.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team1DefenseValue.setTextColor(textColor);
 
-                team1DefenseRank.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team1DefenseRank.setTextColor(textColor);
 
                 team1AssistsValue.setText(String.valueOf(teamStatsObject.getApg()));
-                team1AssistsValue.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team1AssistsValue.setTextColor(textColor);
 
-                team1AssistsRank.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team1AssistsRank.setTextColor(textColor);
 
                 team1ReboundsValue.setText(String.valueOf(teamStatsObject.getRpg()));
-                team1ReboundsValue.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team1ReboundsValue.setTextColor(textColor);
 
-                team1ReboundsRank.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team1ReboundsRank.setTextColor(textColor);
 
                 team1ThreePointValue.setText(String.valueOf(teamStatsObject.getTpm()));
-                team1ThreePointValue.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team1ThreePointValue.setTextColor(textColor);
 
-                team1ThreePointRank.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team1ThreePointRank.setTextColor(textColor);
 
                 DecimalFormat decimalFormat = new DecimalFormat("#.#");
                 String freethrowpercentage =  decimalFormat.format(teamStatsObject.getFtp());
 
                 team1FreeThrowValue.setText(freethrowpercentage);
-                team1FreeThrowValue.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team1FreeThrowValue.setTextColor(textColor);
 
-                team1FreeThrowRank.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team1FreeThrowRank.setTextColor(textColor);
 
                 String theTeamName = String.valueOf(teamStatsObject.getFullName());
                 team1TeamName.setText(theTeamName.toUpperCase());
-                team1TeamName.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team1TeamName.setTextColor(textColor);
             }
         };
 
@@ -334,43 +342,51 @@ public class TeamStatsFragment extends Fragment {
                 //Toast.makeText(getActivity(),"Team 2 changed", Toast.LENGTH_LONG).show();
 
 
+                int textColor = getResources().getColor(teamStatsObject.getColor());
+                if (textColor == (Integer)getResources().getColor(R.color.colorPelicansPrimary)){
+                    textColor = getResources().getColor(R.color.colorPelicansText);
+                }
+                if(textColor == (Integer)getResources().getColor(R.color.colorJazzPrimary)){
+                    textColor = getResources().getColor(R.color.colorJazzText);
+                }
+                
                 //Bind available raw values to views and change fields to team colors
                 team2OffenseValue.setText(String.valueOf(teamStatsObject.getPpg()));
-                team2OffenseValue.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team2OffenseValue.setTextColor(textColor);
 
-                team2OffenseRank.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team2OffenseRank.setTextColor(textColor);
 
                 team2DefenseValue.setText(String.valueOf(teamStatsObject.getOppg()));
-                team2DefenseValue.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team2DefenseValue.setTextColor(textColor);
 
-                team2DefenseRank.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team2DefenseRank.setTextColor(textColor);
 
                 team2AssistsValue.setText(String.valueOf(teamStatsObject.getApg()));
-                team2AssistsValue.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team2AssistsValue.setTextColor(textColor);
 
-                team2AssistsRank.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team2AssistsRank.setTextColor(textColor);
 
                 team2ReboundsValue.setText(String.valueOf(teamStatsObject.getRpg()));
-                team2ReboundsValue.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team2ReboundsValue.setTextColor(textColor);
 
-                team2ReboundsRank.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team2ReboundsRank.setTextColor(textColor);
 
                 team2ThreePointValue.setText(String.valueOf(teamStatsObject.getTpm()));
-                team2ThreePointValue.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team2ThreePointValue.setTextColor(textColor);
 
-                team2ThreePointRank.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team2ThreePointRank.setTextColor(textColor);
 
                 DecimalFormat decimalFormat = new DecimalFormat("#.#");
                 String freethrowpercentage =  decimalFormat.format(teamStatsObject.getFtp());
 
                 team2FreeThrowValue.setText(freethrowpercentage);
-                team2FreeThrowValue.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team2FreeThrowValue.setTextColor(textColor);
 
-                team2FreeThrowRank.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team2FreeThrowRank.setTextColor(textColor);
 
                 String theTeamName = String.valueOf(teamStatsObject.getFullName());
                 team2TeamName.setText(theTeamName.toUpperCase());
-                team2TeamName.setTextColor(getResources().getColor(teamStatsObject.getColor()));
+                team2TeamName.setTextColor(textColor);
             }
         };
 

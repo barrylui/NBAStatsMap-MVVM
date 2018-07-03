@@ -1,8 +1,11 @@
 package barrylui.myteam;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,15 +67,30 @@ public class SplashLoadingFragment extends Fragment {
         MySportsFeedRetrofitClient.getTeamData();
         MySportsFeedRetrofitClient.getPlayerData();
         //Displays splash screen for 5 seconds while the the JSON files are fetched
+
+
+
         Handler mHandler = new Handler();
         Runnable mRunnable = new Runnable() {
             @Override
             public void run() {
+                //Runnable waits 5 secs to wait for application to load data
                 //Checks to see if data loaded
-                //If data is not loaded, inflate error fragment
-                final DataDidNotLoad bListener = (DataDidNotLoad)getContext();
+                //If data is not loaded, show an alert dialog that shuts down the application once "OK" is pressed
+                final CallOnFinish bListener = (CallOnFinish) getContext();
                 if(NBATeamDataSingleton.getInstance().getTeamDataMap().isEmpty() || NBAPlayerDataSingleton.getInstance().getPlayerDataMap().isEmpty()){
-                    bListener.dataDidNotLoad();
+                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                    alertDialog.setTitle(getString(R.string.dataDidNotLoad));
+                    alertDialog.setMessage(getString(R.string.dataDidNotLoadMsg));
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.dataDidNotLoadDialogButtonString), new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialog, int which){
+                            bListener.callOnFinish();
+                        }
+                    });
+
+                    alertDialog.show();
+
                 }else{
                     mListener.fetchdataAndLaunch();//Starts application
                 }
@@ -91,5 +109,9 @@ public class SplashLoadingFragment extends Fragment {
 
     public interface DataDidNotLoad{
         public void dataDidNotLoad();
+    }
+
+    public interface CallOnFinish{
+        public void callOnFinish();
     }
 }

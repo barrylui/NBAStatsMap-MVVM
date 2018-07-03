@@ -14,7 +14,9 @@
     <string name="slot1">SLOT 1</string>
     <string name="slot2">SLOT 2</string>
     <string name="backToTeam">BACK TO TEAM SELECTION</string>
-    <string name="dataDidNotLoad">DATA DID NOT LOAD. MAKE SURE YOU HAVE A VALID INTERNET CONNECTION AND TRY AGAIN</string>
+    <string name="dataDidNotLoad">DATA DID NOT LOAD.</string>
+    <string name="dataDidNotLoadMsg">APPLICATION CLOSING.\n \nMAKE SURE YOU HAVE A VALID INTERNET CONNECTION AND TRY AGAIN</string>
+    <string name="dataDidNotLoadDialogButtonString">OK </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

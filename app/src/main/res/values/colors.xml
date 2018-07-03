@@ -24,6 +24,7 @@
     <color name="colorHeatPrimary">#9C002F</color>
     <color name="colorHornetsPrimary">#0B7797</color>
     <color name="colorJazzPrimary">#0D2240</color>
+    <color name="colorJazzText">#FFA005</color>
     <color name="colorKingsPrimary">#5B2B82</color>
     <color name="colorKnicksPrimary">#FF671B</color>
     <color name="colorLakersPrimary">#FDB927</color>
@@ -33,6 +34,7 @@
     <color name="colorNuggetsPrimary">#5091CD</color>
     <color name="colorPacersPrimary">#FDBB30</color>
     <color name="colorPelicansPrimary">#012A5C</color>
+    <color name="colorPelicansText">#D12236</color>
     <color name="colorPistonsPrimary">#006AB6</color>
     <color name="colorRaptorsPrimary">#CD1141</color>
     <color name="colorRocketsPrimary">#CE1141</color>
@@ -42,6 +44,7 @@
     <color name="colorThunderPrimary">#08679F</color>
     <color name="colorTrailblazersPrimary">#D12437</color>
     <color name="colorTimberwolvesPrimary">#0D2240</color>
+    <color name="colorTimberwolvesText">#7FC43D</color>
     <color name="colorWarriorsPrimary">#FFC627</color>
     <color name="colorWizardsPrimary">#CF0A2C</color>
 </resources>
