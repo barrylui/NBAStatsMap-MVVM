@@ -13,10 +13,9 @@ import barrylui.myteam.MySportsFeedAPI.MySportsFeedRetrofitClient;
 
 public class SplashLoadingFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static int DISPLAY_TIME = 5000;
+    private static int DISPLAY_TIME = 5000; //Time to display splash screen, 5000 = 5 seconds
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -31,15 +30,6 @@ public class SplashLoadingFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SplashLoadingFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static SplashLoadingFragment newInstance(String param1, String param2) {
         SplashLoadingFragment fragment = new SplashLoadingFragment();
         Bundle args = new Bundle();
@@ -70,23 +60,22 @@ public class SplashLoadingFragment extends Fragment {
         //Stores relevant data in Singleton Hashmap class
         MySportsFeedRetrofitClient.getTeamData();
         MySportsFeedRetrofitClient.getPlayerData();
-        //Displays splash screen for 4 seconds while the the JSON file is fetched
+        //Displays splash screen for 5 seconds while the the JSON files are fetched
         Handler mHandler = new Handler();
         Runnable mRunnable = new Runnable() {
             @Override
             public void run() {
                 //launches application
-                mListener.dataLoadLaunchApplication();
+                mListener.fetchdataAndLaunch();//Starts application
             }
         };
         mHandler.postDelayed(mRunnable, DISPLAY_TIME);
         return rootView;
-
     }
 
 
     //interface to communicate with parent activity to start the application
     public interface FetchDataAndLaunch {
-        public void dataLoadLaunchApplication();
+        public void fetchdataAndLaunch();
     }
 }

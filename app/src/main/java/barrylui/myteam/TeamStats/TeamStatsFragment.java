@@ -136,11 +136,15 @@ public class TeamStatsFragment extends Fragment {
 
 
         //Bind views
+
+
         radarChart = (RadarChart)view.findViewById(R.id.radarchart);
 
+        //Selector menus for teams
         team1Menu = (RecyclerView)view.findViewById(R.id.team1_select_recycleview);
         team2Menu = (RecyclerView)view.findViewById(R.id.team2_recyclerview);
 
+        //Team 1 Stat TextViews
         team1TeamName = (TextView)view.findViewById(R.id.Team1NameTextView);
         team1OffenseValue = (TextView)view.findViewById(R.id.offenseTeam1ValueTextView);
         team1DefenseValue = (TextView)view.findViewById(R.id.defenseTeam1ValueTextView);
@@ -156,7 +160,7 @@ public class TeamStatsFragment extends Fragment {
         team1ThreePointRank = (TextView) view.findViewById(R.id.threepointTeam1RankTextView);
         team1FreeThrowRank = (TextView) view.findViewById(R.id.freethrowTeam1RankTextView);
 
-
+        //Team 2 Stat TextViews
         team2OffenseValue = (TextView)view.findViewById(R.id.offenseTeam2ValueTextView);
         team2DefenseValue = (TextView)view.findViewById(R.id.defenseTeam2ValueTextView);
         team2AssistsValue = (TextView)view.findViewById(R.id.assistsTeam2ValueTextView);
@@ -187,9 +191,9 @@ public class TeamStatsFragment extends Fragment {
         labels.add("FT%");
         labels.add("3PT SCORING");
 
-        //Input blank data for blank chart
-        ArrayList<Entry> entry1 = new ArrayList<>();
+        //Setup blank data for blank chart to be displayed
 
+        //Empty dataset
         entry1.add(new Entry(0,0));
         entry1.add(new Entry(0,1));
         entry1.add(new Entry(0,2));
@@ -197,14 +201,23 @@ public class TeamStatsFragment extends Fragment {
         entry1.add(new Entry(0,4));
         entry1.add(new Entry(0,5));
 
+        entry2.add(new Entry(0,0));
+        entry2.add(new Entry(0,1));
+        entry2.add(new Entry(0,2));
+        entry2.add(new Entry(0,3));
+        entry2.add(new Entry(0,4));
+        entry2.add(new Entry(0,5));
+
         //Setup radarchart settings and bind radar chart
         RadarDataSet dataset1 = new RadarDataSet(entry1,"Team 1");
         RadarDataSet dataset2 = new RadarDataSet(entry2, "Team 2");
 
+        //Draw settings
         dataset1.setFillAlpha(180);
         dataset1.setLineWidth(5f);
         dataset1.setDrawValues(false);
 
+        //Add datasets to radarChart
         ArrayList<RadarDataSet> dataSets= new ArrayList<RadarDataSet>();
         dataSets.add(dataset1);
         dataSets.add(dataset2);
@@ -216,6 +229,7 @@ public class TeamStatsFragment extends Fragment {
         radarChart.setDescription("");
         l.setEnabled(false);
 
+        //Sets labels of each axis to be white
         radarChart.getXAxis().setTextColor(Color.WHITE);
         //Max is 30 because there are 30 nba teams. Each stat is ranked against other teams and can be plotted to see how good/bad a team is in a paticular category
         YAxis yAxis = radarChart.getYAxis();
@@ -227,12 +241,6 @@ public class TeamStatsFragment extends Fragment {
         radarChart.notifyDataSetChanged();
         radarChart.invalidate();
 
-
-
-        //Checks if data is loaded
-
-
-
         //Get the ViewModel
         mViewModel = ViewModelProviders.of(this).get(TeamStatsViewModel.class);
 
@@ -240,12 +248,25 @@ public class TeamStatsFragment extends Fragment {
         //If team1 or team 2 changes (when user selects a team)
         // change appropriate text fields and radar chart
 
-
         //Team 1 Stats LiveData onChanged
         final android.arch.lifecycle.Observer<TeamStatsObject> team1StatsObserver = new android.arch.lifecycle.Observer<TeamStatsObject>() {
             @Override
             public void onChanged(@Nullable TeamStatsObject teamStatsObject) {
                 //Toast.makeText(getActivity(),"Team 1 changed", Toast.LENGTH_SHORT).show();
+
+                //Call viewModel method here
+                //Method must iterate through TeamData HashMap and store each stat in an array.
+                //Method will take a teamStatsObject as a parameter
+                //Method will perform linear search through arrays to determine the team's ranking for each stat
+                //Return a hashmap of doubles
+                //Hashmap will have the stat category as the key and the ranking value as the value
+                //Keys : offenseRadarValue. offenseRank, defenseRadarValue, defenseRank, AssistsRadarValue, AssistsRank,
+                //      ReboundsRadarValue, ReboundsRank, ThreesRadarValue, ThreesRank, FreeThrowRadarValue, FreeThrowRank
+                // Use values to bind to RadarChart
+                // Use values to bind to Ranking textViews
+
+
+                //Bind available raw values to views and change fields to team colors
                 team1OffenseValue.setText(String.valueOf(teamStatsObject.getPpg()));
                 team1OffenseValue.setTextColor(getResources().getColor(teamStatsObject.getColor()));
 
@@ -285,12 +306,12 @@ public class TeamStatsFragment extends Fragment {
             }
         };
 
-
         //Team 2 Stats LiveData onChanged
 
         final android.arch.lifecycle.Observer<TeamStatsObject> team2StatsObserver = new android.arch.lifecycle.Observer<TeamStatsObject>() {
             @Override
             public void onChanged(@Nullable TeamStatsObject teamStatsObject) {
+
 
                 //Call viewModel method here
                 //Method must iterate through TeamData HashMap and store each stat in an array.
@@ -304,6 +325,9 @@ public class TeamStatsFragment extends Fragment {
                 // Use values to bind to Ranking textViews
 
                 //Toast.makeText(getActivity(),"Team 2 changed", Toast.LENGTH_LONG).show();
+
+
+                //Bind available raw values to views and change fields to team colors
                 team2OffenseValue.setText(String.valueOf(teamStatsObject.getPpg()));
                 team2OffenseValue.setTextColor(getResources().getColor(teamStatsObject.getColor()));
 
@@ -375,7 +399,10 @@ public class TeamStatsFragment extends Fragment {
         team1Adapter.SetOnItemClickListener(new Team1RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItem1Click(View view, int position, String teamAbbrv, int color) {
+                //Retrieves data entry for specific team
                 HashMap<String, Object> teamHashMap = NBATeamDataSingleton.getInstance().getTeamDataMap().get(teamAbbrv);
+
+                //Creates teamStatsObject using the data for the specific team
                 TeamStatsObject teamStats1Object = new TeamStatsObject((Double)teamHashMap.get("offense"), (Double)teamHashMap.get("defense"),
                         (Double)teamHashMap.get("rebounds"), (Double)teamHashMap.get("assists"), (Double)teamHashMap.get("tpm"),
                         (Double)teamHashMap.get("ftp"), color, (String)teamHashMap.get("wins"),
@@ -384,10 +411,14 @@ public class TeamStatsFragment extends Fragment {
             }
         });
 
+
         team2Adapter.SetOnItemClickListener(new Team2RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItem2Click(View view, int position, String teamAbbrv, int color) {
+                //Retrieves data entry for specific team
                 HashMap<String, Object> teamHashMap = NBATeamDataSingleton.getInstance().getTeamDataMap().get(teamAbbrv);
+
+                //Creates teamStatsObject using the data for the specific team
                 TeamStatsObject teamStats2Object = new TeamStatsObject((Double)teamHashMap.get("offense"), (Double)teamHashMap.get("defense"),
                         (Double)teamHashMap.get("rebounds"), (Double)teamHashMap.get("assists"), (Double)teamHashMap.get("tpm"),
                         (Double)teamHashMap.get("ftp"), color, (String)teamHashMap.get("wins"),
@@ -398,6 +429,5 @@ public class TeamStatsFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return view;
-
     }
 }

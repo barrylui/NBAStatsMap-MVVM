@@ -85,11 +85,12 @@ public class MainActivity extends AppCompatActivity implements SplashLoadingFrag
     }
     //Starts the application after loading the data
     //Makes the bottom navigation bar visibile and loads the teamstats fragment
-    public void dataLoadLaunchApplication(){
+    public void fetchdataAndLaunch(){
         navigation.setVisibility(View.VISIBLE);
         loadFragment(teanStatsFragment);
     }
 
+    //If JSON data could not be fetched display the DataFetchErrorFragment
     public void dataDidNotLoad(){
         navigation.setVisibility(View.GONE);
         loadFragment(new DataFetchErrorFragment());

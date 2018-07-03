@@ -69,18 +69,19 @@ public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2Recycler
             super(view);
             teamPicture = (ImageView) view.findViewById(R.id.teamLogo);
             linearLayout = (LinearLayout) view.findViewById(R.id.cardview_team);
-            //            //view.setOnClickListener(this);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    //Deselects last team from the UI by changing its alpha
                     if(imageStack.isEmpty()==false){
                         ImageView previousImageView = imageStack.pop();
                         previousImageView.setAlpha(.3f);
                     }
-
+                    //moves cursor to item selected by highlighting team logo
+                    //push view holder into stack so it can be referenced later and deselected from the UI
                     imageStack.push(teamPicture);
                     teamPicture.setAlpha(1f);
-
+                    //Get Team data in Fragment
                     if(mItemClickListener!=null){
                         mItemClickListener.onItem2Click(view, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"));
                     }

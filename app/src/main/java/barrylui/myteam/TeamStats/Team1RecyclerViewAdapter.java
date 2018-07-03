@@ -63,7 +63,6 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
     {
         ImageView teamPicture;
         LinearLayout linearLayout;
-        //GradientDrawableDrawable circleBackground;
 
         public Team1ViewHolder(View view) {
             super(view);
@@ -73,19 +72,19 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
             view.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-                    //moves cursor to item selected
+                    //Deselects last team from the UI by changing its alpha
                     if(ImageviewStack.isEmpty()==false) {
-                        //previousViewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
                         ImageView previousImageView = ImageviewStack.pop();
                         previousImageView.setAlpha(.3f);
                     }
 
 
+                    //moves cursor to item selected
                     //Highlight team selected
                     //push view holder into stack
                     ImageviewStack.push(teamPicture);
                     teamPicture.setAlpha(1f);
-                    //Get Team data
+                    //Get Team data in Fragment
                     if(mItemClickListener !=null){
                         mItemClickListener.onItem1Click(v, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"));
                     }
