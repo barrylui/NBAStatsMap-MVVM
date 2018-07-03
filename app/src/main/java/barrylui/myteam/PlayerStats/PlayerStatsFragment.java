@@ -82,7 +82,7 @@ public class PlayerStatsFragment extends Fragment {
 
         slot1Button.setVisibility(View.GONE);
         slot2Button.setVisibility(View.GONE);
-        
+
         return view;
     }
 }

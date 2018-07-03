@@ -69,6 +69,8 @@ public class TeamStatsFragment extends Fragment {
     private TextView team2ThreePointRank;
     private TextView team2FreeThrowRank;
 
+    private ArrayList<Entry> entry1 = new ArrayList<>();
+    private ArrayList<Entry> entry2 = new ArrayList<>();
     private NBATeamAssetsData nbaTeamData = new NBATeamAssetsData();
     LinearLayoutManager aLayoutManager;
     LinearLayoutManager bLayoutManager;
@@ -111,10 +113,23 @@ public class TeamStatsFragment extends Fragment {
         }
     }
 
+    public interface DataDidNotLoad{
+        public void dataDidNotLoad();
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
+
+        //Checks to see if data loaded
+        //If data is not loaded, inflate error fragment
+        final DataDidNotLoad mListener = (DataDidNotLoad)getContext();
+        if(NBATeamDataSingleton.getInstance().getTeamDataMap().isEmpty() || NBAPlayerDataSingleton.getInstance().getPlayerDataMap().isEmpty()){
+            mListener.dataDidNotLoad();
+        }
+
         View view = inflater.inflate(R.layout.fragment_team_stats, container, false);
 
 
@@ -184,6 +199,7 @@ public class TeamStatsFragment extends Fragment {
 
         //Setup radarchart settings and bind radar chart
         RadarDataSet dataset1 = new RadarDataSet(entry1,"Team 1");
+        RadarDataSet dataset2 = new RadarDataSet(entry2, "Team 2");
 
         dataset1.setFillAlpha(180);
         dataset1.setLineWidth(5f);
@@ -191,6 +207,7 @@ public class TeamStatsFragment extends Fragment {
 
         ArrayList<RadarDataSet> dataSets= new ArrayList<RadarDataSet>();
         dataSets.add(dataset1);
+        dataSets.add(dataset2);
         RadarData theradardata = new RadarData(labels, dataSets);
         radarChart.setData(theradardata);
 
@@ -212,16 +229,7 @@ public class TeamStatsFragment extends Fragment {
 
 
 
-        if(NBATeamDataSingleton.getInstance().getTeamDataMap().isEmpty()==true && NBAPlayerDataSingleton.getInstance().getPlayerDataMap().isEmpty()==true){
-            Toast.makeText(getActivity(),"Team data and Player data are empty", Toast.LENGTH_LONG).show();
-        } else if(NBATeamDataSingleton.getInstance().getTeamDataMap().isEmpty()==false&&NBAPlayerDataSingleton.getInstance().getPlayerDataMap().isEmpty()==true){
-            Toast.makeText(getActivity(),"Team data is loaded and Player data is Empty", Toast.LENGTH_LONG).show();
-        } else if (NBATeamDataSingleton.getInstance().getTeamDataMap().isEmpty()==true&&NBAPlayerDataSingleton.getInstance().getPlayerDataMap().isEmpty()==false){
-            Toast.makeText(getActivity(),"Team data is empty and Player data is loaded", Toast.LENGTH_LONG).show();
-        }
-        else {
-            Toast.makeText(getActivity(),"All data is loaded", Toast.LENGTH_LONG).show();
-        }
+        //Checks if data is loaded
 
 
 
@@ -388,6 +396,7 @@ public class TeamStatsFragment extends Fragment {
             }
         });
 
+        // Inflate the layout for this fragment
         return view;
 
     }

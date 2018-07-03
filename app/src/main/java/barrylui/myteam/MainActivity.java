@@ -18,7 +18,7 @@ import barrylui.myteam.PlayerStats.PlayerStatsFragment;
 import barrylui.myteam.TeamStats.TeamStatsFragment;
 
 
-public class MainActivity extends AppCompatActivity implements SplashLoadingFragment.DataLoadedLaunchApplication, Serializable {
+public class MainActivity extends AppCompatActivity implements SplashLoadingFragment.FetchDataAndLaunch, Serializable, TeamStatsFragment.DataDidNotLoad {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
@@ -88,5 +88,10 @@ public class MainActivity extends AppCompatActivity implements SplashLoadingFrag
     public void dataLoadLaunchApplication(){
         navigation.setVisibility(View.VISIBLE);
         loadFragment(teanStatsFragment);
+    }
+
+    public void dataDidNotLoad(){
+        navigation.setVisibility(View.GONE);
+        loadFragment(new DataFetchErrorFragment());
     }
 }

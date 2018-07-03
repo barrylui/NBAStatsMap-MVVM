@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import java.util.HashMap;
 
@@ -17,7 +16,7 @@ public class SplashLoadingFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static int DISPLAY_TIME = 4200;
+    private static int DISPLAY_TIME = 5000;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -64,7 +63,7 @@ public class SplashLoadingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        final DataLoadedLaunchApplication mListener = (DataLoadedLaunchApplication)getContext();
+        final FetchDataAndLaunch mListener = (FetchDataAndLaunch)getContext();
         View rootView = inflater.inflate(R.layout.fragment_splash_loading, container, false);
 
         //Fetches JSON data for stats of all 30 NBA Teams
@@ -87,7 +86,7 @@ public class SplashLoadingFragment extends Fragment {
 
 
     //interface to communicate with parent activity to start the application
-    public interface DataLoadedLaunchApplication {
+    public interface FetchDataAndLaunch {
         public void dataLoadLaunchApplication();
     }
 }
