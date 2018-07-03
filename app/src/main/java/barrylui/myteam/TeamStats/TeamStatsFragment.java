@@ -113,9 +113,7 @@ public class TeamStatsFragment extends Fragment {
         }
     }
 
-    public interface DataDidNotLoad{
-        public void dataDidNotLoad();
-    }
+
 
 
     @Override
@@ -125,11 +123,12 @@ public class TeamStatsFragment extends Fragment {
 
         //Checks to see if data loaded
         //If data is not loaded, inflate error fragment
+        /*
         final DataDidNotLoad mListener = (DataDidNotLoad)getContext();
         if(NBATeamDataSingleton.getInstance().getTeamDataMap().isEmpty() || NBAPlayerDataSingleton.getInstance().getPlayerDataMap().isEmpty()){
             mListener.dataDidNotLoad();
         }
-
+*/
         View view = inflater.inflate(R.layout.fragment_team_stats, container, false);
 
 
@@ -193,20 +192,24 @@ public class TeamStatsFragment extends Fragment {
 
         //Setup blank data for blank chart to be displayed
 
-        //Empty dataset
-        entry1.add(new Entry(0,0));
-        entry1.add(new Entry(0,1));
-        entry1.add(new Entry(0,2));
-        entry1.add(new Entry(0,3));
-        entry1.add(new Entry(0,4));
-        entry1.add(new Entry(0,5));
+        if(entry1.isEmpty()){
+            //Empty dataset
+            entry1.add(new Entry(0,0));
+            entry1.add(new Entry(0,1));
+            entry1.add(new Entry(0,2));
+            entry1.add(new Entry(0,3));
+            entry1.add(new Entry(0,4));
+            entry1.add(new Entry(0,5));
+        }
 
-        entry2.add(new Entry(0,0));
-        entry2.add(new Entry(0,1));
-        entry2.add(new Entry(0,2));
-        entry2.add(new Entry(0,3));
-        entry2.add(new Entry(0,4));
-        entry2.add(new Entry(0,5));
+        if(entry2.isEmpty()){
+            entry2.add(new Entry(0,0));
+            entry2.add(new Entry(0,1));
+            entry2.add(new Entry(0,2));
+            entry2.add(new Entry(0,3));
+            entry2.add(new Entry(0,4));
+            entry2.add(new Entry(0,5));
+        }
 
         //Setup radarchart settings and bind radar chart
         RadarDataSet dataset1 = new RadarDataSet(entry1,"Team 1");
@@ -216,6 +219,10 @@ public class TeamStatsFragment extends Fragment {
         dataset1.setFillAlpha(180);
         dataset1.setLineWidth(5f);
         dataset1.setDrawValues(false);
+
+        dataset2.setFillAlpha(180);
+        dataset2.setLineWidth(5f);
+        dataset2.setDrawValues(false);
 
         //Add datasets to radarChart
         ArrayList<RadarDataSet> dataSets= new ArrayList<RadarDataSet>();

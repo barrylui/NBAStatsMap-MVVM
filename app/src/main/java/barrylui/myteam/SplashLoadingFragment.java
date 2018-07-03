@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import java.util.HashMap;
 
 import barrylui.myteam.MySportsFeedAPI.MySportsFeedRetrofitClient;
+import barrylui.myteam.TeamDataNBA.NBAPlayerDataSingleton;
+import barrylui.myteam.TeamDataNBA.NBATeamDataSingleton;
+import barrylui.myteam.TeamStats.TeamStatsFragment;
 
 public class SplashLoadingFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -65,8 +68,15 @@ public class SplashLoadingFragment extends Fragment {
         Runnable mRunnable = new Runnable() {
             @Override
             public void run() {
-                //launches application
-                mListener.fetchdataAndLaunch();//Starts application
+                //Checks to see if data loaded
+                //If data is not loaded, inflate error fragment
+                final DataDidNotLoad bListener = (DataDidNotLoad)getContext();
+                if(NBATeamDataSingleton.getInstance().getTeamDataMap().isEmpty() || NBAPlayerDataSingleton.getInstance().getPlayerDataMap().isEmpty()){
+                    bListener.dataDidNotLoad();
+                }else{
+                    mListener.fetchdataAndLaunch();//Starts application
+                }
+
             }
         };
         mHandler.postDelayed(mRunnable, DISPLAY_TIME);
@@ -77,5 +87,9 @@ public class SplashLoadingFragment extends Fragment {
     //interface to communicate with parent activity to start the application
     public interface FetchDataAndLaunch {
         public void fetchdataAndLaunch();
+    }
+
+    public interface DataDidNotLoad{
+        public void dataDidNotLoad();
     }
 }
