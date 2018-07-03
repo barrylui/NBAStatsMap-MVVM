@@ -2,26 +2,33 @@ package barrylui.myteam.PlayerStats;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import barrylui.myteam.R;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link PlayerStatsFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link PlayerStatsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PlayerStatsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private RecyclerView slot1Team1;
+    private RecyclerView slot2Team2;
+    private RecyclerView slot1Player1;
+    private RecyclerView slot2Player2;
+
+    private TextView slot1TextView;
+    private TextView slot2TextView;
+
+    private Button slot1Button;
+    private Button slot2Button;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -33,15 +40,7 @@ public class PlayerStatsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PlayerStatsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static PlayerStatsFragment newInstance(String param1, String param2) {
         PlayerStatsFragment fragment = new PlayerStatsFragment();
         Bundle args = new Bundle();
@@ -64,47 +63,26 @@ public class PlayerStatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_player_stats, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_player_stats, container, false);
 
-    /*
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+        slot1Team1 = (RecyclerView)view.findViewById(R.id.team1_select_recycleview);
+        slot2Team2 = (RecyclerView)view.findViewById(R.id.team2_select_recycleview);
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+        slot1Player1 = (RecyclerView)view.findViewById(R.id.team1_player_select_recyclerview);
+        slot2Player2 = (RecyclerView)view.findViewById(R.id.team2_player_select_recyclerview);
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+        slot1TextView = (TextView)view.findViewById(R.id.slot1_header);
+        slot2TextView = (TextView)view.findViewById(R.id.slot2_header);
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+        slot1Button = (Button)view.findViewById(R.id.slot1BacktoTeamButton);
+        slot2Button = (Button)view.findViewById(R.id.slot2BacktoTeamButton);
 
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        slot1Player1.setVisibility(View.GONE);
+        slot2Player2.setVisibility(View.GONE);
+
+        slot1Button.setVisibility(View.GONE);
+        slot2Button.setVisibility(View.GONE);
+        
+        return view;
     }
-    */
 }

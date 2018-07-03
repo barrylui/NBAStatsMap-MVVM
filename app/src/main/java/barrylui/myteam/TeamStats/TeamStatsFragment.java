@@ -123,7 +123,7 @@ public class TeamStatsFragment extends Fragment {
         //Bind views
         radarChart = (RadarChart)view.findViewById(R.id.radarchart);
 
-        team1Menu = (RecyclerView)view.findViewById(R.id.team1_recyclerview);
+        team1Menu = (RecyclerView)view.findViewById(R.id.team1_select_recycleview);
         team2Menu = (RecyclerView)view.findViewById(R.id.team2_recyclerview);
 
         team1TeamName = (TextView)view.findViewById(R.id.Team1NameTextView);
