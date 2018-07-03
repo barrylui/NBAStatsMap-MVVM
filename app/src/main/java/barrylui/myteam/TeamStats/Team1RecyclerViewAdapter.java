@@ -16,11 +16,12 @@ import barrylui.myteam.R;
 
 
 public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1RecyclerViewAdapter.Team1ViewHolder>{
-    private List<Map<String, ?>> mDataset;
-    private Stack<Team1ViewHolder> viewHolderStack = new Stack<>();
+    private static List<Map<String, ?>> mDataset;
+    private static Stack<ImageView> ImageviewStack = new Stack<>();
     private Context mContext;
     private static final String TAG = "RosterView";
-    //OnItemClickListener mItemClickListener;
+    private TeamStatsViewModel mModel;
+    private static OnItemClickListener mItemClickListener;
 
     public Team1RecyclerViewAdapter(Context context, List<Map<String, ?>> list){
         mDataset = list;
@@ -34,39 +35,24 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
         return new Team1ViewHolder(playerView);
     }
 
-
     @Override
     public void onBindViewHolder(final Team1ViewHolder viewHolder, final int position) {
         final int logoimage = (Integer)mDataset.get(position).get("image");
         viewHolder.teamPicture.setImageResource(logoimage);
         viewHolder.teamPicture.setAlpha(.3f);
 
+
         final Team1ViewHolder currentViewHolder = viewHolder;
         viewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
-        viewHolder.linearLayout.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-
-
-
-                //moves cursor to item selected
-                if(viewHolderStack.isEmpty()==false){
-                    Team1ViewHolder previousViewHolder = viewHolderStack.pop();
-                    previousViewHolder.teamPicture.setAlpha(.3f);
-                    //previousViewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
-                }
-                //Highlight team selected
-                //Call for team's data
-                //Call for all teams data and load into array
-                //Perform binary search for team's data
-                viewHolderStack.push(currentViewHolder);
-                currentViewHolder.teamPicture.setAlpha(1f);
-                //currentViewHolder.linearLayout.setBackgroundResource(R.color.blacklightcomp);
-            }
-        });
     }
 
+    public interface OnItemClickListener{
+        public void onItem1Click(View view, int position, String teamAbbrv, int color);
+    }
 
+    public void SetOnItemClickListener(final OnItemClickListener theClickListener){
+        this.mItemClickListener = theClickListener;
+    }
 
     @Override
     public int getItemCount() {
@@ -83,6 +69,28 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
             super(view);
             teamPicture = (ImageView) view.findViewById(R.id.teamLogo);
             linearLayout = (LinearLayout) view.findViewById(R.id.cardview_team);
+
+            view.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    //moves cursor to item selected
+                    if(ImageviewStack.isEmpty()==false) {
+                        //previousViewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
+                        ImageView previousImageView = ImageviewStack.pop();
+                        previousImageView.setAlpha(.3f);
+                    }
+
+
+                    //Highlight team selected
+                    //push view holder into stack
+                    ImageviewStack.push(teamPicture);
+                    teamPicture.setAlpha(1f);
+                    //Get Team data
+                    if(mItemClickListener !=null){
+                        mItemClickListener.onItem1Click(v, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"));
+                    }
+                }
+            });
 
         }
     }

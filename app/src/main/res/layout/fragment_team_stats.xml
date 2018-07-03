@@ -26,7 +26,7 @@
         android:layout_marginLeft="4dp"
         android:textSize="10sp"
         android:textStyle="bold"
-        android:text="TEAM 1"
+        android:text="@string/team1"
         android:layout_marginBottom="1dp"/>
 
     <android.support.v7.widget.RecyclerView
@@ -46,14 +46,15 @@
         android:layout_marginLeft="4dp"
         android:textStyle="bold"
         android:textSize="10sp"
-        android:text="TEAM 2"
+        android:text="@string/team2"
         android:layout_marginBottom="1dp"/>
 
     <com.github.mikephil.charting.charts.RadarChart
         android:id="@+id/radarchart"
-        android:layout_width="285dp"
-        android:layout_height="285dp"
+        android:layout_width="290dp"
+        android:layout_height="290dp"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="2dp"
         android:layout_centerHorizontal="true"/>
     <TextView
         android:layout_width="wrap_content"
@@ -61,10 +62,10 @@
         android:id="@+id/freethrowDisplayTextView"
         android:textStyle="bold"
         android:textSize="12sp"
-        android:text="FREE THROW (%)"
+        android:text="@string/ftdisplay"
         android:textColor="@color/white"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="8dp"
         android:layout_above="@id/team2_header"/>
     <TextView
         android:layout_width="wrap_content"
@@ -72,7 +73,7 @@
         android:id="@+id/threepointDisplayTextView"
         android:textStyle="bold"
         android:textSize="12sp"
-        android:text="3-POINT (3PM)"
+        android:text="@string/threeptdisplay"
         android:textColor="@color/white"
         android:layout_centerHorizontal="true"
         android:layout_above="@id/freethrowDisplayTextView"/>
@@ -83,7 +84,7 @@
         android:id="@+id/reboundsDisplayTextView"
         android:textStyle="bold"
         android:textSize="12sp"
-        android:text="REBOUNDS (RPG)"
+        android:text="@string/reboundsdisplay"
         android:textColor="@color/white"
         android:layout_centerHorizontal="true"
         android:layout_above="@id/threepointDisplayTextView"/>
@@ -93,7 +94,7 @@
         android:id="@+id/assistsDisplayTextView"
         android:textStyle="bold"
         android:textSize="12sp"
-        android:text="ASSIST (APG)"
+        android:text="@string/assisstsdisplay"
         android:textColor="@color/white"
         android:layout_centerHorizontal="true"
         android:layout_above="@id/reboundsDisplayTextView"/>
@@ -103,7 +104,7 @@
         android:id="@+id/defensiveDisplayTextView"
         android:textStyle="bold"
         android:textSize="12sp"
-        android:text="DEFENSE (O PPG)"
+        android:text="@string/defensedisplay"
         android:textColor="@color/white"
         android:layout_centerHorizontal="true"
         android:layout_above="@id/assistsDisplayTextView"/>
@@ -113,7 +114,7 @@
         android:id="@+id/offensiveDisplayTextView"
         android:textStyle="bold"
         android:textSize="12sp"
-        android:text="OFFENSE (PPG)"
+        android:text="@string/offensedisplay"
         android:textColor="@color/white"
         android:layout_centerHorizontal="true"
         android:layout_above="@id/defensiveDisplayTextView" />
@@ -121,133 +122,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/offenseTeam1RankTextView"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:layout_alignBottom="@id/offensiveDisplayTextView"
-        android:textColor="@color/white"
-        android:text="1st"
-        android:textSize="11sp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/defenseTeam1RankTextView"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:layout_alignBottom="@id/defensiveDisplayTextView"
-        android:textColor="@color/white"
-        android:text="4th"
-        android:textSize="11sp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/assistsTeam1RankTextView"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:layout_alignBottom="@id/assistsDisplayTextView"
-        android:textColor="@color/white"
-        android:text="10"
-        android:textSize="11sp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/reboundsTeam1RankTextView"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:layout_alignBottom="@id/reboundsDisplayTextView"
-        android:textColor="@color/white"
-        android:text="1"
-        android:textSize="11sp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/threepointTeam1RankTextView"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:layout_alignBottom="@id/threepointDisplayTextView"
-        android:textColor="@color/white"
-        android:text="1"
-        android:textSize="11sp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/freethrowTeam1RankTextView"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:layout_alignBottom="@id/freethrowDisplayTextView"
-        android:textColor="@color/white"
-        android:text="2"
-        android:textSize="11sp"/>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/offenseTeam1ValueTextView"
-        android:layout_toLeftOf="@id/offenseTeam1RankTextView"
-        android:layout_marginRight="30dp"
-        android:layout_alignBottom="@id/offensiveDisplayTextView"
-        android:text="112.8"
-        android:textSize="11sp"
-        android:textColor="@color/white"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/defenseTeam1ValueTextView"
-        android:layout_alignRight="@id/offenseTeam1ValueTextView"
-        android:layout_alignBottom="@id/defensiveDisplayTextView"
-        android:text="100.8"
-        android:textSize="11sp"
-        android:textColor="@color/white"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/assistsTeam1ValueTextView"
-        android:layout_alignRight="@id/offenseTeam1ValueTextView"
-        android:layout_alignBottom="@id/assistsDisplayTextView"
-        android:text="20.8"
-        android:textSize="11sp"
-        android:textColor="@color/white"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/reboundsTeam1ValueTextView"
-        android:layout_alignRight="@id/offenseTeam1ValueTextView"
-        android:layout_alignBottom="@id/reboundsDisplayTextView"
-        android:text="30.8"
-        android:textSize="11sp"
-        android:textColor="@color/white"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/threepointTeam1ValueTextView"
-        android:layout_alignRight="@id/offenseTeam1ValueTextView"
-        android:layout_alignBottom="@id/threepointDisplayTextView"
-        android:text="9.8"
-        android:textSize="11sp"
-        android:textColor="@color/white"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/freethrowTeam1ValueTextView"
-        android:layout_alignRight="@id/offenseTeam1ValueTextView"
-        android:layout_alignBottom="@id/freethrowDisplayTextView"
-        android:text="94.3"
-        android:textSize="11sp"
-        android:textColor="@color/white"/>
-
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/offenseTeam2RankTextView"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
         android:layout_alignBottom="@id/offensiveDisplayTextView"
         android:textColor="@color/white"
         android:text="1st"
@@ -257,6 +134,124 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/defenseTeam2RankTextView"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_alignBottom="@id/defensiveDisplayTextView"
+        android:textColor="@color/white"
+        android:text="4th"
+        android:textSize="11sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/assistsTeam2RankTextView"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_alignBottom="@id/assistsDisplayTextView"
+        android:textColor="@color/white"
+        android:text="10"
+        android:textSize="11sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reboundsTeam2RankTextView"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_alignBottom="@id/reboundsDisplayTextView"
+        android:textColor="@color/white"
+        android:text="1"
+        android:textSize="11sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/threepointTeam2RankTextView"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_alignBottom="@id/threepointDisplayTextView"
+        android:textColor="@color/white"
+        android:text="1"
+        android:textSize="11sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/freethrowTeam2RankTextView"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_alignBottom="@id/freethrowDisplayTextView"
+        android:textColor="@color/white"
+        android:text="2"
+        android:textSize="11sp"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/offenseTeam2ValueTextView"
+        android:layout_toLeftOf="@id/offenseTeam2RankTextView"
+        android:layout_marginRight="30dp"
+        android:layout_alignBottom="@id/offensiveDisplayTextView"
+        android:textSize="11sp"
+        android:textColor="@color/white"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/defenseTeam2ValueTextView"
+        android:layout_alignRight="@id/offenseTeam2ValueTextView"
+        android:layout_alignBottom="@id/defensiveDisplayTextView"
+        android:textSize="11sp"
+        android:textColor="@color/white"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/assistsTeam2ValueTextView"
+        android:layout_alignRight="@id/offenseTeam2ValueTextView"
+        android:layout_alignBottom="@id/assistsDisplayTextView"
+        android:textSize="11sp"
+        android:textColor="@color/white"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reboundsTeam2ValueTextView"
+        android:layout_alignRight="@id/offenseTeam2ValueTextView"
+        android:layout_alignBottom="@id/reboundsDisplayTextView"
+        android:textSize="11sp"
+        android:textColor="@color/white"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/threepointTeam2ValueTextView"
+        android:layout_alignRight="@id/offenseTeam2ValueTextView"
+        android:layout_alignBottom="@id/threepointDisplayTextView"
+        android:textSize="11sp"
+        android:textColor="@color/white"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/freethrowTeam2ValueTextView"
+        android:layout_alignRight="@id/offenseTeam2ValueTextView"
+        android:layout_alignBottom="@id/freethrowDisplayTextView"
+        android:textSize="11sp"
+        android:textColor="@color/white"/>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/offenseTeam1RankTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_alignBottom="@id/offensiveDisplayTextView"
+        android:textColor="@color/white"
+        android:text="1st"
+        android:textSize="11sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/defenseTeam1RankTextView"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="20dp"
         android:layout_alignBottom="@id/defensiveDisplayTextView"
@@ -267,7 +262,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/assistsTeam2RankTextView"
+        android:id="@+id/assistsTeam1RankTextView"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="20dp"
         android:layout_alignBottom="@id/assistsDisplayTextView"
@@ -278,7 +273,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/reboundsTeam2RankTextView"
+        android:id="@+id/reboundsTeam1RankTextView"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="20dp"
         android:layout_alignBottom="@id/reboundsDisplayTextView"
@@ -288,7 +283,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/threepointTeam2RankTextView"
+        android:id="@+id/threepointTeam1RankTextView"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="20dp"
         android:layout_alignBottom="@id/threepointDisplayTextView"
@@ -299,7 +294,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/freethrowTeam2RankTextView"
+        android:id="@+id/freethrowTeam1RankTextView"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="20dp"
         android:layout_alignBottom="@id/freethrowDisplayTextView"
@@ -314,57 +309,72 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/offenseTeam2ValueTextView"
-        android:layout_toRightOf="@id/offenseTeam2RankTextView"
+        android:id="@+id/offenseTeam1ValueTextView"
+        android:layout_toRightOf="@id/offenseTeam1RankTextView"
         android:layout_marginLeft="30dp"
         android:layout_alignBottom="@id/offensiveDisplayTextView"
-        android:text="112.8"
         android:textSize="11sp"
         android:textColor="@color/white"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/defenseTeam2ValueTextView"
-        android:layout_alignLeft="@id/offenseTeam2ValueTextView"
+        android:id="@+id/defenseTeam1ValueTextView"
+        android:layout_alignLeft="@id/offenseTeam1ValueTextView"
         android:layout_alignBottom="@id/defensiveDisplayTextView"
-        android:text="100.8"
         android:textSize="11sp"
         android:textColor="@color/white"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/assistsTeam2ValueTextView"
-        android:layout_alignLeft="@id/offenseTeam2ValueTextView"
+        android:id="@+id/assistsTeam1ValueTextView"
+        android:layout_alignLeft="@id/offenseTeam1ValueTextView"
         android:layout_alignBottom="@id/assistsDisplayTextView"
-        android:text="20.8"
         android:textSize="11sp"
         android:textColor="@color/white"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/reboundsTeam2ValueTextView"
-        android:layout_alignLeft="@id/offenseTeam2ValueTextView"
+        android:id="@+id/reboundsTeam1ValueTextView"
+        android:layout_alignLeft="@id/offenseTeam1ValueTextView"
         android:layout_alignBottom="@id/reboundsDisplayTextView"
-        android:text="30.8"
         android:textSize="11sp"
         android:textColor="@color/white"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/threepointTeam2ValueTextView"
-        android:layout_alignLeft="@id/offenseTeam2ValueTextView"
+        android:id="@+id/threepointTeam1ValueTextView"
+        android:layout_alignLeft="@id/offenseTeam1ValueTextView"
         android:layout_alignBottom="@id/threepointDisplayTextView"
-        android:text="9.8"
         android:textSize="11sp"
         android:textColor="@color/white"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/freethrowTeam2ValueTextView"
-        android:layout_alignLeft="@id/offenseTeam2ValueTextView"
+        android:id="@+id/freethrowTeam1ValueTextView"
+        android:layout_alignLeft="@id/offenseTeam1ValueTextView"
         android:layout_alignBottom="@id/freethrowDisplayTextView"
-        android:text="94.3"
-        android:textSize="11sp"
+        android:textColor="@color/white"
+        android:textSize="12sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Team2NameTextView"
+        android:layout_above="@id/offensiveDisplayTextView"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="35dp"
+        android:textSize="12sp"
+        android:text="@string/team2"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Team1NameTextView"
+        android:layout_above="@id/offensiveDisplayTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="35dp"
+        android:textSize="12sp"
+        android:text="@string/team1"
         android:textColor="@color/white"/>
 
 </RelativeLayout>

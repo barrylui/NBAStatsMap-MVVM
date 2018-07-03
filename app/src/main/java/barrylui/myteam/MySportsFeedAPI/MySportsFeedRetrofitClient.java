@@ -1,12 +1,10 @@
 package barrylui.myteam.MySportsFeedAPI;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.HashMap;
 
 import barrylui.myteam.InternetUtilities.BasicAuthInterceptor;
-import barrylui.myteam.MainActivity;
 import barrylui.myteam.MySportsFeedAPI.MySportsFeedPlayerStatsModel.PlayerStats;
 import barrylui.myteam.MySportsFeedAPI.MySportsFeedTeamStats.TeamData;
 import barrylui.myteam.TeamDataNBA.NBAPlayerDataSingleton;
@@ -24,6 +22,7 @@ public class MySportsFeedRetrofitClient {
     private static Retrofit retrofit;
     private static final String BASE_URL = MySportsFeedAPIService.BASE_URL;
     private static String TAG = "MainActivity";
+    //Retrofit instance
     public static Retrofit getInstance() {
         if (retrofit == null){
             OkHttpClient client = new OkHttpClient.Builder()
@@ -40,11 +39,15 @@ public class MySportsFeedRetrofitClient {
         return retrofit;
     }
 
+    //Retrieves JSON data for stats of all NBA Players
+    //Stores relevant data in Singleton HashMap class for players
     public static void getPlayerData(){
+        //Network call
         MySportsFeedAPIService mySportsFeedAPIService = MySportsFeedRetrofitClient.getInstance().create(MySportsFeedAPIService.class);
         Call<PlayerStats> call = mySportsFeedAPIService.getAllPlayerStats();
         call.enqueue(new Callback<PlayerStats>() {
             @Override
+            //Load data into HashMap if connection is successfully made
             public void onResponse(Call<PlayerStats> call, Response<PlayerStats> response) {
                 Log.d(TAG, "onResponse: 200");
                 int numberOfNBAPlayers = response.body().getCumulativeplayerstats().getPlayerstatsentry().size();
@@ -57,6 +60,8 @@ public class MySportsFeedRetrofitClient {
                     Double bpg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getBlkPerGame().getText());
                     Double ftm = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getFtMade().getText());
                     Double fta = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getFtAtt().getText());
+
+                    //Calculate free throw percent
                     Double ftpercent = (ftm/fta)*100;
 
                     playerStatsMap.put("Scoring", ppg);
@@ -66,9 +71,12 @@ public class MySportsFeedRetrofitClient {
                     playerStatsMap.put("Blocks", bpg );
                     playerStatsMap.put("FTPercent",ftpercent);
 
+
+                    //Get PlayerName
                     String playerName = response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getPlayer().getFirstName() + " " +
                             response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getPlayer().getLastName();
 
+                    //Load player name as key and HashMap with stats into singleton hashMap class for players
                     NBAPlayerDataSingleton.getInstance().getPlayerDataMap().put(playerName, playerStatsMap);
                 }
             }
@@ -80,7 +88,7 @@ public class MySportsFeedRetrofitClient {
         });
     }
     //Fetches JSON data for stats of all 30 NBA Teams
-    //Stores relevant data in Singleton Hashmap class
+    //Stores relevant data in Singleton Hashmap class for teams
     public static void getTeamData(){
         MySportsFeedAPIService mySportsFeedAPIService = MySportsFeedRetrofitClient.getInstance().create(MySportsFeedAPIService.class);
         Call<TeamData> call = mySportsFeedAPIService.getTeamStatsData();
@@ -91,10 +99,12 @@ public class MySportsFeedRetrofitClient {
                     Log.d(TAG, "onResponse: 200");
                     for(int i =0; i<2;i++){
                         for(int j=0; j<15;j++){
-                            HashMap<String, Double> statsMap = new HashMap<String, Double>();
+                            HashMap<String, Object> statsMap = new HashMap<String, Object>();
 
+                            String teamName = response.body().getConferenceteamstandings().getConference().get(i).getTeamentry().get(j).getTeam().getName();
                             String teamAbbrv = response.body().getConferenceteamstandings().getConference().get(i).getTeamentry().get(j).getTeam().getAbbreviation();
-
+                            String numberOfWins = response.body().getConferenceteamstandings().getConference().get(i).getTeamentry().get(j).getStats().getWins().getText();
+                            String numberOfLosses = response.body().getConferenceteamstandings().getConference().get(i).getTeamentry().get(j).getStats().getLosses().getText();
                             Double ppg = Double.parseDouble(response.body().getConferenceteamstandings().getConference()
                                     .get(i).getTeamentry().get(j).getStats().getPtsPerGame().get(0).getText());
                             Double oppg = Double.parseDouble(response.body().getConferenceteamstandings().getConference()
@@ -111,13 +121,21 @@ public class MySportsFeedRetrofitClient {
                                     .get(i).getTeamentry().get(j).getStats().getFg3PtMadePerGame().getText());
                             Double ftp = (ftm/fta)*100;
 
+
                             statsMap.put("offense", ppg);
                             statsMap.put("defense",oppg);
                             statsMap.put("rebounds",rpg);
                             statsMap.put("assists",apg);
                             statsMap.put("tpm", tpm);
                             statsMap.put("ftp",ftp);
+                            statsMap.put("wins", numberOfWins);
+                            statsMap.put("losses", numberOfLosses);
+                            statsMap.put("Abbrv",teamAbbrv);
+                            statsMap.put("teamName", teamName);
 
+
+                            //team abbr is key
+                            //Hashmap with stats is value
                             NBATeamDataSingleton.getInstance().getTeamDataMap().put(teamAbbrv, statsMap);
                         }
                     }

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import barrylui.myteam.R;
-
+//contains Team Abbreviations, References to Team logo image, Team color
 public class NBATeamAssetsData {
 
     List<Map<String,?>> teamsList;

@@ -1,7 +1,6 @@
 package barrylui.myteam;
 
 import android.content.pm.ActivityInfo;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -9,26 +8,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import java.io.Serializable;
-import java.util.HashMap;
 
 import barrylui.myteam.Leaders.LeagueLeadersFragment;
-import barrylui.myteam.MySportsFeedAPI.MySportsFeedAPIService;
-import barrylui.myteam.MySportsFeedAPI.MySportsFeedRetrofitClient;
-import barrylui.myteam.MySportsFeedAPI.MySportsFeedTeamStats.TeamData;
 import barrylui.myteam.PlayerStats.PlayerStatsFragment;
-import barrylui.myteam.TeamDataNBA.NBATeamDataSingleton;
 import barrylui.myteam.TeamStats.TeamStatsFragment;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static barrylui.myteam.MySportsFeedAPI.MySportsFeedRetrofitClient.getTeamData;
 
 
 public class MainActivity extends AppCompatActivity implements SplashLoadingFragment.DataLoadedLaunchApplication, Serializable {

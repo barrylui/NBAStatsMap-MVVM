@@ -17,7 +17,7 @@ public class SplashLoadingFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static int DISPLAY_TIME = 3000;
+    private static int DISPLAY_TIME = 4200;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
