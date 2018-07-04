@@ -106,6 +106,7 @@ public class TeamStatsFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,10 +118,12 @@ public class TeamStatsFragment extends Fragment {
 
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        entry1.clear();
+        entry2.clear();
 
         View view = inflater.inflate(R.layout.fragment_team_stats, container, false);
         //Bind views
@@ -427,6 +430,7 @@ public class TeamStatsFragment extends Fragment {
             @Override
             public void onItem1Click(View view, int position, String teamAbbrv, int color, boolean currentItemSelected) {
 
+                //If the user taps a team that is already selected, deselect the team and unbind the data
                 if(currentItemSelected == true){
                     team1OffenseRank.setText(getString(R.string.empty_string));
                     team1DefenseRank.setText(getString(R.string.empty_string));
@@ -457,6 +461,7 @@ public class TeamStatsFragment extends Fragment {
                     radarChart.invalidate();
 
                 }
+                // Loads the team's data and binds it to the UI
                 else{
                     //Retrieves data entry for specific team
                     HashMap<String, Object> teamHashMap = NBATeamDataSingleton.getInstance().getTeamDataMap().get(teamAbbrv);
@@ -475,7 +480,7 @@ public class TeamStatsFragment extends Fragment {
         team2Adapter.SetOnItemClickListener(new Team2RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItem2Click(View view, int position, String teamAbbrv, int color, boolean currentItemSelected) {
-
+                //If the user taps a team that is already selected, deselect the team and unbind the data
                 if(currentItemSelected == true){
                     team2OffenseRank.setText(getString(R.string.empty_string));
                     team2DefenseRank.setText(getString(R.string.empty_string));
@@ -506,6 +511,7 @@ public class TeamStatsFragment extends Fragment {
                     radarChart.invalidate();
 
                 }
+                //Loads the team data and binds it to the UI
                 else{
                     //Retrieves data entry for specific team
                     HashMap<String, Object> teamHashMap = NBATeamDataSingleton.getInstance().getTeamDataMap().get(teamAbbrv);

@@ -9,6 +9,7 @@ import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import java.util.HashMap;
 
@@ -58,6 +59,10 @@ public class SplashLoadingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
 
         final FetchDataAndLaunch mListener = (FetchDataAndLaunch)getContext();
         View rootView = inflater.inflate(R.layout.fragment_splash_loading, container, false);

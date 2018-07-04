@@ -4,6 +4,7 @@ import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import barrylui.myteam.Leaders.LeagueLeadersFragment;
 import barrylui.myteam.PlayerStats.PlayerStatsFragment;
 import barrylui.myteam.TeamStats.TeamStatsFragment;
 
+import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
+
 
 public class MainActivity extends AppCompatActivity implements SplashLoadingFragment.FetchDataAndLaunch, Serializable, SplashLoadingFragment.CallOnFinish {
     static {
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements SplashLoadingFrag
             //new HashMap<String, HashMap<String, Double>>();
     private static String TAG = "MainActivity";
     private static TeamStatsFragment teanStatsFragment = new TeamStatsFragment();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,24 +61,46 @@ public class MainActivity extends AppCompatActivity implements SplashLoadingFrag
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment fragment;
+
             switch (item.getItemId()) {
                 case R.id.navigation_team_stats:
-                    
-                    fragment = new TeamStatsFragment();
-                    loadFragment(fragment);
-                    return true;
+                    if (getSupportFragmentManager().findFragmentById(R.id.frame_container) instanceof TeamStatsFragment){
+                        //do nothing
+                        return true;
+                    }
+                    else {
+                        fragment = new TeamStatsFragment();
+                        loadFragment(fragment);
+                        return true;
+                    }
+
                 case R.id.navigation_player_stats:
-                    fragment = new PlayerStatsFragment();
-                    loadFragment(fragment);
-                    return true;
+                    if (getSupportFragmentManager().findFragmentById(R.id.frame_container) instanceof PlayerStatsFragment){
+                        //do nothing
+                        return true;
+                    }
+                    else {
+                        fragment = new PlayerStatsFragment();
+                        loadFragment(fragment);
+                        return true;
+                    }
                 case R.id.navigation_leaders:
-                    fragment = new LeagueLeadersFragment();
-                    loadFragment(fragment);
-                    return true;
+                    if (getSupportFragmentManager().findFragmentById(R.id.frame_container) instanceof LeagueLeadersFragment){
+                        //do nothing
+                        return true;
+                    }
+                    else {
+                        fragment = new LeagueLeadersFragment();
+                        loadFragment(fragment);
+                        return true;
+                    }
             }
             return false;
         }
     };
+
+
+
 
 
     private void loadFragment(Fragment fragment) {
@@ -89,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements SplashLoadingFrag
     public void fetchdataAndLaunch(){
         navigation.setVisibility(View.VISIBLE);
         loadFragment(teanStatsFragment);
+        getWindow().clearFlags(FLAG_FULLSCREEN);
     }
 
     //If JSON data could not be fetched close the application
