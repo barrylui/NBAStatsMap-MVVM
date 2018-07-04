@@ -1,6 +1,7 @@
 package barrylui.myteam.TeamStats;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,7 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
     }
 
     public interface OnItemClickListener{
-        public void onItem1Click(View view, int position, String teamAbbrv, int color);
+        public void onItem1Click(View view, int position, String teamAbbrv, int color, boolean currentItemSelected);
     }
 
     public void SetOnItemClickListener(final OnItemClickListener theClickListener){
@@ -66,28 +67,39 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
 
         public Team1ViewHolder(View view) {
             super(view);
-            teamPicture = (ImageView) view.findViewById(R.id.teamLogo);
-            linearLayout = (LinearLayout) view.findViewById(R.id.cardview_team);
+            final View v = view;
+            teamPicture = (ImageView) v.findViewById(R.id.teamLogo);
+            linearLayout = (LinearLayout) v.findViewById(R.id.cardview_team);
 
-            view.setOnClickListener(new View.OnClickListener(){
+            v.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-                    //Deselects last team from the UI by changing its alpha
-                    if(ImageviewStack.isEmpty()==false) {
+
+                    //Checks if previous team selected is the same team being selected. if so remove the data
+                    if (ImageviewStack.isEmpty()==false && teamPicture==ImageviewStack.peek()){
                         ImageView previousImageView = ImageviewStack.pop();
-                        previousImageView.setAlpha(.3f);
+                        teamPicture.setAlpha(.3f);
+                        mItemClickListener.onItem1Click(v, getLayoutPosition(), (String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), true);
+                    }
+                    else{
+                        //Deselects last team from the UI by changing its alpha
+                        if(ImageviewStack.isEmpty()==false) {
+                            ImageView previousImageView = ImageviewStack.pop();
+                            previousImageView.setAlpha(.3f);
+                        }
+
+                        //moves cursor to item selected
+                        //Highlight team selected
+                        //push view holder into stack
+                        ImageviewStack.push(teamPicture);
+                        teamPicture.setAlpha(1f);
+                        //Get Team data in Fragment
+                        if(mItemClickListener !=null){
+                            mItemClickListener.onItem1Click(v, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), false);
+                        }
                     }
 
 
-                    //moves cursor to item selected
-                    //Highlight team selected
-                    //push view holder into stack
-                    ImageviewStack.push(teamPicture);
-                    teamPicture.setAlpha(1f);
-                    //Get Team data in Fragment
-                    if(mItemClickListener !=null){
-                        mItemClickListener.onItem1Click(v, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"));
-                    }
                 }
             });
 

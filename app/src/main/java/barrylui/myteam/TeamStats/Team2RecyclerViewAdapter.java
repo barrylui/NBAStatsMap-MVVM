@@ -46,7 +46,7 @@ public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2Recycler
     }
 
     public interface OnItemClickListener{
-        public void onItem2Click(View view, int position, String teamAbbrv, int color);
+        public void onItem2Click(View view, int position, String teamAbbrv, int color, boolean currentItemSelected);
     }
 
     public void SetOnItemClickListener(OnItemClickListener clickListener){
@@ -67,24 +67,31 @@ public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2Recycler
 
         public Team2ViewHolder(View view) {
             super(view);
+            final View v = view;
             teamPicture = (ImageView) view.findViewById(R.id.teamLogo);
             linearLayout = (LinearLayout) view.findViewById(R.id.cardview_team);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Deselects last team from the UI by changing its alpha
-                    if(imageStack.isEmpty()==false){
+                    if (imageStack.isEmpty()==false && teamPicture==imageStack.peek()){
                         ImageView previousImageView = imageStack.pop();
-                        previousImageView.setAlpha(.3f);
+                        teamPicture.setAlpha(.3f);
+                        mItemClickListener.onItem2Click(v, getLayoutPosition(), (String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), true);
                     }
-                    //moves cursor to item selected by highlighting team logo
-                    //push view holder into stack so it can be referenced later and deselected from the UI
-                    imageStack.push(teamPicture);
-                    teamPicture.setAlpha(1f);
-                    //Get Team data in Fragment
-                    if(mItemClickListener!=null){
-                        mItemClickListener.onItem2Click(view, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"));
-                    }
+                    else{
+                        //Deselects last team from the UI by changing its alpha
+                        if(imageStack.isEmpty()==false){
+                            ImageView previousImageView = imageStack.pop();
+                            previousImageView.setAlpha(.3f);
+                        }
+                        //moves cursor to item selected by highlighting team logo
+                        //push view holder into stack so it can be referenced later and deselected from the UI
+                        imageStack.push(teamPicture);
+                        teamPicture.setAlpha(1f);
+                        //Get Team data in Fragment
+                        if(mItemClickListener!=null){
+                            mItemClickListener.onItem2Click(view, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), false);
+                        }}
                 }
             });
 

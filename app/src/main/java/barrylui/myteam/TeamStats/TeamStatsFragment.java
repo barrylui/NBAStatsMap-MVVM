@@ -71,6 +71,8 @@ public class TeamStatsFragment extends Fragment {
 
     private ArrayList<Entry> entry1 = new ArrayList<>();
     private ArrayList<Entry> entry2 = new ArrayList<>();
+
+
     private NBATeamAssetsData nbaTeamData = new NBATeamAssetsData();
     LinearLayoutManager aLayoutManager;
     LinearLayoutManager bLayoutManager;
@@ -120,20 +122,7 @@ public class TeamStatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
-        //Checks to see if data loaded
-        //If data is not loaded, inflate error fragment
-        /*
-        final DataDidNotLoad mListener = (DataDidNotLoad)getContext();
-        if(NBATeamDataSingleton.getInstance().getTeamDataMap().isEmpty() || NBAPlayerDataSingleton.getInstance().getPlayerDataMap().isEmpty()){
-            mListener.dataDidNotLoad();
-        }
-*/
         View view = inflater.inflate(R.layout.fragment_team_stats, container, false);
-
-
-
-
         //Bind views
 
 
@@ -212,20 +201,22 @@ public class TeamStatsFragment extends Fragment {
         }
 
         //Setup radarchart settings and bind radar chart
-        RadarDataSet dataset1 = new RadarDataSet(entry1,"Team 1");
-        RadarDataSet dataset2 = new RadarDataSet(entry2, "Team 2");
+        final RadarDataSet dataset1 = new RadarDataSet(entry1,"Team 1");
+        final RadarDataSet dataset2 = new RadarDataSet(entry2, "Team 2");
 
         //Draw settings
-        dataset1.setFillAlpha(180);
-        dataset1.setLineWidth(5f);
+        dataset1.setFillAlpha(100);
+        dataset1.setLineWidth(4f);
         dataset1.setDrawValues(false);
+        dataset1.setDrawFilled(true);
 
-        dataset2.setFillAlpha(180);
-        dataset2.setLineWidth(5f);
+        dataset2.setFillAlpha(100);
+        dataset2.setLineWidth(4f);
         dataset2.setDrawValues(false);
+        dataset2.setDrawFilled(true);
 
         //Add datasets to radarChart
-        ArrayList<RadarDataSet> dataSets= new ArrayList<RadarDataSet>();
+        final ArrayList<RadarDataSet> dataSets= new ArrayList<RadarDataSet>();
         dataSets.add(dataset1);
         dataSets.add(dataset2);
         RadarData theradardata = new RadarData(labels, dataSets);
@@ -241,7 +232,7 @@ public class TeamStatsFragment extends Fragment {
         //Max is 30 because there are 30 nba teams. Each stat is ranked against other teams and can be plotted to see how good/bad a team is in a paticular category
         YAxis yAxis = radarChart.getYAxis();
         yAxis.resetAxisMaxValue();
-        yAxis.setAxisMaxValue(30);
+        yAxis.setAxisMaxValue(30f);
         yAxis.setAxisMinValue(0);
         yAxis.setDrawLabels(false);
 
@@ -261,18 +252,12 @@ public class TeamStatsFragment extends Fragment {
             public void onChanged(@Nullable TeamStatsObject teamStatsObject) {
                 //Toast.makeText(getActivity(),"Team 1 changed", Toast.LENGTH_SHORT).show();
 
-                //Call viewModel method here
-                //Method must iterate through TeamData HashMap and store each stat in an array.
-                //Method will take a teamStatsObject as a parameter
-                //Method will perform linear search through arrays to determine the team's ranking for each stat
-                //Return a hashmap of doubles
-                //Hashmap will have the stat category as the key and the ranking value as the value
-                //Keys : offenseRadarValue. offenseRank, defenseRadarValue, defenseRank, AssistsRadarValue, AssistsRank,
-                //      ReboundsRadarValue, ReboundsRank, ThreesRadarValue, ThreesRank, FreeThrowRadarValue, FreeThrowRank
-                // Use values to bind to RadarChart
-                // Use values to bind to Ranking textViews
+                //calls ViewModel method to obtain team ranking data for each category.
+                HashMap<String, Object> teamRankingAndRadarMap = mViewModel.getTeamStatRanking(teamStatsObject);
 
+                //Sets text colors for different teams
                 int textColor = getResources().getColor(teamStatsObject.getColor());
+                //Handles two cases where we dont want the primary color being the text color
                 if (textColor == (Integer)getResources().getColor(R.color.colorPelicansPrimary)){
                     textColor = getResources().getColor(R.color.colorPelicansText);
                 }
@@ -280,44 +265,58 @@ public class TeamStatsFragment extends Fragment {
                     textColor = getResources().getColor(R.color.colorJazzText);
                 }
 
-
-                //Bind available raw values to views and change fields to team colors
-                team1OffenseValue.setText(String.valueOf(teamStatsObject.getPpg()));
                 team1OffenseValue.setTextColor(textColor);
-
                 team1OffenseRank.setTextColor(textColor);
-
-                team1DefenseValue.setText(String.valueOf(teamStatsObject.getOppg()));
                 team1DefenseValue.setTextColor(textColor);
-
                 team1DefenseRank.setTextColor(textColor);
-
-                team1AssistsValue.setText(String.valueOf(teamStatsObject.getApg()));
                 team1AssistsValue.setTextColor(textColor);
-
                 team1AssistsRank.setTextColor(textColor);
-
-                team1ReboundsValue.setText(String.valueOf(teamStatsObject.getRpg()));
+                team1AssistsValue.setTextColor(textColor);
                 team1ReboundsValue.setTextColor(textColor);
-
                 team1ReboundsRank.setTextColor(textColor);
-
-                team1ThreePointValue.setText(String.valueOf(teamStatsObject.getTpm()));
                 team1ThreePointValue.setTextColor(textColor);
-
                 team1ThreePointRank.setTextColor(textColor);
+                team1FreeThrowValue.setTextColor(textColor);
+                team1FreeThrowRank.setTextColor(textColor);
+                team1TeamName.setTextColor(textColor);
+
+                team1OffenseRank.setText((String)teamRankingAndRadarMap.get("offenseRank"));
+                team1DefenseRank.setText((String)teamRankingAndRadarMap.get("defenseRank"));
+                team1ReboundsRank.setText((String)teamRankingAndRadarMap.get("reboundsRank"));
+                team1AssistsRank.setText((String)teamRankingAndRadarMap.get("assistsRank"));
+                team1ThreePointRank.setText((String)teamRankingAndRadarMap.get("threesRank"));
+                team1FreeThrowRank.setText((String)teamRankingAndRadarMap.get("freeThrowRank"));
+
+                team1OffenseValue.setText(String.valueOf(teamStatsObject.getPpg()));
+                team1DefenseValue.setText(String.valueOf(teamStatsObject.getOppg()));
+                team1AssistsValue.setText(String.valueOf(teamStatsObject.getApg()));
+                team1ReboundsValue.setText(String.valueOf(teamStatsObject.getRpg()));
+                team1ThreePointValue.setText(String.valueOf(teamStatsObject.getTpm()));
 
                 DecimalFormat decimalFormat = new DecimalFormat("#.#");
+                double freethrowRadarValue = (30 * (teamStatsObject.getFtp())/100);
                 String freethrowpercentage =  decimalFormat.format(teamStatsObject.getFtp());
-
                 team1FreeThrowValue.setText(freethrowpercentage);
-                team1FreeThrowValue.setTextColor(textColor);
 
-                team1FreeThrowRank.setTextColor(textColor);
 
                 String theTeamName = String.valueOf(teamStatsObject.getFullName());
                 team1TeamName.setText(theTeamName.toUpperCase());
-                team1TeamName.setTextColor(textColor);
+
+                entry1.clear();
+
+                entry1.add(new Entry((float)(double)teamRankingAndRadarMap.get("reboundsRadarVal"),0));
+                entry1.add(new Entry((float)(double)teamRankingAndRadarMap.get("offenseRadarVal"),1));
+                entry1.add(new Entry((float)(double)teamRankingAndRadarMap.get("defenseRadarVal"),2));
+                entry1.add(new Entry((float)(double)teamRankingAndRadarMap.get("assistsRadarVal"),3));
+                entry1.add(new Entry((float)freethrowRadarValue,4));
+                entry1.add(new Entry((float)(double)teamRankingAndRadarMap.get("threesRadarVal"),5));
+
+                dataset1.setColor(getResources().getColor(teamStatsObject.getColor()));
+                dataset1.setFillColor(getResources().getColor(teamStatsObject.getColor()));
+
+
+                radarChart.notifyDataSetChanged();
+                radarChart.invalidate();
             }
         };
 
@@ -328,65 +327,70 @@ public class TeamStatsFragment extends Fragment {
             public void onChanged(@Nullable TeamStatsObject teamStatsObject) {
 
 
-                //Call viewModel method here
-                //Method must iterate through TeamData HashMap and store each stat in an array.
-                //Method will take a teamStatsObject as a parameter
-                //Method will perform linear search through arrays to determine the team's ranking for each stat
-                //Return a hashmap of doubles
-                //Hashmap will have the stat category as the key and the ranking value as the value
-                //Keys : offenseRadarValue. offenseRank, defenseRadarValue, defenseRank, AssistsRadarValue, AssistsRank,
-                //      ReboundsRadarValue, ReboundsRank, ThreesRadarValue, ThreesRank, FreeThrowRadarValue, FreeThrowRank
-                // Use values to bind to RadarChart
-                // Use values to bind to Ranking textViews
+                //calls ViewModel method to obtain team ranking data for each category.
+                HashMap<String, Object> teamRankingAndRadarMap = mViewModel.getTeamStatRanking(teamStatsObject);
 
-                //Toast.makeText(getActivity(),"Team 2 changed", Toast.LENGTH_LONG).show();
-
-
+                //Sets text colors for different teams
                 int textColor = getResources().getColor(teamStatsObject.getColor());
+                //Handles two cases where we dont want the primary color being the text color
                 if (textColor == (Integer)getResources().getColor(R.color.colorPelicansPrimary)){
                     textColor = getResources().getColor(R.color.colorPelicansText);
                 }
                 if(textColor == (Integer)getResources().getColor(R.color.colorJazzPrimary)){
                     textColor = getResources().getColor(R.color.colorJazzText);
                 }
-                
-                //Bind available raw values to views and change fields to team colors
-                team2OffenseValue.setText(String.valueOf(teamStatsObject.getPpg()));
+
                 team2OffenseValue.setTextColor(textColor);
-
                 team2OffenseRank.setTextColor(textColor);
-
-                team2DefenseValue.setText(String.valueOf(teamStatsObject.getOppg()));
                 team2DefenseValue.setTextColor(textColor);
-
                 team2DefenseRank.setTextColor(textColor);
-
-                team2AssistsValue.setText(String.valueOf(teamStatsObject.getApg()));
                 team2AssistsValue.setTextColor(textColor);
-
                 team2AssistsRank.setTextColor(textColor);
-
-                team2ReboundsValue.setText(String.valueOf(teamStatsObject.getRpg()));
+                team2AssistsValue.setTextColor(textColor);
                 team2ReboundsValue.setTextColor(textColor);
-
                 team2ReboundsRank.setTextColor(textColor);
-
-                team2ThreePointValue.setText(String.valueOf(teamStatsObject.getTpm()));
                 team2ThreePointValue.setTextColor(textColor);
-
                 team2ThreePointRank.setTextColor(textColor);
+                team2FreeThrowValue.setTextColor(textColor);
+                team2FreeThrowRank.setTextColor(textColor);
+                team2TeamName.setTextColor(textColor);
+
+                team2OffenseRank.setText((String)teamRankingAndRadarMap.get("offenseRank"));
+                team2DefenseRank.setText((String)teamRankingAndRadarMap.get("defenseRank"));
+                team2ReboundsRank.setText((String)teamRankingAndRadarMap.get("reboundsRank"));
+                team2AssistsRank.setText((String)teamRankingAndRadarMap.get("assistsRank"));
+                team2ThreePointRank.setText((String)teamRankingAndRadarMap.get("threesRank"));
+                team2FreeThrowRank.setText((String)teamRankingAndRadarMap.get("freeThrowRank"));
+
+                team2OffenseValue.setText(String.valueOf(teamStatsObject.getPpg()));
+                team2DefenseValue.setText(String.valueOf(teamStatsObject.getOppg()));
+                team2AssistsValue.setText(String.valueOf(teamStatsObject.getApg()));
+                team2ReboundsValue.setText(String.valueOf(teamStatsObject.getRpg()));
+                team2ThreePointValue.setText(String.valueOf(teamStatsObject.getTpm()));
 
                 DecimalFormat decimalFormat = new DecimalFormat("#.#");
+                double freethrowRadarValue = (30 * (teamStatsObject.getFtp())/100);
                 String freethrowpercentage =  decimalFormat.format(teamStatsObject.getFtp());
-
                 team2FreeThrowValue.setText(freethrowpercentage);
-                team2FreeThrowValue.setTextColor(textColor);
 
-                team2FreeThrowRank.setTextColor(textColor);
 
                 String theTeamName = String.valueOf(teamStatsObject.getFullName());
                 team2TeamName.setText(theTeamName.toUpperCase());
-                team2TeamName.setTextColor(textColor);
+
+                entry2.clear();
+
+                entry2.add(new Entry((float)(double)teamRankingAndRadarMap.get("reboundsRadarVal"),0));
+                entry2.add(new Entry((float)(double)teamRankingAndRadarMap.get("offenseRadarVal"),1));
+                entry2.add(new Entry((float)(double)teamRankingAndRadarMap.get("defenseRadarVal"),2));
+                entry2.add(new Entry((float)(double)teamRankingAndRadarMap.get("assistsRadarVal"),3));
+                entry2.add(new Entry((float)freethrowRadarValue,4));
+                entry2.add(new Entry((float)(double)teamRankingAndRadarMap.get("threesRadarVal"),5));
+
+                dataset2.setColor(getResources().getColor(teamStatsObject.getColor()));
+                dataset2.setFillColor(getResources().getColor(teamStatsObject.getColor()));
+
+                radarChart.notifyDataSetChanged();
+                radarChart.invalidate();
             }
         };
 
@@ -421,32 +425,98 @@ public class TeamStatsFragment extends Fragment {
         //Set team slot's stats as the teamStatsObject so it will trigger an UI change
         team1Adapter.SetOnItemClickListener(new Team1RecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItem1Click(View view, int position, String teamAbbrv, int color) {
-                //Retrieves data entry for specific team
-                HashMap<String, Object> teamHashMap = NBATeamDataSingleton.getInstance().getTeamDataMap().get(teamAbbrv);
+            public void onItem1Click(View view, int position, String teamAbbrv, int color, boolean currentItemSelected) {
 
-                //Creates teamStatsObject using the data for the specific team
-                TeamStatsObject teamStats1Object = new TeamStatsObject((Double)teamHashMap.get("offense"), (Double)teamHashMap.get("defense"),
-                        (Double)teamHashMap.get("rebounds"), (Double)teamHashMap.get("assists"), (Double)teamHashMap.get("tpm"),
-                        (Double)teamHashMap.get("ftp"), color, (String)teamHashMap.get("wins"),
-                        (String)teamHashMap.get("losses"), (String)teamHashMap.get("teamName"), teamAbbrv);
-                mViewModel.getTeam1Stats().setValue(teamStats1Object);
+                if(currentItemSelected == true){
+                    team1OffenseRank.setText(getString(R.string.empty_string));
+                    team1DefenseRank.setText(getString(R.string.empty_string));
+                    team1AssistsRank.setText(getString(R.string.empty_string));
+                    team1ReboundsRank.setText(getString(R.string.empty_string));
+                    team1ThreePointRank.setText(getString(R.string.empty_string));
+                    team1FreeThrowRank.setText(getString(R.string.empty_string));
+                    team1TeamName.setText(getString(R.string.team1));
+                    team1TeamName.setTextColor(getResources().getColor(R.color.white));
+
+                    team1OffenseValue.setText(getString(R.string.empty_string));
+                    team1DefenseValue.setText(getString(R.string.empty_string));
+                    team1AssistsValue.setText(getString(R.string.empty_string));
+                    team1ReboundsValue.setText(getString(R.string.empty_string));
+                    team1ThreePointValue.setText(getString(R.string.empty_string));
+                    team1FreeThrowValue.setText(getString(R.string.empty_string));
+
+                    entry1.clear();
+
+                    entry1.add(new Entry(0,0));
+                    entry1.add(new Entry(0,1));
+                    entry1.add(new Entry(0,2));
+                    entry1.add(new Entry(0,3));
+                    entry1.add(new Entry(0,4));
+                    entry1.add(new Entry(0,5));
+
+                    radarChart.notifyDataSetChanged();
+                    radarChart.invalidate();
+
+                }
+                else{
+                    //Retrieves data entry for specific team
+                    HashMap<String, Object> teamHashMap = NBATeamDataSingleton.getInstance().getTeamDataMap().get(teamAbbrv);
+
+                    //Creates teamStatsObject using the data for the specific team
+                    TeamStatsObject teamStats1Object = new TeamStatsObject((Double)teamHashMap.get("offense"), (Double)teamHashMap.get("defense"),
+                            (Double)teamHashMap.get("rebounds"), (Double)teamHashMap.get("assists"), (Double)teamHashMap.get("tpm"),
+                            (Double)teamHashMap.get("ftp"), color, (String)teamHashMap.get("wins"),
+                            (String)teamHashMap.get("losses"), (String)teamHashMap.get("teamName"), teamAbbrv);
+                    mViewModel.getTeam1Stats().setValue(teamStats1Object);
+                }
             }
         });
 
 
         team2Adapter.SetOnItemClickListener(new Team2RecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItem2Click(View view, int position, String teamAbbrv, int color) {
-                //Retrieves data entry for specific team
-                HashMap<String, Object> teamHashMap = NBATeamDataSingleton.getInstance().getTeamDataMap().get(teamAbbrv);
+            public void onItem2Click(View view, int position, String teamAbbrv, int color, boolean currentItemSelected) {
 
-                //Creates teamStatsObject using the data for the specific team
-                TeamStatsObject teamStats2Object = new TeamStatsObject((Double)teamHashMap.get("offense"), (Double)teamHashMap.get("defense"),
-                        (Double)teamHashMap.get("rebounds"), (Double)teamHashMap.get("assists"), (Double)teamHashMap.get("tpm"),
-                        (Double)teamHashMap.get("ftp"), color, (String)teamHashMap.get("wins"),
-                        (String)teamHashMap.get("losses"), (String)teamHashMap.get("teamName"), teamAbbrv);
-                mViewModel.getTeam2Stats().setValue(teamStats2Object);
+                if(currentItemSelected == true){
+                    team2OffenseRank.setText(getString(R.string.empty_string));
+                    team2DefenseRank.setText(getString(R.string.empty_string));
+                    team2AssistsRank.setText(getString(R.string.empty_string));
+                    team2ReboundsRank.setText(getString(R.string.empty_string));
+                    team2ThreePointRank.setText(getString(R.string.empty_string));
+                    team2FreeThrowRank.setText(getString(R.string.empty_string));
+                    team2TeamName.setText(getString(R.string.team2));
+                    team2TeamName.setTextColor(getResources().getColor(R.color.white));
+
+                    team2OffenseValue.setText(getString(R.string.empty_string));
+                    team2DefenseValue.setText(getString(R.string.empty_string));
+                    team2AssistsValue.setText(getString(R.string.empty_string));
+                    team2ReboundsValue.setText(getString(R.string.empty_string));
+                    team2ThreePointValue.setText(getString(R.string.empty_string));
+                    team2FreeThrowValue.setText(getString(R.string.empty_string));
+
+                    entry2.clear();
+
+                    entry2.add(new Entry(0,0));
+                    entry2.add(new Entry(0,1));
+                    entry2.add(new Entry(0,2));
+                    entry2.add(new Entry(0,3));
+                    entry2.add(new Entry(0,4));
+                    entry2.add(new Entry(0,5));
+
+                    radarChart.notifyDataSetChanged();
+                    radarChart.invalidate();
+
+                }
+                else{
+                    //Retrieves data entry for specific team
+                    HashMap<String, Object> teamHashMap = NBATeamDataSingleton.getInstance().getTeamDataMap().get(teamAbbrv);
+
+                    //Creates teamStatsObject using the data for the specific team
+                    TeamStatsObject teamStats2Object = new TeamStatsObject((Double)teamHashMap.get("offense"), (Double)teamHashMap.get("defense"),
+                            (Double)teamHashMap.get("rebounds"), (Double)teamHashMap.get("assists"), (Double)teamHashMap.get("tpm"),
+                            (Double)teamHashMap.get("ftp"), color, (String)teamHashMap.get("wins"),
+                            (String)teamHashMap.get("losses"), (String)teamHashMap.get("teamName"), teamAbbrv);
+                    mViewModel.getTeam2Stats().setValue(teamStats2Object);
+                }
             }
         });
 

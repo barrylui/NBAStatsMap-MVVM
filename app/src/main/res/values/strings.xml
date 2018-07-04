@@ -15,6 +15,7 @@
     <string name="slot2">SLOT 2</string>
     <string name="backToTeam">BACK TO TEAM SELECTION</string>
     <string name="dataDidNotLoad">DATA DID NOT LOAD.</string>
+    <string name="empty_string">""</string>
     <string name="dataDidNotLoadMsg">APPLICATION CLOSING.\n \nMAKE SURE YOU HAVE A VALID INTERNET CONNECTION AND TRY AGAIN</string>
     <string name="dataDidNotLoadDialogButtonString">OK </string>
     <!-- TODO: Remove or change this placeholder text -->

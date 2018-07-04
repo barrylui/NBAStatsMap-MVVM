@@ -9,11 +9,7 @@ import java.util.HashMap;
 public class NBATeamDataSingleton {
     private HashMap<String, HashMap<String, Object>> teamDataMap =
             new HashMap<String, HashMap<String, Object>>();
-    private double[] rankOffense = new double[30];
-    private double[] rankDefense = new double[30];
-    private double[] rankRebound = new double[30];
-    private double[] rankAssists = new double[30];
-    private double[] rank3PTMade = new double[30];
+
 
     private static NBATeamDataSingleton instance = null;
     private NBATeamDataSingleton(){}
@@ -30,25 +26,6 @@ public class NBATeamDataSingleton {
         return teamDataMap;
     }
 
-    public double[] getRankOffense() {
-        return rankOffense;
-    }
-
-    public double[] getRankDefense() {
-        return rankDefense;
-    }
-
-    public double[] getRankRebound() {
-        return rankRebound;
-    }
-
-    public double[] getRankAssists() {
-        return rankAssists;
-    }
-
-    public double[] getRank3PTMade() {
-        return rank3PTMade;
-    }
 
     /*
     public void put(String teamName, HashMap theMap){
