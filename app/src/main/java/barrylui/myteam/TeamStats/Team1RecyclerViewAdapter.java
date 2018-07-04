@@ -41,10 +41,7 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
         final int logoimage = (Integer)mDataset.get(position).get("image");
         viewHolder.teamPicture.setImageResource(logoimage);
         viewHolder.teamPicture.setAlpha(.3f);
-
-
-        final Team1ViewHolder currentViewHolder = viewHolder;
-        viewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
+        //viewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
     }
 
     public interface OnItemClickListener{
@@ -98,8 +95,6 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
                             mItemClickListener.onItem1Click(v, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), false);
                         }
                     }
-
-
                 }
             });
 

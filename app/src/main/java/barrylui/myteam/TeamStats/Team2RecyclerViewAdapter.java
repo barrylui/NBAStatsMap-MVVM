@@ -42,7 +42,7 @@ public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2Recycler
         final Team2ViewHolder currentViewHolder = viewHolder;
         viewHolder.teamPicture.setImageResource(logoimage);
         viewHolder.teamPicture.setAlpha(.3f);
-        viewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
+        //viewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
     }
 
     public interface OnItemClickListener{
@@ -94,7 +94,6 @@ public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2Recycler
                         }}
                 }
             });
-
         }
     }
 }

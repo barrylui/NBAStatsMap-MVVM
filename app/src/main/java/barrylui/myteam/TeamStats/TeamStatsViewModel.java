@@ -53,11 +53,10 @@ public class TeamStatsViewModel extends ViewModel {
         return team2Stats;
     }
 
-    //Call viewModel method here
-    //Method must iterate through TeamData HashMap and store each stat in an array.
     //Method will take a teamStatsObject as a parameter
+    //Method must iterate through TeamData HashMap and store each stat in an array.
     //Method will perform linear search through arrays to determine the team's ranking for each stat
-    //Return a hashmap of doubles
+    //Return a hashmap of Objects containing stats
     //Hashmap will have the stat category as the key and the ranking value as the value
     //Keys : offenseRadarValue. offenseRank, defenseRadarValue, defenseRank, AssistsRadarValue, AssistsRank,
     //      ReboundsRadarValue, ReboundsRank, ThreesRadarValue, ThreesRank, FreeThrowRadarValue, FreeThrowRank
@@ -110,6 +109,7 @@ public class TeamStatsViewModel extends ViewModel {
             threesCompareVal = Double.compare(rank3PTMade[j], theTeamStatsObject.getTpm());
             ftpercentCompareVal = Double.compare(rankFTP[j], theTeamStatsObject.getFtp());
 
+            //Bind ranking and radar stat value to be passed
             if (offenseCompareVal == 0){
                 offenseRadarValue = j;
                 if(30-offenseRadarValue == 1){
@@ -134,6 +134,7 @@ public class TeamStatsViewModel extends ViewModel {
                 } else {
                     defenseRank = Integer.toString((int)defenseRadarValue) + "th";
                 }
+                defenseRadarValue = 30 - defenseRadarValue;
             }
 
             if(reboundsCompareVal == 0){
@@ -190,6 +191,7 @@ public class TeamStatsViewModel extends ViewModel {
 
         }
 
+        //put data in hashmap to be passed
         statRankingsMap.put("offenseRadarVal", offenseRadarValue);
         statRankingsMap.put("offenseRank", offenseRank);
         statRankingsMap.put("defenseRadarVal", defenseRadarValue);
@@ -202,6 +204,7 @@ public class TeamStatsViewModel extends ViewModel {
         statRankingsMap.put("threesRank", threesRank);
         statRankingsMap.put("freeThrowRank", freeThrowRank);
 
+        //pass data
         return statRankingsMap;
     }
 }

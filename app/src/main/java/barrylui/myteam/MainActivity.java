@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements SplashLoadingFrag
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_team_stats:
+                    
                     fragment = new TeamStatsFragment();
                     loadFragment(fragment);
                     return true;
