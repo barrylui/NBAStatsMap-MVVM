@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements SplashLoadingFrag
     public void fetchdataAndLaunch(){
         navigation.setVisibility(View.VISIBLE);
         loadFragment(teanStatsFragment);
-        getWindow().clearFlags(FLAG_FULLSCREEN);
+        //getWindow().clearFlags(FLAG_FULLSCREEN);
     }
 
     //If JSON data could not be fetched close the application

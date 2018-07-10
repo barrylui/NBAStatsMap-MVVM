@@ -22,7 +22,7 @@ public class SplashLoadingFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static int DISPLAY_TIME = 5000; //Time to display splash screen, 5000 = 5 seconds
+    private static int DISPLAY_TIME = 5500; //Time to display splash screen, 5000 = 5 seconds
 
     // TODO: Rename and change types of parameters
     private String mParam1;

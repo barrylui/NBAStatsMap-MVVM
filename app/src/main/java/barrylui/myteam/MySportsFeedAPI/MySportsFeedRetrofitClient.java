@@ -101,7 +101,9 @@ public class MySportsFeedRetrofitClient {
                         for(int j=0; j<15;j++){
                             HashMap<String, Object> statsMap = new HashMap<String, Object>();
 
-                            String teamName = response.body().getConferenceteamstandings().getConference().get(i).getTeamentry().get(j).getTeam().getName();
+
+                            String teamCity = response.body().getConferenceteamstandings().getConference().get(i).getTeamentry().get(j).getTeam().getCity();
+                            String teamName = teamCity + "\n" + response.body().getConferenceteamstandings().getConference().get(i).getTeamentry().get(j).getTeam().getName();
                             String teamAbbrv = response.body().getConferenceteamstandings().getConference().get(i).getTeamentry().get(j).getTeam().getAbbreviation();
                             String numberOfWins = response.body().getConferenceteamstandings().getConference().get(i).getTeamentry().get(j).getStats().getWins().getText();
                             String numberOfLosses = response.body().getConferenceteamstandings().getConference().get(i).getTeamentry().get(j).getStats().getLosses().getText();
@@ -132,6 +134,7 @@ public class MySportsFeedRetrofitClient {
                             statsMap.put("losses", numberOfLosses);
                             statsMap.put("Abbrv",teamAbbrv);
                             statsMap.put("teamName", teamName);
+                            statsMap.put("teamCity", teamCity);
 
 
                             //team abbr is key
