@@ -9,6 +9,8 @@
     <string name="assisstsdisplay">ASSISTS (APG)</string>
     <string name="defensedisplay">DEFENSE (Opp PPG)</string>
     <string name="offensedisplay">OFFENSE (PPG)</string>
+    <string name="stealsDisplay">STEALS (SPG)</string>
+    <string name="blocksDisplay">BLOCKS (BPG)</string>
     <string name="team1">TEAM 1</string>
     <string name="team2">TEAM 2</string>
     <string name="slot1">PICK A TEAM TO VIEW PLAYERS</string>
@@ -16,6 +18,8 @@
     <string name="backToTeam">BACK TO TEAM SELECTION</string>
     <string name="dataDidNotLoad">DATA DID NOT LOAD.</string>
     <string name="empty_string">""</string>
+    <string name="player1">PLAYER 1</string>
+    <string name="player2">PLAYER 2</string>
     <string name="dataDidNotLoadMsg">APPLICATION CLOSING.\n \nMAKE SURE YOU HAVE A VALID INTERNET CONNECTION AND TRY AGAIN</string>
     <string name="dataDidNotLoadDialogButtonString">OK </string>
     <!-- TODO: Remove or change this placeholder text -->
