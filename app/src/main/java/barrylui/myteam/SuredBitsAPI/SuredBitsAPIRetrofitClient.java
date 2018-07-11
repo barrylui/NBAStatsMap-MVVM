@@ -1,15 +1,12 @@
-package barrylui.myteam.SuredBitsAPI.SuredBitsPlayerModel;
+package barrylui.myteam.SuredBitsAPI;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import barrylui.myteam.Data.NBATeamAssetsData;
 import barrylui.myteam.Data.NBATeamRosterSingleton;
-import barrylui.myteam.SuredBitsAPI.SuredBitsAPIService;
+import barrylui.myteam.SuredBitsAPI.SuredBitsPlayerModel.PlayerInfoModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -19,9 +19,12 @@ import com.github.mikephil.charting.data.RadarData;
 import com.github.mikephil.charting.data.RadarDataSet;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import barrylui.myteam.Data.NBATeamRosterSingleton;
 import barrylui.myteam.R;
 import barrylui.myteam.Data.NBATeamAssetsData;
+import barrylui.myteam.SuredBitsAPI.SuredBitsPlayerModel.PlayerInfoModel;
 
 
 public class PlayerStatsFragment extends Fragment {
@@ -30,16 +33,16 @@ public class PlayerStatsFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private RecyclerView slot1Team1;
-    private RecyclerView slot2Team2;
-    private RecyclerView slot1Player1;
-    private RecyclerView slot2Player2;
+    private RecyclerView Team1TeamSelectRecyclerView;
+    private RecyclerView Team2TeamSelectRecyclerView;
+    private RecyclerView Team1RosterRecyclerView;
+    private RecyclerView Team2RosterReyclerView;
 
     private TextView slot1TextView;
     private TextView slot2TextView;
 
-    private Button slot1Button;
-    private Button slot2Button;
+    private Button backToTeamSelectionButton1;
+    private Button backToTeamSelectionButton2;
 
     private ArrayList<Entry> playerentry1 = new ArrayList<>();
     private ArrayList<Entry> playerentry2 = new ArrayList<>();
@@ -50,10 +53,12 @@ public class PlayerStatsFragment extends Fragment {
     LinearLayoutManager team1LayoutManager;
     LinearLayoutManager team2LayoutManager;
     LinearLayoutManager playerOnTeam1LayoutManager;
-    LinearLayoutManager playOnTeam2LayoutManager;
+    LinearLayoutManager playerOnTeam2LayoutManager;
 
     private Team1SelectRecycleViewAdapter team1selectAdapter = null;
     private Team2SelectRecycleViewAdapter team2selectAdapter = null;
+    private Player1SelectRecyclerViewAdapter player1SelectAdapter = null;
+    private Player2SelectRecyclerViewAdapter player2SelectAdapter = null;
 
 
     // TODO: Rename and change types of parameters
@@ -99,85 +104,103 @@ public class PlayerStatsFragment extends Fragment {
 
         playerRadarChart = (RadarChart)view.findViewById(R.id.player_radar_chart);
 
-        slot1Team1 = (RecyclerView)view.findViewById(R.id.team1_select_recycleview);
-        slot2Team2 = (RecyclerView)view.findViewById(R.id.team2_select_recycleview);
+        Team1TeamSelectRecyclerView = (RecyclerView)view.findViewById(R.id.team1_select_recycleview);
+        Team2TeamSelectRecyclerView = (RecyclerView)view.findViewById(R.id.team2_select_recycleview);
 
-        slot1Player1 = (RecyclerView)view.findViewById(R.id.team1_player_select_recyclerview);
-        slot2Player2 = (RecyclerView)view.findViewById(R.id.team2_player_select_recyclerview);
+        Team1RosterRecyclerView = (RecyclerView)view.findViewById(R.id.team1_player_select_recyclerview);
+        Team2RosterReyclerView = (RecyclerView)view.findViewById(R.id.team2_player_select_recyclerview);
 
         slot1TextView = (TextView)view.findViewById(R.id.slot1_header);
         slot2TextView = (TextView)view.findViewById(R.id.slot2_header);
 
-        slot1Button = (Button)view.findViewById(R.id.slot1BacktoTeamButton);
-        slot2Button = (Button)view.findViewById(R.id.slot2BacktoTeamButton);
+        backToTeamSelectionButton1 = (Button)view.findViewById(R.id.slot1BacktoTeamButton);
+        backToTeamSelectionButton2 = (Button)view.findViewById(R.id.slot2BacktoTeamButton);
 
-        slot1Button.setOnClickListener(new View.OnClickListener() {
+        backToTeamSelectionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                slot1Button.setVisibility(View.INVISIBLE);
-                slot1Player1.setVisibility(View.INVISIBLE);
-                slot1Team1.setVisibility(View.VISIBLE);
+                backToTeamSelectionButton1.setVisibility(View.INVISIBLE);
+                Team1RosterRecyclerView.setVisibility(View.INVISIBLE);
+                Team1TeamSelectRecyclerView.setVisibility(View.VISIBLE);
                 slot1TextView.setText(getString(R.string.slot1));
             }
         });
 
 
-        slot2Button.setOnClickListener(new View.OnClickListener() {
+        backToTeamSelectionButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                slot2Button.setVisibility(View.INVISIBLE);
-                slot2Player2.setVisibility(View.INVISIBLE);
-                slot2Team2.setVisibility(View.VISIBLE);
+                backToTeamSelectionButton2.setVisibility(View.INVISIBLE);
+                Team2RosterReyclerView.setVisibility(View.INVISIBLE);
+                Team2TeamSelectRecyclerView.setVisibility(View.VISIBLE);
                 slot2TextView.setText(getString(R.string.slot1));
             }
         });
 
-        slot1Player1.setVisibility(View.INVISIBLE);
-        slot2Player2.setVisibility(View.INVISIBLE);
+        Team1RosterRecyclerView.setVisibility(View.INVISIBLE);
+        Team2RosterReyclerView.setVisibility(View.INVISIBLE);
 
-        slot1Button.setVisibility(View.INVISIBLE);
-        slot2Button.setVisibility(View.INVISIBLE);
+        backToTeamSelectionButton1.setVisibility(View.INVISIBLE);
+        backToTeamSelectionButton2.setVisibility(View.INVISIBLE);
 
-        slot1Team1.setHasFixedSize(false);
-        slot2Team2.setHasFixedSize(false);
-        slot1Player1.setHasFixedSize(false);
-        slot2Player2.setHasFixedSize(false);
+        Team1TeamSelectRecyclerView.setHasFixedSize(false);
+        Team2TeamSelectRecyclerView.setHasFixedSize(false);
+        Team1RosterRecyclerView.setHasFixedSize(false);
+        Team2RosterReyclerView.setHasFixedSize(false);
 
         //Setup Adapters here
 
         team1LayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         team2LayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        slot1Team1.setLayoutManager(team1LayoutManager);
-        slot2Team2.setLayoutManager(team2LayoutManager);
+        playerOnTeam1LayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        playerOnTeam2LayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+
+        Team1TeamSelectRecyclerView.setLayoutManager(team1LayoutManager);
+        Team2TeamSelectRecyclerView.setLayoutManager(team2LayoutManager);
+        Team1RosterRecyclerView.setLayoutManager(playerOnTeam1LayoutManager);
+        Team2RosterReyclerView.setLayoutManager(playerOnTeam2LayoutManager);
 
         team1selectAdapter = new Team1SelectRecycleViewAdapter(getActivity(), nbaTeamData.getTeamsList());
         team2selectAdapter = new Team2SelectRecycleViewAdapter(getActivity(), nbaTeamData.getTeamsList());
 
-        slot1Team1.setAdapter(team1selectAdapter);
-        slot2Team2.setAdapter(team2selectAdapter);
+        Team1TeamSelectRecyclerView.setAdapter(team1selectAdapter);
+        Team2TeamSelectRecyclerView.setAdapter(team2selectAdapter);
 
         team1selectAdapter.notifyDataSetChanged();
         team2selectAdapter.notifyDataSetChanged();
 
+        //Behavior for when user taps the initial recyclerview to select a team to view the team's roster
+        //Hide the team menu, display the roster menu, change menu header, make back button visible to go back to team selected
         team1selectAdapter.SetOnTeam1SelectClickListener(new Team1SelectRecycleViewAdapter.OnTeam1SelectClickListener() {
             @Override
             public void onTeam1SelectClick(View view, int position, String teamAbbrv, int color) {
-                slot1Team1.setVisibility(View.INVISIBLE);
-                slot1Player1.setVisibility(View.VISIBLE);
+                Team1RosterRecyclerView.setVisibility(View.VISIBLE);
+                List<PlayerInfoModel> teamRoster = NBATeamRosterSingleton.getInstance().getTeamRosterHashMap().get(teamAbbrv);
+                player1SelectAdapter = new Player1SelectRecyclerViewAdapter(getActivity(), teamRoster);
+                Team1RosterRecyclerView.setAdapter(player1SelectAdapter);
+                player1SelectAdapter.notifyDataSetChanged();
+
+                Team1TeamSelectRecyclerView.setVisibility(View.INVISIBLE);
                 slot1TextView.setText(getString(R.string.slot2));
-                slot1Player1.setVisibility(View.VISIBLE);
-                slot1Button.setVisibility(View.VISIBLE);
+                backToTeamSelectionButton1.setVisibility(View.VISIBLE);
+
             }
         });
 
+        //Behavior for when user taps the initial recyclerview to select a team to view the team's roster
+        //Hide the team menu, display the roster menu, change menu header, make back button visible to go back to team selected
         team2selectAdapter.SetOnTeam2SelectClickListener(new Team2SelectRecycleViewAdapter.OnTeam2SelectClickListener() {
             @Override
             public void onTeam2SelectClick(View view, int position, String teamAbbrv, int color) {
-                slot2Team2.setVisibility(View.INVISIBLE);
-                slot2Player2.setVisibility(View.VISIBLE);
+                Team2RosterReyclerView.setVisibility(View.VISIBLE);
+                List<PlayerInfoModel> teamRoster = NBATeamRosterSingleton.getInstance().getTeamRosterHashMap().get(teamAbbrv);
+                player2SelectAdapter = new Player2SelectRecyclerViewAdapter(getActivity(), teamRoster);
+                Team2RosterReyclerView.setAdapter(player2SelectAdapter);
+                player2SelectAdapter.notifyDataSetChanged();
+
+                Team2TeamSelectRecyclerView.setVisibility(View.INVISIBLE);
                 slot2TextView.setText(getString(R.string.slot2));
-                slot2Player2.setVisibility(View.VISIBLE);
-                slot2Button.setVisibility(View.VISIBLE);
+                backToTeamSelectionButton2.setVisibility(View.VISIBLE);
             }
         });
 

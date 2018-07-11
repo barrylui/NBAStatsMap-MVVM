@@ -16,7 +16,7 @@ import barrylui.myteam.Data.NBATeamRosterSingleton;
 import barrylui.myteam.MySportsFeedAPI.MySportsFeedRetrofitClient;
 import barrylui.myteam.Data.NBAPlayerDataSingleton;
 import barrylui.myteam.Data.NBATeamDataSingleton;
-import barrylui.myteam.SuredBitsAPI.SuredBitsPlayerModel.SuredBitsAPIRetrofitClient;
+import barrylui.myteam.SuredBitsAPI.SuredBitsAPIRetrofitClient;
 
 public class SplashLoadingFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
