@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +12,11 @@ import android.view.WindowManager;
 
 import java.util.HashMap;
 
+import barrylui.myteam.Data.NBATeamRosterSingleton;
 import barrylui.myteam.MySportsFeedAPI.MySportsFeedRetrofitClient;
-import barrylui.myteam.TeamDataNBA.NBAPlayerDataSingleton;
-import barrylui.myteam.TeamDataNBA.NBATeamDataSingleton;
-import barrylui.myteam.TeamStats.TeamStatsFragment;
+import barrylui.myteam.Data.NBAPlayerDataSingleton;
+import barrylui.myteam.Data.NBATeamDataSingleton;
+import barrylui.myteam.SuredBitsAPI.SuredBitsPlayerModel.SuredBitsAPIRetrofitClient;
 
 public class SplashLoadingFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -70,7 +70,12 @@ public class SplashLoadingFragment extends Fragment {
         //Fetches JSON data for stats of all 30 NBA Teams
         //Stores relevant data in Singleton Hashmap class
         MySportsFeedRetrofitClient.getTeamData();
+
+
         MySportsFeedRetrofitClient.getPlayerData();
+
+
+        SuredBitsAPIRetrofitClient.loadTeamRosters();
         //Displays splash screen for 5 seconds while the the JSON files are fetched
 
 
@@ -83,7 +88,7 @@ public class SplashLoadingFragment extends Fragment {
                 //Checks to see if data loaded
                 //If data is not loaded, show an alert dialog that shuts down the application once "OK" is pressed
                 final CallOnFinish bListener = (CallOnFinish) getContext();
-                if(NBATeamDataSingleton.getInstance().getTeamDataMap().isEmpty() || NBAPlayerDataSingleton.getInstance().getPlayerDataMap().isEmpty()){
+                if(NBATeamDataSingleton.getInstance().getTeamDataMap().isEmpty() || NBAPlayerDataSingleton.getInstance().getPlayerDataMap().isEmpty()|| NBATeamRosterSingleton.getInstance().getTeamRosterHashMap().isEmpty()){
                     AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
                     alertDialog.setTitle(getString(R.string.dataDidNotLoad));
                     alertDialog.setMessage(getString(R.string.dataDidNotLoadMsg));

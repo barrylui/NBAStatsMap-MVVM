@@ -7,8 +7,8 @@ import java.util.HashMap;
 import barrylui.myteam.InternetUtilities.BasicAuthInterceptor;
 import barrylui.myteam.MySportsFeedAPI.MySportsFeedPlayerStatsModel.PlayerStats;
 import barrylui.myteam.MySportsFeedAPI.MySportsFeedTeamStats.TeamData;
-import barrylui.myteam.TeamDataNBA.NBAPlayerDataSingleton;
-import barrylui.myteam.TeamDataNBA.NBATeamDataSingleton;
+import barrylui.myteam.Data.NBAPlayerDataSingleton;
+import barrylui.myteam.Data.NBATeamDataSingleton;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,35 +49,37 @@ public class MySportsFeedRetrofitClient {
             @Override
             //Load data into HashMap if connection is successfully made
             public void onResponse(Call<PlayerStats> call, Response<PlayerStats> response) {
-                Log.d(TAG, "onResponse: 200");
-                int numberOfNBAPlayers = response.body().getCumulativeplayerstats().getPlayerstatsentry().size();
-                for(int i =0; i<numberOfNBAPlayers; i++){
-                    HashMap<String, Double> playerStatsMap = new HashMap<>();
-                    Double ppg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getPtsPerGame().getText());
-                    Double apg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getAstPerGame().getText());
-                    Double rpg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getRebPerGame().getText());
-                    Double spg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getStlPerGame().getText());
-                    Double bpg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getBlkPerGame().getText());
-                    Double ftm = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getFtMade().getText());
-                    Double fta = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getFtAtt().getText());
+                if(response.code()==200){
+                    Log.d(TAG, "onResponse: 200");
+                    int numberOfNBAPlayers = response.body().getCumulativeplayerstats().getPlayerstatsentry().size();
+                    for(int i =0; i<numberOfNBAPlayers; i++){
+                        HashMap<String, Double> playerStatsMap = new HashMap<>();
+                        Double ppg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getPtsPerGame().getText());
+                        Double apg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getAstPerGame().getText());
+                        Double rpg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getRebPerGame().getText());
+                        Double spg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getStlPerGame().getText());
+                        Double bpg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getBlkPerGame().getText());
+                        Double ftm = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getFtMade().getText());
+                        Double fta = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getFtAtt().getText());
 
-                    //Calculate free throw percent
-                    Double ftpercent = (ftm/fta)*100;
+                        //Calculate free throw percent
+                        Double ftpercent = (ftm/fta)*100;
 
-                    playerStatsMap.put("Scoring", ppg);
-                    playerStatsMap.put("Assists", apg);
-                    playerStatsMap.put("Rebounding",rpg);
-                    playerStatsMap.put("Steals", spg);
-                    playerStatsMap.put("Blocks", bpg );
-                    playerStatsMap.put("FTPercent",ftpercent);
+                        playerStatsMap.put("Scoring", ppg);
+                        playerStatsMap.put("Assists", apg);
+                        playerStatsMap.put("Rebounding",rpg);
+                        playerStatsMap.put("Steals", spg);
+                        playerStatsMap.put("Blocks", bpg );
+                        playerStatsMap.put("FTPercent",ftpercent);
 
 
-                    //Get PlayerName
-                    String playerName = response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getPlayer().getFirstName() + " " +
-                            response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getPlayer().getLastName();
+                        //Get PlayerName
+                        String playerName = response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getPlayer().getFirstName() + " " +
+                                response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getPlayer().getLastName();
 
-                    //Load player name as key and HashMap with stats into singleton hashMap class for players
-                    NBAPlayerDataSingleton.getInstance().getPlayerDataMap().put(playerName, playerStatsMap);
+                        //Load player name as key and HashMap with stats into singleton hashMap class for players
+                        NBAPlayerDataSingleton.getInstance().getPlayerDataMap().put(playerName, playerStatsMap);
+                    }
                 }
             }
 

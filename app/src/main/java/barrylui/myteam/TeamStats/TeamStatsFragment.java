@@ -23,9 +23,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import barrylui.myteam.TeamDataNBA.NBATeamAssetsData;
+import barrylui.myteam.Data.NBATeamAssetsData;
 import barrylui.myteam.R;
-import barrylui.myteam.TeamDataNBA.NBATeamDataSingleton;
+import barrylui.myteam.Data.NBATeamDataSingleton;
 
 
 public class TeamStatsFragment extends Fragment {

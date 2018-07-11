@@ -1,4 +1,4 @@
-package barrylui.myteam.TeamDataNBA;
+package barrylui.myteam.Data;
 
 
 import java.util.ArrayList;

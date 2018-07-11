@@ -5,12 +5,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.ViewUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.RadarChart;
@@ -23,7 +21,7 @@ import com.github.mikephil.charting.data.RadarDataSet;
 import java.util.ArrayList;
 
 import barrylui.myteam.R;
-import barrylui.myteam.TeamDataNBA.NBATeamAssetsData;
+import barrylui.myteam.Data.NBATeamAssetsData;
 
 
 public class PlayerStatsFragment extends Fragment {

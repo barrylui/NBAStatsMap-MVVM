@@ -157,7 +157,7 @@
         android:textSize="11sp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="60dp"
-        android:textColor="@color/blue"
+        android:textColor="@color/colorMagicPrimary"
         android:id="@+id/team2_offenseValue_textView"
         android:text="0"
         android:layout_alignBottom="@id/points_display_textView" />
@@ -167,7 +167,7 @@
         android:textSize="11sp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="60dp"
-        android:textColor="@color/blue"
+        android:textColor="@color/colorMagicPrimary"
         android:id="@+id/team2_Assists_Value_textView"
         android:text="0"
         android:layout_alignBottom="@id/assists_display_textView" />
@@ -177,7 +177,7 @@
         android:textSize="11sp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="60dp"
-        android:textColor="@color/blue"
+        android:textColor="@color/colorMagicPrimary"
         android:id="@+id/team2_rebounds_Value_textView"
         android:text="0"
         android:layout_alignBottom="@id/rebounds_display_textView" />
@@ -187,7 +187,7 @@
         android:textSize="11sp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="60dp"
-        android:textColor="@color/blue"
+        android:textColor="@color/colorMagicPrimary"
         android:id="@+id/team2_blocks_Value_textView"
         android:text="0"
         android:layout_alignBottom="@id/blocks_display_textView" />
@@ -199,7 +199,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="60dp"
         android:text="0"
-        android:textColor="@color/blue"
+        android:textColor="@color/colorMagicPrimary"
         android:id="@+id/team2_steals_Value_textView"
         android:layout_alignBottom="@id/steals_display_textView" />
     <TextView
@@ -208,7 +208,7 @@
         android:textSize="11sp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="60dp"
-        android:textColor="@color/blue"
+        android:textColor="@color/colorMagicPrimary"
         android:text="0"
         android:id="@+id/team2_ft_Value_textView"
         android:layout_alignBottom="@id/ft_display_textview" />
@@ -289,15 +289,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:textColor="@color/blue"
+        android:textColor="@color/colorMagicPrimary"
         android:text="@string/player2"
         android:layout_above="@id/team2_offenseValue_textView"
         android:gravity="center"
         android:layout_marginRight="30dp"
         android:layout_alignParentRight="true"/>
-
-
-
-
-
 </RelativeLayout>

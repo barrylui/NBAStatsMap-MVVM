@@ -5,11 +5,9 @@ import android.arch.lifecycle.ViewModel;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
-import barrylui.myteam.TeamDataNBA.NBAPlayerDataSingleton;
-import barrylui.myteam.TeamDataNBA.NBATeamDataSingleton;
+import barrylui.myteam.Data.NBATeamDataSingleton;
 
 public class TeamStatsViewModel extends ViewModel {
     public MutableLiveData<TeamStatsObject> team1Stats;

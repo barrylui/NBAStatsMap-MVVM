@@ -7,7 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-public interface SuredBitsAPI {
+public interface SuredBitsAPIService {
 
     String BASE_URL = "http://api.suredbits.com/nba/v0/";
 
