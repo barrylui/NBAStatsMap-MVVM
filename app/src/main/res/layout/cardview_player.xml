@@ -31,7 +31,7 @@
             android:layout_marginTop="6dp"
             android:id="@+id/playerLastName"
             android:layout_below="@id/playerImage"
-            android:textColor="@color/white"
+            android:textColor="@color/blacklightcomp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="10sp"
