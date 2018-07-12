@@ -18,11 +18,11 @@ import barrylui.myteam.R;
 
 public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1RecyclerViewAdapter.Team1ViewHolder>{
     private static List<Map<String, ?>> mDataset;
-    private static Stack<ImageView> ImageviewStack = new Stack<>();
     private Context mContext;
     private static final String TAG = "RosterView";
     private TeamStatsViewModel mModel;
     private static OnItemClickListener mItemClickListener;
+    static int selected_position = -1;
 
     public Team1RecyclerViewAdapter(Context context, List<Map<String, ?>> list){
         mDataset = list;
@@ -40,7 +40,7 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
     public void onBindViewHolder(final Team1ViewHolder viewHolder, final int position) {
         final int logoimage = (Integer)mDataset.get(position).get("image");
         viewHolder.teamPicture.setImageResource(logoimage);
-        viewHolder.teamPicture.setAlpha(.3f);
+        viewHolder.teamPicture.setAlpha(selected_position == position? 1f : .3f);
         //viewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
     }
 
@@ -57,7 +57,7 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
         return mDataset.size();
     }
 
-    public static class Team1ViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/
+    public class Team1ViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/
     {
         ImageView teamPicture;
         LinearLayout linearLayout;
@@ -68,10 +68,23 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
             teamPicture = (ImageView) v.findViewById(R.id.teamLogo);
             linearLayout = (LinearLayout) v.findViewById(R.id.cardview_team);
 
+
             v.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-
+                    if(selected_position == getAdapterPosition()){
+                        selected_position = -1;
+                        notifyItemChanged(selected_position);
+                        notifyDataSetChanged();
+                        mItemClickListener.onItem1Click(v, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), true);
+                    }
+                    else{
+                        selected_position = getAdapterPosition();
+                        notifyItemChanged(selected_position);
+                        notifyDataSetChanged();
+                        mItemClickListener.onItem1Click(v, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), false);
+                    }
+                    /*
                     //Checks if previous team selected is the same team being selected. if so remove the data
                     if (ImageviewStack.isEmpty()==false && teamPicture==ImageviewStack.peek()){
                         ImageView previousImageView = ImageviewStack.pop();
@@ -95,6 +108,7 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
                             mItemClickListener.onItem1Click(v, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), false);
                         }
                     }
+                    */
                 }
             });
 

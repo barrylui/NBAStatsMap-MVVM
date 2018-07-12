@@ -19,10 +19,10 @@ import barrylui.myteam.R;
 public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2RecyclerViewAdapter.Team2ViewHolder>{
     private static List<Map<String, ?>> mDataset;
     private Context mContext;
-    private Stack<Team2ViewHolder> viewHolderStack = new Stack<>();
     private static final String TAG = "RosterView";
     private static Stack<ImageView> imageStack = new Stack<ImageView>();
     private static OnItemClickListener mItemClickListener;
+    static int selected_position = -1;
 
     public Team2RecyclerViewAdapter(Context context, List<Map<String, ?>> list){
         mDataset = list;
@@ -41,7 +41,7 @@ public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2Recycler
         final int logoimage = (Integer)mDataset.get(position).get("image");
         final Team2ViewHolder currentViewHolder = viewHolder;
         viewHolder.teamPicture.setImageResource(logoimage);
-        viewHolder.teamPicture.setAlpha(.3f);
+        viewHolder.teamPicture.setAlpha(selected_position == position? 1f : .3f);
         //viewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
     }
 
@@ -59,7 +59,7 @@ public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2Recycler
     }
 
 
-    public static class Team2ViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/
+    public class Team2ViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/
     {
         ImageView teamPicture;
         LinearLayout linearLayout;
@@ -73,25 +73,18 @@ public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2Recycler
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (imageStack.isEmpty()==false && teamPicture==imageStack.peek()){
-                        ImageView previousImageView = imageStack.pop();
-                        teamPicture.setAlpha(.3f);
-                        mItemClickListener.onItem2Click(v, getLayoutPosition(), (String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), true);
+                    if(selected_position == getAdapterPosition()){
+                        selected_position = -1;
+                        notifyItemChanged(selected_position);
+                        notifyDataSetChanged();
+                        mItemClickListener.onItem2Click(v, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), true);
                     }
                     else{
-                        //Deselects last team from the UI by changing its alpha
-                        if(imageStack.isEmpty()==false){
-                            ImageView previousImageView = imageStack.pop();
-                            previousImageView.setAlpha(.3f);
-                        }
-                        //moves cursor to item selected by highlighting team logo
-                        //push view holder into stack so it can be referenced later and deselected from the UI
-                        imageStack.push(teamPicture);
-                        teamPicture.setAlpha(1f);
-                        //Get Team data in Fragment
-                        if(mItemClickListener!=null){
-                            mItemClickListener.onItem2Click(view, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), false);
-                        }}
+                        selected_position = getAdapterPosition();
+                        notifyItemChanged(selected_position);
+                        notifyDataSetChanged();
+                        mItemClickListener.onItem2Click(v, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), false);
+                    }
                 }
             });
         }

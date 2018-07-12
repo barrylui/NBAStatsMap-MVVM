@@ -31,6 +31,7 @@ public class Player1SelectRecyclerViewAdapter extends RecyclerView.Adapter<Playe
     private Context mContext;
     private static final String TAG = "RosterView";
     private static OnPlayer1SelectClickListener mItemClickListener;
+    static int selected_position = -1;
 
     public Player1SelectRecyclerViewAdapter(Context context, List<PlayerInfoModel> list){
         mDataset = list;
@@ -52,11 +53,12 @@ public class Player1SelectRecyclerViewAdapter extends RecyclerView.Adapter<Playe
         final String theLastName = mDataset.get(position).getLastName();
 
         viewHolder.playerName.setText(theLastName);
+        viewHolder.playerName.setTextColor(selected_position == position? Color.parseColor("#ffffff"):Color.parseColor("#7F7E7E"));
 
         final Context playerPhotoContext = viewHolder.playerHeadshot.getContext();
         Picasso.with(playerPhotoContext).load(url).placeholder(R.drawable.default_nba_headshot_v2).error(R.drawable.default_nba_headshot_v2).into(viewHolder.playerHeadshot);
 
-        viewHolder.playerHeadshot.setAlpha(.3f);
+        viewHolder.playerHeadshot.setAlpha(selected_position == position? 1f : .3f);
 
         //final int logoimage = (Integer)mDataset.get(position).get("image");
         //viewHolder.teamPicture.setImageResource(logoimage);
@@ -77,7 +79,7 @@ public class Player1SelectRecyclerViewAdapter extends RecyclerView.Adapter<Playe
         return mDataset.size();
     }
 
-    public static class Player1SelectViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/
+    public class Player1SelectViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/
     {
         ImageView playerHeadshot;
         LinearLayout linearLayout;
@@ -94,9 +96,22 @@ public class Player1SelectRecyclerViewAdapter extends RecyclerView.Adapter<Playe
             v.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
+
+                    if(selected_position == getAdapterPosition()){
+                        selected_position = -1;
+                        notifyItemChanged(selected_position);
+                        notifyDataSetChanged();
+                        //Interface call here to load data into textfields and chart
+                    }
+                    else{
+                        selected_position = getAdapterPosition();
+                        notifyItemChanged(selected_position);
+                        notifyDataSetChanged();
+                    }
                     //Call interface method here so PlayerStats Fragment can hide recyclerview and then display the button and new recyclerview with players
                     //mItemClickListener.onPlayer1SelectClick(v, getLayoutPosition(), (String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"));
-                    //Checks if previous player is the same player being selected. if so remove the data
+
+                    /*//Checks if previous player is the same player being selected. if so remove the data
                     if(imageViewStack.isEmpty()==false && playerHeadshot == imageViewStack.peek()&&textViewStack.isEmpty()==false && playerName == textViewStack.peek()){
                         ImageView previousImageView = imageViewStack.pop();
                         TextView previousTextView = textViewStack.pop();
@@ -121,6 +136,7 @@ public class Player1SelectRecyclerViewAdapter extends RecyclerView.Adapter<Playe
                     }
                     //Call interface method here so PlayerStats Fragment can hide recyclerview and then display the button and new recyclerview with players
                     //mItemClickListener.onPlayer1SelectClick(v, getLayoutPosition(), (String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"));
+                    */
                 }
             });
 
