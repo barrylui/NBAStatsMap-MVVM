@@ -35,21 +35,22 @@ public class SuredBitsAPIRetrofitClient {
 
         //For each NBA Team load the suredBitsData and store it in the NBATeamRosterSingleton
         for(int i=0; i<nbaTeamData.getSize(); i++){
-            String name = (String)nbaTeamData.getTeamsList().get(i).get("name");
-            if(name.equals("OKL")){
-                name = "OKC";
+            final String name = (String)nbaTeamData.getTeamsList().get(i).get("name");
+            String teamName = name;
+            if(teamName.equals("OKL")){
+                teamName = "OKC";
             }
             if(name.equals("BRO")){
-                name = "BKN";
+                teamName = "BKN";
             }
-            final String teamName = name;
+
             Call<List<PlayerInfoModel>> rosterCall = suredBitsAPIService.getTeamInfo(teamName);
             rosterCall.enqueue(new Callback<List<PlayerInfoModel>>() {
                 @Override
                 public void onResponse(Call<List<PlayerInfoModel>> call, Response<List<PlayerInfoModel>> response) {
                     if (response.code()==200){
                         List<PlayerInfoModel> playersOnTeamRoster = response.body();
-                        NBATeamRosterSingleton.getInstance().getTeamRosterHashMap().put(teamName, playersOnTeamRoster);
+                        NBATeamRosterSingleton.getInstance().getTeamRosterHashMap().put(name, playersOnTeamRoster);
                     }
                 }
 
