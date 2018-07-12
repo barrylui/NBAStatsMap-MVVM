@@ -96,12 +96,10 @@ public class PlayerStatsFragment extends Fragment {
         playerentry1.clear();
         playerentry2.clear();
 
-
-
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_player_stats, container, false);
 
 
+        //Bind views
         playerRadarChart = (RadarChart)view.findViewById(R.id.player_radar_chart);
 
         Team1TeamSelectRecyclerView = (RecyclerView)view.findViewById(R.id.team1_select_recycleview);
@@ -116,30 +114,12 @@ public class PlayerStatsFragment extends Fragment {
         backToTeamSelectionButton1 = (Button)view.findViewById(R.id.slot1BacktoTeamButton);
         backToTeamSelectionButton2 = (Button)view.findViewById(R.id.slot2BacktoTeamButton);
 
-        backToTeamSelectionButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                backToTeamSelectionButton1.setVisibility(View.INVISIBLE);
-                Team1RosterRecyclerView.setVisibility(View.INVISIBLE);
-                Team1TeamSelectRecyclerView.setVisibility(View.VISIBLE);
-                slot1TextView.setText(getString(R.string.slot1));
-            }
-        });
 
-
-        backToTeamSelectionButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                backToTeamSelectionButton2.setVisibility(View.INVISIBLE);
-                Team2RosterReyclerView.setVisibility(View.INVISIBLE);
-                Team2TeamSelectRecyclerView.setVisibility(View.VISIBLE);
-                slot2TextView.setText(getString(R.string.slot1));
-            }
-        });
-
+        //Hide Team Roster / Player Select recyclerView
         Team1RosterRecyclerView.setVisibility(View.INVISIBLE);
         Team2RosterReyclerView.setVisibility(View.INVISIBLE);
 
+        //Hide back to team selection button
         backToTeamSelectionButton1.setVisibility(View.INVISIBLE);
         backToTeamSelectionButton2.setVisibility(View.INVISIBLE);
 
@@ -149,7 +129,6 @@ public class PlayerStatsFragment extends Fragment {
         Team2RosterReyclerView.setHasFixedSize(false);
 
         //Setup Adapters here
-
         team1LayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         team2LayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         playerOnTeam1LayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -169,19 +148,59 @@ public class PlayerStatsFragment extends Fragment {
         team1selectAdapter.notifyDataSetChanged();
         team2selectAdapter.notifyDataSetChanged();
 
+
+
+        //Back to team selection button
+        backToTeamSelectionButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Hide button
+                backToTeamSelectionButton1.setVisibility(View.INVISIBLE);
+                //Hide team roster / player select recycler view
+                Team1RosterRecyclerView.setVisibility(View.INVISIBLE);
+                //Show team select recyclerview
+                Team1TeamSelectRecyclerView.setVisibility(View.VISIBLE);
+                //Change header
+                slot1TextView.setText(getString(R.string.slot1));
+
+            }
+        });
+
+        //Back to team selection button
+        backToTeamSelectionButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Hide button
+                backToTeamSelectionButton2.setVisibility(View.INVISIBLE);
+                //Hide team roster / player select recycler view
+                Team2RosterReyclerView.setVisibility(View.INVISIBLE);
+                //Show team select recyclerview
+                Team2TeamSelectRecyclerView.setVisibility(View.VISIBLE);
+                //Change header
+                slot2TextView.setText(getString(R.string.slot1));
+            }
+        });
+
         //Behavior for when user taps the initial recyclerview to select a team to view the team's roster
         //Hide the team menu, display the roster menu, change menu header, make back button visible to go back to team selected
         team1selectAdapter.SetOnTeam1SelectClickListener(new Team1SelectRecycleViewAdapter.OnTeam1SelectClickListener() {
             @Override
             public void onTeam1SelectClick(View view, int position, String teamAbbrv, int color) {
+                //Show team roster / player select recycler view
                 Team1RosterRecyclerView.setVisibility(View.VISIBLE);
+                //Get team's list of players
                 List<PlayerInfoModel> teamRoster = NBATeamRosterSingleton.getInstance().getTeamRosterHashMap().get(teamAbbrv);
+                //Bind list to team roster / player select recyclerview
                 player1SelectAdapter = new Player1SelectRecyclerViewAdapter(getActivity(), teamRoster);
+                //Setup Adapter
                 Team1RosterRecyclerView.setAdapter(player1SelectAdapter);
                 player1SelectAdapter.notifyDataSetChanged();
 
+                //Hide team select recyclerview
                 Team1TeamSelectRecyclerView.setVisibility(View.INVISIBLE);
+                //Change header
                 slot1TextView.setText(getString(R.string.slot2));
+                //Show back to team selection button
                 backToTeamSelectionButton1.setVisibility(View.VISIBLE);
 
             }
@@ -192,14 +211,20 @@ public class PlayerStatsFragment extends Fragment {
         team2selectAdapter.SetOnTeam2SelectClickListener(new Team2SelectRecycleViewAdapter.OnTeam2SelectClickListener() {
             @Override
             public void onTeam2SelectClick(View view, int position, String teamAbbrv, int color) {
+                //Show team roster / player select recycler view
                 Team2RosterReyclerView.setVisibility(View.VISIBLE);
+                //Get team's list of players
                 List<PlayerInfoModel> teamRoster = NBATeamRosterSingleton.getInstance().getTeamRosterHashMap().get(teamAbbrv);
+                //Bind list to team roster / player select recyclerview
                 player2SelectAdapter = new Player2SelectRecyclerViewAdapter(getActivity(), teamRoster);
+                //Setup Adapter
                 Team2RosterReyclerView.setAdapter(player2SelectAdapter);
                 player2SelectAdapter.notifyDataSetChanged();
-
+                //Hide team select recyclerview
                 Team2TeamSelectRecyclerView.setVisibility(View.INVISIBLE);
+                //Change header
                 slot2TextView.setText(getString(R.string.slot2));
+                //Show back to team selection button
                 backToTeamSelectionButton2.setVisibility(View.VISIBLE);
             }
         });

@@ -27,7 +27,6 @@ public class Team2SelectRecycleViewAdapter extends RecyclerView.Adapter<Team2Sel
         mContext = context;
     }
 
-
     @Override
     public Team2SelectViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View teamView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_team, parent, false);
@@ -38,8 +37,6 @@ public class Team2SelectRecycleViewAdapter extends RecyclerView.Adapter<Team2Sel
     public void onBindViewHolder(final Team2SelectViewHolder viewHolder, final int position) {
         final int logoimage = (Integer)mDataset.get(position).get("image");
         viewHolder.teamPicture.setImageResource(logoimage);
-        //viewHolder.teamPicture.setAlpha(.3f);
-        //viewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
     }
 
     public interface OnTeam2SelectClickListener {

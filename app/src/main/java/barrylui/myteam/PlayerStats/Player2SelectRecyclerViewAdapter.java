@@ -28,13 +28,17 @@ public class Player2SelectRecyclerViewAdapter extends RecyclerView.Adapter<Playe
     private Context mContext;
     private static final String TAG = "RosterView";
     private static OnPlayer2SelectClickListener mItemClickListener;
+    public int selected_position = -1;
 
     public Player2SelectRecyclerViewAdapter(Context context, List<PlayerInfoModel> list){
         mDataset = list;
         mContext = context;
+        resetPosition();
     }
-
-
+    //resets player selected
+    public void resetPosition (){
+        selected_position = -2;
+    }
     @Override
     public Player2SelectViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View teamView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_player, parent, false);
@@ -44,23 +48,23 @@ public class Player2SelectRecyclerViewAdapter extends RecyclerView.Adapter<Playe
     @Override
     public void onBindViewHolder(final Player2SelectViewHolder viewHolder, final int position) {
         String playerId = String.valueOf(mDataset.get(position).getPlayerId());
+        //url for headshot for player
         final String url = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/" + playerId + ".png";
 
-
+        //last name to display
         final String theLastName = mDataset.get(position).getLastName();
-
+        //display the last name
         viewHolder.playerName.setText(theLastName);
 
         final Context playerPhotoContext = viewHolder.playerHeadshot.getContext();
+        //Load player headshot, provide default no picture placeholder image
         Picasso.with(playerPhotoContext).load(url).placeholder(R.drawable.default_nba_headshot_v2).error(R.drawable.default_nba_headshot_v2).into(viewHolder.playerHeadshot);
-
-        viewHolder.playerHeadshot.setAlpha(.3f);
-        //final int logoimage = (Integer)mDataset.get(position).get("image");
-        //viewHolder.teamPicture.setImageResource(logoimage);
-        //viewHolder.teamPicture.setAlpha(.3f);
-        //viewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
+        //Player image is not transparent if selected, player image is transparent if not selected
+        viewHolder.playerHeadshot.setAlpha(selected_position == position? 1f : .3f);
+        //Change textcolor of name depending on if it is selected or not
+        viewHolder.playerName.setTextColor(selected_position == position? Color.parseColor("#ffffff"):Color.parseColor("#7F7E7E"));
     }
-
+    //Interface method to communicate with main activity
     public interface OnPlayer2SelectClickListener {
         public void onPlayer1SelectClick(View view, int position, String teamAbbrv, int color);
     }
@@ -74,7 +78,7 @@ public class Player2SelectRecyclerViewAdapter extends RecyclerView.Adapter<Playe
         return mDataset.size();
     }
 
-    public static class Player2SelectViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/
+    public class Player2SelectViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/
     {
         ImageView playerHeadshot;
         LinearLayout linearLayout;
@@ -91,32 +95,19 @@ public class Player2SelectRecyclerViewAdapter extends RecyclerView.Adapter<Playe
             v.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-                    //Checks if previous player is the same player being selected. if so remove the data
-                    if(imageViewStack.isEmpty()==false && playerHeadshot == imageViewStack.peek()&&textViewStack.isEmpty()==false && playerName == textViewStack.peek()){
-                        ImageView previousImageView = imageViewStack.pop();
-                        TextView previousTextView = textViewStack.pop();
-                        playerHeadshot.setAlpha(.3f);
-                        playerName.setTextColor(Color.parseColor("#7F7E7E"));
-                        //Interface call here
+                    //If current player selected is the same the player user selected, deselect it
+                    if(selected_position == getAdapterPosition()){
+                        selected_position = -1;
+                        notifyItemChanged(selected_position);
+                        notifyDataSetChanged();
+                        //Interface call here to load data into textfields and chart
                     }
+                    //select the player the usr selected
                     else{
-                        //If another player was selected, deselect it
-                        if(imageViewStack.isEmpty()==false && textViewStack.isEmpty()==false){
-                            ImageView previousImageView = imageViewStack.pop();
-                            TextView previousTextView = textViewStack.pop();
-                            previousImageView.setAlpha(.3f);
-                            previousTextView.setTextColor(Color.parseColor("#7F7E7E"));
-                        }
-
-                        //Change ui so it looks like the player is selected by changing the transparency and text color
-                        textViewStack.push(playerName);
-                        imageViewStack.push(playerHeadshot);
-                        playerHeadshot.setAlpha(1f);
-                        playerName.setTextColor(Color.WHITE);
-                        //call interface method here
+                        selected_position = getAdapterPosition();
+                        notifyItemChanged(selected_position);
+                        notifyDataSetChanged();
                     }
-                    //Call interface method here so PlayerStats Fragment can hide recyclerview and then display the button and new recyclerview with players
-                    //mItemClickListener.onPlayer1SelectClick(v, getLayoutPosition(), (String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"));
                 }
             });
 

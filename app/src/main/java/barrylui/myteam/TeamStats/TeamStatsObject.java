@@ -2,6 +2,8 @@ package barrylui.myteam.TeamStats;
 
 import barrylui.myteam.R;
 
+//This class is an Object class that contains stats for teams
+//This class is used to encapsulate stats for teams to be used in the Team Stats module
 public class TeamStatsObject {
     public Double ppg = 0.0;
     public Double oppg = 0.0;

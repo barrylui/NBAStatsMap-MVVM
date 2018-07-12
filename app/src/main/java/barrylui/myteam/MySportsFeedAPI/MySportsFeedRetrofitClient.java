@@ -42,18 +42,21 @@ public class MySportsFeedRetrofitClient {
     //Retrieves JSON data for stats of all NBA Players
     //Stores relevant data in Singleton HashMap class for players
     public static void getPlayerData(){
-        //Network call
+        //Network call to get data
         MySportsFeedAPIService mySportsFeedAPIService = MySportsFeedRetrofitClient.getInstance().create(MySportsFeedAPIService.class);
         Call<PlayerStats> call = mySportsFeedAPIService.getAllPlayerStats();
         call.enqueue(new Callback<PlayerStats>() {
             @Override
             //Load data into HashMap if connection is successfully made
             public void onResponse(Call<PlayerStats> call, Response<PlayerStats> response) {
+                //If connection is successful
                 if(response.code()==200){
                     Log.d(TAG, "onResponse: 200");
                     int numberOfNBAPlayers = response.body().getCumulativeplayerstats().getPlayerstatsentry().size();
                     for(int i =0; i<numberOfNBAPlayers; i++){
+                        //Create hashmap to store player stats data
                         HashMap<String, Double> playerStatsMap = new HashMap<>();
+                        //Store stats on ppg, apg, rpg, spg, bpg, ftp
                         Double ppg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getPtsPerGame().getText());
                         Double apg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getAstPerGame().getText());
                         Double rpg = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getRebPerGame().getText());
@@ -97,13 +100,14 @@ public class MySportsFeedRetrofitClient {
         call.enqueue(new Callback<TeamData>() {
             @Override
             public void onResponse(Call<TeamData> call, Response<TeamData> response) {
+                //If connection is successful
                 if(response.code()==200){
                     Log.d(TAG, "onResponse: 200");
                     for(int i =0; i<2;i++){
                         for(int j=0; j<15;j++){
+                            //Create hashmap to store team stats data
                             HashMap<String, Object> statsMap = new HashMap<String, Object>();
-
-
+                            //Store team stats in hashmap
                             String teamCity = response.body().getConferenceteamstandings().getConference().get(i).getTeamentry().get(j).getTeam().getCity();
                             String teamName = teamCity + "\n" + response.body().getConferenceteamstandings().getConference().get(i).getTeamentry().get(j).getTeam().getName();
                             String teamAbbrv = response.body().getConferenceteamstandings().getConference().get(i).getTeamentry().get(j).getTeam().getAbbreviation();

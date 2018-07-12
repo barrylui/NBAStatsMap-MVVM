@@ -27,6 +27,13 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
     public Team1RecyclerViewAdapter(Context context, List<Map<String, ?>> list){
         mDataset = list;
         mContext = context;
+        resetPosition();
+    }
+
+
+    //Resets item selected in recycler view
+    public void resetPosition (){
+        selected_position = -2;
     }
 
 
@@ -40,8 +47,8 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
     public void onBindViewHolder(final Team1ViewHolder viewHolder, final int position) {
         final int logoimage = (Integer)mDataset.get(position).get("image");
         viewHolder.teamPicture.setImageResource(logoimage);
+        // If selected make it non transparent, if not selected make it transparent
         viewHolder.teamPicture.setAlpha(selected_position == position? 1f : .3f);
-        //viewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
     }
 
     public interface OnItemClickListener{
@@ -72,43 +79,21 @@ public class Team1RecyclerViewAdapter extends RecyclerView.Adapter<Team1Recycler
             v.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
+                    //If the currently selected team is chosen again by the user, deselect the team
                     if(selected_position == getAdapterPosition()){
                         selected_position = -1;
                         notifyItemChanged(selected_position);
                         notifyDataSetChanged();
                         mItemClickListener.onItem1Click(v, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), true);
                     }
+                    //Select the team
                     else{
                         selected_position = getAdapterPosition();
                         notifyItemChanged(selected_position);
                         notifyDataSetChanged();
                         mItemClickListener.onItem1Click(v, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), false);
                     }
-                    /*
-                    //Checks if previous team selected is the same team being selected. if so remove the data
-                    if (ImageviewStack.isEmpty()==false && teamPicture==ImageviewStack.peek()){
-                        ImageView previousImageView = ImageviewStack.pop();
-                        teamPicture.setAlpha(.3f);
-                        mItemClickListener.onItem1Click(v, getLayoutPosition(), (String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), true);
-                    }
-                    else{
-                        //Deselects last team from the UI by changing its alpha
-                        if(ImageviewStack.isEmpty()==false) {
-                            ImageView previousImageView = ImageviewStack.pop();
-                            previousImageView.setAlpha(.3f);
-                        }
 
-                        //moves cursor to item selected
-                        //Highlight team selected
-                        //push view holder into stack
-                        ImageviewStack.push(teamPicture);
-                        teamPicture.setAlpha(1f);
-                        //Get Team data in Fragment
-                        if(mItemClickListener !=null){
-                            mItemClickListener.onItem1Click(v, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), false);
-                        }
-                    }
-                    */
                 }
             });
 

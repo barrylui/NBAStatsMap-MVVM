@@ -86,15 +86,7 @@ public class TeamStatsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TeamStatsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static TeamStatsFragment newInstance(String param1, String param2) {
         TeamStatsFragment fragment = new TeamStatsFragment();
         Bundle args = new Bundle();
@@ -115,11 +107,11 @@ public class TeamStatsFragment extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //Clear chart data
         team1ChartValuesArray.clear();
         team2ChartValuesArray.clear();
 
@@ -165,11 +157,7 @@ public class TeamStatsFragment extends Fragment {
         team2ThreePointRank = (TextView) view.findViewById(R.id.threepointTeam2RankTextView);
         team2FreeThrowRank = (TextView) view.findViewById(R.id.freethrowTeam2RankTextView);
 
-
-
-
         //Set up Blank Radar Chart
-
 
         //Label axis on radar chart
         labels = new ArrayList<String>();
@@ -181,25 +169,19 @@ public class TeamStatsFragment extends Fragment {
         labels.add("3PT SCORING");
 
         //Setup blank data for blank chart to be displayed
-
-        if(team1ChartValuesArray.isEmpty()){
-            //Empty dataset
             team1ChartValuesArray.add(new Entry(0,0));
             team1ChartValuesArray.add(new Entry(0,1));
             team1ChartValuesArray.add(new Entry(0,2));
             team1ChartValuesArray.add(new Entry(0,3));
             team1ChartValuesArray.add(new Entry(0,4));
             team1ChartValuesArray.add(new Entry(0,5));
-        }
 
-        if(team2ChartValuesArray.isEmpty()){
             team2ChartValuesArray.add(new Entry(0,0));
             team2ChartValuesArray.add(new Entry(0,1));
             team2ChartValuesArray.add(new Entry(0,2));
             team2ChartValuesArray.add(new Entry(0,3));
             team2ChartValuesArray.add(new Entry(0,4));
             team2ChartValuesArray.add(new Entry(0,5));
-        }
 
         //Setup radarchart settings and bind radar chart
         final RadarDataSet dataset1 = new RadarDataSet(team1ChartValuesArray,"Team 1");
@@ -256,8 +238,8 @@ public class TeamStatsFragment extends Fragment {
                 //calls ViewModel method to obtain team ranking data for each category.
                 HashMap<String, Object> teamRankingAndRadarMap = mViewModel.getTeamStatRanking(teamStatsObject);
 
-                //Sets text colors for different teams
                 int textColor = getResources().getColor(teamStatsObject.getColor());
+
                 //Handles two cases where we dont want the primary color being the text color
                 if (textColor == (Integer)getResources().getColor(R.color.colorPelicansPrimary)){
                     textColor = getResources().getColor(R.color.colorPelicansText);
@@ -266,6 +248,7 @@ public class TeamStatsFragment extends Fragment {
                     textColor = getResources().getColor(R.color.colorJazzText);
                 }
 
+                //Sets text colors for different teams
                 team1OffenseValue.setTextColor(textColor);
                 team1OffenseRank.setTextColor(textColor);
                 team1DefenseValue.setTextColor(textColor);
@@ -281,6 +264,7 @@ public class TeamStatsFragment extends Fragment {
                 team1FreeThrowRank.setTextColor(textColor);
                 team1TeamName.setTextColor(textColor);
 
+                //Changes text fields to display team stats
                 team1OffenseRank.setText((String)teamRankingAndRadarMap.get("offenseRank"));
                 team1DefenseRank.setText((String)teamRankingAndRadarMap.get("defenseRank"));
                 team1ReboundsRank.setText((String)teamRankingAndRadarMap.get("reboundsRank"));
@@ -294,17 +278,20 @@ public class TeamStatsFragment extends Fragment {
                 team1ReboundsValue.setText(String.valueOf(teamStatsObject.getRpg()));
                 team1ThreePointValue.setText(String.valueOf(teamStatsObject.getTpm()));
 
+                //Prepare Decimal to be displayed as percentage value
                 DecimalFormat decimalFormat = new DecimalFormat("#.#");
                 double freethrowRadarValue = (30 * (teamStatsObject.getFtp())/100);
                 String freethrowpercentage =  decimalFormat.format(teamStatsObject.getFtp());
                 team1FreeThrowValue.setText(freethrowpercentage);
 
-
+                //Get team and bind to the text view
                 String theTeamName = String.valueOf(teamStatsObject.getFullName());
                 team1TeamName.setText(theTeamName.toUpperCase());
 
+                //Clear previous data in chart
                 team1ChartValuesArray.clear();
 
+                //Add team data to chart
                 team1ChartValuesArray.add(new Entry((float)(double)teamRankingAndRadarMap.get("reboundsRadarVal"),0));
                 team1ChartValuesArray.add(new Entry((float)(double)teamRankingAndRadarMap.get("offenseRadarVal"),1));
                 team1ChartValuesArray.add(new Entry((float)(double)teamRankingAndRadarMap.get("defenseRadarVal"),2));
@@ -312,10 +299,11 @@ public class TeamStatsFragment extends Fragment {
                 team1ChartValuesArray.add(new Entry((float)freethrowRadarValue,4));
                 team1ChartValuesArray.add(new Entry((float)(double)teamRankingAndRadarMap.get("threesRadarVal"),5));
 
+                //Change chart color
                 dataset1.setColor(getResources().getColor(teamStatsObject.getColor()));
                 dataset1.setFillColor(getResources().getColor(teamStatsObject.getColor()));
 
-
+                //Update the chart
                 radarChart.notifyDataSetChanged();
                 radarChart.invalidate();
             }
@@ -341,6 +329,7 @@ public class TeamStatsFragment extends Fragment {
                     textColor = getResources().getColor(R.color.colorJazzText);
                 }
 
+                //Sets text colors for different teams
                 team2OffenseValue.setTextColor(textColor);
                 team2OffenseRank.setTextColor(textColor);
                 team2DefenseValue.setTextColor(textColor);
@@ -356,6 +345,7 @@ public class TeamStatsFragment extends Fragment {
                 team2FreeThrowRank.setTextColor(textColor);
                 team2TeamName.setTextColor(textColor);
 
+                //Changes text fields to display team stats
                 team2OffenseRank.setText((String)teamRankingAndRadarMap.get("offenseRank"));
                 team2DefenseRank.setText((String)teamRankingAndRadarMap.get("defenseRank"));
                 team2ReboundsRank.setText((String)teamRankingAndRadarMap.get("reboundsRank"));
@@ -369,17 +359,21 @@ public class TeamStatsFragment extends Fragment {
                 team2ReboundsValue.setText(String.valueOf(teamStatsObject.getRpg()));
                 team2ThreePointValue.setText(String.valueOf(teamStatsObject.getTpm()));
 
+                //Prepare Decimal to be displayed as percentage value
                 DecimalFormat decimalFormat = new DecimalFormat("#.#");
                 double freethrowRadarValue = (30 * (teamStatsObject.getFtp())/100);
                 String freethrowpercentage =  decimalFormat.format(teamStatsObject.getFtp());
                 team2FreeThrowValue.setText(freethrowpercentage);
 
 
+                //Get team name and bind to text view
                 String theTeamName = String.valueOf(teamStatsObject.getFullName());
                 team2TeamName.setText(theTeamName.toUpperCase());
 
+                //Clear previous team data
                 team2ChartValuesArray.clear();
 
+                //Add team data to chart
                 team2ChartValuesArray.add(new Entry((float)(double)teamRankingAndRadarMap.get("reboundsRadarVal"),0));
                 team2ChartValuesArray.add(new Entry((float)(double)teamRankingAndRadarMap.get("offenseRadarVal"),1));
                 team2ChartValuesArray.add(new Entry((float)(double)teamRankingAndRadarMap.get("defenseRadarVal"),2));
@@ -387,9 +381,11 @@ public class TeamStatsFragment extends Fragment {
                 team2ChartValuesArray.add(new Entry((float)freethrowRadarValue,4));
                 team2ChartValuesArray.add(new Entry((float)(double)teamRankingAndRadarMap.get("threesRadarVal"),5));
 
+                //Change chart color to team color
                 dataset2.setColor(getResources().getColor(teamStatsObject.getColor()));
                 dataset2.setFillColor(getResources().getColor(teamStatsObject.getColor()));
 
+                //Update the chart
                 radarChart.notifyDataSetChanged();
                 radarChart.invalidate();
             }

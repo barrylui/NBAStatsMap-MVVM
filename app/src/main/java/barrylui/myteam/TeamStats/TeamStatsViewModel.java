@@ -108,6 +108,8 @@ public class TeamStatsViewModel extends ViewModel {
             ftpercentCompareVal = Double.compare(rankFTP[j], theTeamStatsObject.getFtp());
 
             //Bind ranking and radar stat value to be passed
+
+            //Find offense ranking and radar chart value
             if (offenseCompareVal == 0){
                 offenseRadarValue = j;
                 if(30-offenseRadarValue == 1){
@@ -121,6 +123,7 @@ public class TeamStatsViewModel extends ViewModel {
                 }
 
             }
+            //Find defense ranking and radar chart value
             if (defenseCompareVal == 0){
                 defenseRadarValue = j;
                 if(defenseRadarValue == 1){
@@ -135,6 +138,7 @@ public class TeamStatsViewModel extends ViewModel {
                 defenseRadarValue = 30 - defenseRadarValue;
             }
 
+            //Find rebound ranking and radar chart value
             if(reboundsCompareVal == 0){
                 reboundRadarValue = j;
                 if(30-reboundRadarValue == 1){
@@ -148,6 +152,7 @@ public class TeamStatsViewModel extends ViewModel {
                 }
             }
 
+            //Find assist ranking and radar chart value
             if(assistsCompareVal == 0){
                 assistRadarValue= j;
                 if(30-assistRadarValue == 1){
@@ -161,6 +166,7 @@ public class TeamStatsViewModel extends ViewModel {
                 }
             }
 
+            //Find three point made ranking and radar chart value
             if(threesCompareVal == 0 ){
                 threesRadarValue = j;
                 if(30-threesRadarValue == 1){
@@ -174,6 +180,7 @@ public class TeamStatsViewModel extends ViewModel {
                 }
             }
 
+            //Find free throw percent ranking and radar chart value
             if(ftpercentCompareVal == 0 ){
                 freeThrowRadarValue = j;
                 if(30-freeThrowRadarValue == 1){

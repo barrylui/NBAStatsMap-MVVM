@@ -37,6 +37,7 @@ public class SuredBitsAPIRetrofitClient {
         for(int i=0; i<nbaTeamData.getSize(); i++){
             final String name = (String)nbaTeamData.getTeamsList().get(i).get("name");
             String teamName = name;
+            //Handle the name difference so the suredbits api call can be made
             if(teamName.equals("OKL")){
                 teamName = "OKC";
             }
@@ -48,8 +49,11 @@ public class SuredBitsAPIRetrofitClient {
             rosterCall.enqueue(new Callback<List<PlayerInfoModel>>() {
                 @Override
                 public void onResponse(Call<List<PlayerInfoModel>> call, Response<List<PlayerInfoModel>> response) {
+                    //If connection is successful
                     if (response.code()==200){
+                        //get list of players on team
                         List<PlayerInfoModel> playersOnTeamRoster = response.body();
+                        //Store data in singleton team roster instance
                         NBATeamRosterSingleton.getInstance().getTeamRosterHashMap().put(name, playersOnTeamRoster);
                     }
                 }

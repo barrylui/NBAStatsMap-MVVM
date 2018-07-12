@@ -27,8 +27,14 @@ public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2Recycler
     public Team2RecyclerViewAdapter(Context context, List<Map<String, ?>> list){
         mDataset = list;
         mContext = context;
+        resetPosition();
     }
 
+    //Resets item selected in recycler view
+    public void resetPosition (){
+        selected_position = -2;
+        //return selected_position;
+    }
 
     @Override
     public Team2ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -41,8 +47,8 @@ public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2Recycler
         final int logoimage = (Integer)mDataset.get(position).get("image");
         final Team2ViewHolder currentViewHolder = viewHolder;
         viewHolder.teamPicture.setImageResource(logoimage);
+        // If selected make it non transparent, if not selected make it transparent
         viewHolder.teamPicture.setAlpha(selected_position == position? 1f : .3f);
-        //viewHolder.linearLayout.setBackgroundResource(R.color.blackgraycomp);
     }
 
     public interface OnItemClickListener{
@@ -73,6 +79,7 @@ public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2Recycler
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    //If the currently selected team is chosen again by the user, deselect the team
                     if(selected_position == getAdapterPosition()){
                         selected_position = -1;
                         notifyItemChanged(selected_position);
@@ -80,6 +87,7 @@ public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2Recycler
                         mItemClickListener.onItem2Click(v, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), true);
                     }
                     else{
+                        //Select the team
                         selected_position = getAdapterPosition();
                         notifyItemChanged(selected_position);
                         notifyDataSetChanged();
