@@ -66,7 +66,7 @@ public class Player2SelectRecyclerViewAdapter extends RecyclerView.Adapter<Playe
     }
     //Interface method to communicate with main activity
     public interface OnPlayer2SelectClickListener {
-        public void onPlayer1SelectClick(View view, int position, String teamAbbrv, int color);
+        public void onPlayer1SelectClick(View view, int position, String playerName, int color);
     }
 
     public void SetOnTeam1SelectClickListener(final OnPlayer2SelectClickListener theClickListener){

@@ -2,6 +2,9 @@ package barrylui.myteam.Data;
 
 import java.util.HashMap;
 
+//Singleton HashMap object that contains player stats
+//The first key is the name of the player and the value is another hasmap
+//The nested Hashmap's keys are the stats and the values are the stat values
 public class NBAPlayerDataSingleton {
     private HashMap<String, HashMap<String, ?>> playerDataMap =
             new HashMap<>();

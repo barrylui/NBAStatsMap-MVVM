@@ -5,17 +5,17 @@ import barrylui.myteam.R;
 //This class is an Object class that contains stats for teams
 //This class is used to encapsulate stats for teams to be used in the Team Stats module
 public class TeamStatsObject {
-    public Double ppg = 0.0;
-    public Double oppg = 0.0;
-    public Double rpg = 0.0;
-    public Double apg = 0.0;
-    public Double tpm = 0.0;
-    public Double ftp = 0.0;
-    public int color = R.color.colorThunderPrimary;
-    public String wins ="";
-    public String losses = "";
-    public String fullName ="";
-    public String teamAbbreviation="";
+    private Double ppg = 0.0;
+    private Double oppg = 0.0;
+    private Double rpg = 0.0;
+    private Double apg = 0.0;
+    private Double tpm = 0.0;
+    private Double ftp = 0.0;
+    private int color = R.color.colorThunderPrimary;
+    private String wins ="";
+    private String losses = "";
+    private String fullName ="";
+    private String teamAbbreviation="";
 
     public String getFullName() {
         return fullName;

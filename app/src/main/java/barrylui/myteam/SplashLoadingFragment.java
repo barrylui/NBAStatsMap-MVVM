@@ -72,7 +72,7 @@ public class SplashLoadingFragment extends Fragment {
         MySportsFeedRetrofitClient.getTeamData();
 
 
-        MySportsFeedRetrofitClient.getPlayerData();
+        MySportsFeedRetrofitClient.getPlayerStatsData();
 
 
         SuredBitsAPIRetrofitClient.loadTeamRosters();
@@ -87,7 +87,7 @@ public class SplashLoadingFragment extends Fragment {
                 //Runnable waits 5 secs to wait for application to load data
                 //Checks to see if data loaded
                 //If data is not loaded, show an alert dialog that shuts down the application once "OK" is pressed
-                final CallOnFinish bListener = (CallOnFinish) getContext();
+                final DataDidNotLoadRestartApp bListener = (DataDidNotLoadRestartApp) getContext();
                 if(NBATeamDataSingleton.getInstance().getTeamDataMap().isEmpty() || NBAPlayerDataSingleton.getInstance().getPlayerDataMap().isEmpty()|| NBATeamRosterSingleton.getInstance().getTeamRosterHashMap().isEmpty()){
                     AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
                     alertDialog.setTitle(getString(R.string.dataDidNotLoad));
@@ -95,7 +95,7 @@ public class SplashLoadingFragment extends Fragment {
                     alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.dataDidNotLoadDialogButtonString), new DialogInterface.OnClickListener(){
                         @Override
                         public void onClick(DialogInterface dialog, int which){
-                            bListener.callOnFinish();
+                            bListener.dataDidNotLoadRestartApp();
                         }
                     });
 
@@ -117,11 +117,8 @@ public class SplashLoadingFragment extends Fragment {
         public void fetchdataAndLaunch();
     }
 
-    public interface DataDidNotLoad{
-        public void dataDidNotLoad();
-    }
-
-    public interface CallOnFinish{
-        public void callOnFinish();
+    //Call to end this fragment
+    public interface DataDidNotLoadRestartApp {
+        public void dataDidNotLoadRestartApp();
     }
 }

@@ -1,6 +1,7 @@
 package barrylui.myteam.MySportsFeedAPI;
 
 
+import barrylui.myteam.MySportsFeedAPI.MySportsFeedPlayerInfoModel.PlayerInfo;
 import barrylui.myteam.MySportsFeedAPI.MySportsFeedPlayerStatsModel.PlayerStats;
 import barrylui.myteam.MySportsFeedAPI.MySportsFeedTeamStats.TeamData;
 import retrofit2.Call;
@@ -27,4 +28,7 @@ public interface MySportsFeedAPIService {
     @GET("cumulative_player_stats.json?playerstats=PTS/G,AST/G,REB/G,STL/G,BS/G,FTA,FTM")
     Call<PlayerStats> getAllPlayerStats();
 
+    @Headers("Content-type: application/json")
+    @GET("roster_players.json?")
+    Call<PlayerInfo> getPlayerInfo();
 }

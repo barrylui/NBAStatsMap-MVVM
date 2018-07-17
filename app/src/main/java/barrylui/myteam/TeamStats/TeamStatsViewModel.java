@@ -12,30 +12,7 @@ import barrylui.myteam.Data.NBATeamDataSingleton;
 public class TeamStatsViewModel extends ViewModel {
     public MutableLiveData<TeamStatsObject> team1Stats;
     public MutableLiveData<TeamStatsObject> team2Stats;
-    int offenseCompareVal;
-    int defenseCompareVal;
-    int reboundsCompareVal;
-    int assistsCompareVal;
-    int threesCompareVal;
-    int ftpercentCompareVal;
 
-    double offenseRadarValue;
-    String offenseRank;
-
-    double defenseRadarValue;
-    String defenseRank;
-
-    double reboundRadarValue;
-    String reboundsRank;
-
-    double assistRadarValue;
-    String assistsRank;
-
-    double threesRadarValue;
-    String threesRank;
-
-    double freeThrowRadarValue;
-    String freeThrowRank;
 
     public MutableLiveData<TeamStatsObject> getTeam1Stats() {
         if(team1Stats == null){
@@ -62,6 +39,30 @@ public class TeamStatsViewModel extends ViewModel {
     // Use values to bind to Ranking textViews
 
     public HashMap<String, Object> getTeamStatRanking (TeamStatsObject theTeamStatsObject){
+        int offenseCompareVal;
+        int defenseCompareVal;
+        int reboundsCompareVal;
+        int assistsCompareVal;
+        int threesCompareVal;
+        int ftpercentCompareVal;
+
+        double offenseRadarValue=0.0;
+        String offenseRank = "";
+
+        double defenseRadarValue=0.0;
+        String defenseRank = "";
+
+        double reboundRadarValue=0.0;
+        String reboundsRank="";
+
+        double assistRadarValue=0.0;
+        String assistsRank = "";
+
+        double threesRadarValue=0.0;
+        String threesRank = "";
+
+        double freeThrowRadarValue=0.0;
+        String freeThrowRank = "";
 
         //Object to be returned
         HashMap<String, Object> statRankingsMap = new HashMap<>();

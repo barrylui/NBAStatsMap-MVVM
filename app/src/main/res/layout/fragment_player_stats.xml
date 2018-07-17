@@ -149,7 +149,7 @@
         android:id="@+id/points_display_textView"
         android:layout_above="@id/assists_display_textView"
         android:textSize="12sp"
-        android:text="@string/offensedisplay"
+        android:text="@string/pointsdisplay"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:textColor="@color/white"/>

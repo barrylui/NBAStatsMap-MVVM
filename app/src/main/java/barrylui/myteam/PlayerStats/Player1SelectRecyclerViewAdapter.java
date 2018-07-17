@@ -74,7 +74,7 @@ public class Player1SelectRecyclerViewAdapter extends RecyclerView.Adapter<Playe
 
     //Interface method to communicate with main activity
     public interface OnPlayer1SelectClickListener {
-        public void onPlayer1SelectClick(View view, int position, String teamAbbrv, int color);
+        public void onPlayer1SelectClick(View view, int position, String playerName);
     }
 
     public void SetOnTeam1SelectClickListener(final OnPlayer1SelectClickListener theClickListener){
@@ -109,6 +109,7 @@ public class Player1SelectRecyclerViewAdapter extends RecyclerView.Adapter<Playe
                         notifyItemChanged(selected_position);
                         notifyDataSetChanged();
                         //Interface call here to load data into textfields and chart
+                        //mItemClickListener.onPlayer1SelectClick(v, getLayoutPosition(), mDataset.get(getLayoutPosition()).getFullName());
                     }
                     //select the player the usr selected
                     else{

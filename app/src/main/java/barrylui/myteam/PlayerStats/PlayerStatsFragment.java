@@ -26,24 +26,30 @@ import barrylui.myteam.R;
 import barrylui.myteam.Data.NBATeamAssetsData;
 import barrylui.myteam.SuredBitsAPI.SuredBitsPlayerModel.PlayerInfoModel;
 
-
+//Player Stats module
 public class PlayerStatsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    //Menus
+    //Team select
     private RecyclerView Team1TeamSelectRecyclerView;
     private RecyclerView Team2TeamSelectRecyclerView;
+    //Player select
     private RecyclerView Team1RosterRecyclerView;
     private RecyclerView Team2RosterReyclerView;
 
+    //Headers
     private TextView slot1TextView;
     private TextView slot2TextView;
 
+    //Back to team selection buttons to change ui states
     private Button backToTeamSelectionButton1;
     private Button backToTeamSelectionButton2;
 
+    //Radar chart
     private ArrayList<Entry> playerentry1 = new ArrayList<>();
     private ArrayList<Entry> playerentry2 = new ArrayList<>();
     private ArrayList<String> labelsArrayForRadarChart;

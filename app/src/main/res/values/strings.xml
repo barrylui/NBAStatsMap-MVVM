@@ -9,6 +9,7 @@
     <string name="assisstsdisplay">ASSISTS (APG)</string>
     <string name="defensedisplay">DEFENSE (Opp PPG)</string>
     <string name="offensedisplay">OFFENSE (PPG)</string>
+    <string name="pointsdisplay">POINTS (PPG)</string>
     <string name="stealsDisplay">STEALS (SPG)</string>
     <string name="blocksDisplay">BLOCKS (BPG)</string>
     <string name="team1">TEAM 1</string>

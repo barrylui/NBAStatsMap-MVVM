@@ -10,30 +10,39 @@ public class PlayerInfoModel {
     @SerializedName("lastYear")
     @Expose
     private int lastYear;
+
     @SerializedName("rookieYear")
     @Expose
     private int rookieYear;
+
     @SerializedName("fullName")
     @Expose
     private String fullName;
+
     @SerializedName("lastName")
     @Expose
     private String lastName;
+
     @SerializedName("firstName")
     @Expose
     private String firstName;
+
     @SerializedName("birthDate")
     @Expose
     private String birthDate;
+
     @SerializedName("profileUrl")
     @Expose
     private String profileUrl;
+
     @SerializedName("status")
     @Expose
     private String status;
+
     @SerializedName("team")
     @Expose
     private String team;
+
     @SerializedName("playerId")
     @Expose
     private int playerId;

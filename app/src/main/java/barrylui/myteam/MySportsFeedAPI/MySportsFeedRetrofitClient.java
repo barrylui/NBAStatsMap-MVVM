@@ -41,7 +41,7 @@ public class MySportsFeedRetrofitClient {
 
     //Retrieves JSON data for stats of all NBA Players
     //Stores relevant data in Singleton HashMap class for players
-    public static void getPlayerData(){
+    public static void getPlayerStatsData(){
         //Network call to get data
         MySportsFeedAPIService mySportsFeedAPIService = MySportsFeedRetrofitClient.getInstance().create(MySportsFeedAPIService.class);
         Call<PlayerStats> call = mySportsFeedAPIService.getAllPlayerStats();

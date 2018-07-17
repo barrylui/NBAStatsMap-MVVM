@@ -38,8 +38,7 @@ public class NBATeamAssetsData {
 
     public NBATeamAssetsData(){
         teamsList = new ArrayList<Map<String,?>>();
-        //#1-10
-
+        //Create assets for all 30 NBA Teams
         teamsList.add(createTeam("MIL", R.drawable.ic_buckslogo, R.color.colorBucksPrimary));
         teamsList.add(createTeam("CHI", R.drawable.ic_bullslogo, R.color.colorBullsPrimary));
         teamsList.add(createTeam("CLE", R.drawable.ic_cavslogo, R.color.colorCavaliersPrimary));
@@ -75,7 +74,7 @@ public class NBATeamAssetsData {
 
     }
 
-
+    //Creates HashMap containing team data
     private HashMap createTeam(String name, int image, int color) {
         HashMap team = new HashMap();
         team.put("name", name);
