@@ -15,7 +15,7 @@ import java.util.Stack;
 
 import barrylui.myteam.R;
 
-
+//Adapter class for Recyclerview to select a Team, once a team is chosen the team's data will bind to the text fields and radar chart
 public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2RecyclerViewAdapter.Team2ViewHolder>{
     private static List<Map<String, ?>> mDataset;
     private Context mContext;
@@ -84,6 +84,7 @@ public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2Recycler
                         selected_position = -1;
                         notifyItemChanged(selected_position);
                         notifyDataSetChanged();
+                        //Pass to fragment to handle with parameters
                         mItemClickListener.onItem2Click(v, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), true);
                     }
                     else{
@@ -91,6 +92,7 @@ public class Team2RecyclerViewAdapter extends RecyclerView.Adapter<Team2Recycler
                         selected_position = getAdapterPosition();
                         notifyItemChanged(selected_position);
                         notifyDataSetChanged();
+                        //Pass to fragment to handle with parameters
                         mItemClickListener.onItem2Click(v, getLayoutPosition(),(String)mDataset.get(getLayoutPosition()).get("name"), (Integer)mDataset.get(getLayoutPosition()).get("color"), false);
                     }
                 }

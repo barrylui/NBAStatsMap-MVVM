@@ -33,6 +33,7 @@ import barrylui.myteam.Data.NBATeamAssetsData;
 import barrylui.myteam.SuredBitsAPI.SuredBitsPlayerModel.PlayerInfoModel;
 
 //Player Stats module
+//View and compare player stats and visualize player strengths and weaknesses
 public class PlayerStatsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -124,15 +125,14 @@ public class PlayerStatsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //Clear data values
         player1ChartValueArray.clear();
         player2ChartValueArray.clear();
 
         View view = inflater.inflate(R.layout.fragment_player_stats, container, false);
 
-
         //Bind views
         playerRadarChart = (RadarChart)view.findViewById(R.id.player_radar_chart);
-
 
         Team1TeamSelectRecyclerView = (RecyclerView)view.findViewById(R.id.team1_select_recycleview);
         Team2TeamSelectRecyclerView = (RecyclerView)view.findViewById(R.id.team2_select_recycleview);
@@ -255,6 +255,27 @@ public class PlayerStatsFragment extends Fragment {
                 //Change header
                 slot1TextView.setText(getString(R.string.slot1));
 
+                player1PointsValueTextView.setText(getString(R.string.empty_string));
+                player1AssistsValueTextView.setText(getString(R.string.empty_string));
+                player1ReboundsValueTextView.setText(getString(R.string.empty_string));
+                player1BlocksValueTextView.setText(getString(R.string.empty_string));
+                player1StealsValueTextView.setText(getString(R.string.empty_string));
+                player1FreeThrowValueTextView.setText(getString(R.string.empty_string));
+                //Clear player name
+                player1HeaderTextView.setText(getString(R.string.player1));
+                //Clear chartvaluearray
+                player1ChartValueArray.clear();
+                //Load empty data set into array
+                player1ChartValueArray.add(new Entry(0,0));
+                player1ChartValueArray.add(new Entry(0,1));
+                player1ChartValueArray.add(new Entry(0,2));
+                player1ChartValueArray.add(new Entry(0,3));
+                player1ChartValueArray.add(new Entry(0,4));
+                player1ChartValueArray.add(new Entry(0,5));
+                //Update radar chart with empty data to display blank radar chart
+                playerRadarChart.notifyDataSetChanged();
+                playerRadarChart.invalidate();
+
             }
         });
 
@@ -270,6 +291,28 @@ public class PlayerStatsFragment extends Fragment {
                 Team2TeamSelectRecyclerView.setVisibility(View.VISIBLE);
                 //Change header
                 slot2TextView.setText(getString(R.string.slot1));
+
+
+                player2PointsValueTextView.setText(getString(R.string.empty_string));
+                player2AssistsValueTextView.setText(getString(R.string.empty_string));
+                player2ReboundsValueTextView.setText(getString(R.string.empty_string));
+                player2BlocksValueTextView.setText(getString(R.string.empty_string));
+                player2StealsValueTextView.setText(getString(R.string.empty_string));
+                player2FreeThrowValueTextView.setText(getString(R.string.empty_string));
+                //Clear player name
+                player2HeaderTextView.setText(getString(R.string.player1));
+                //Clear chartvaluearray
+                player2ChartValueArray.clear();
+                //Load empty data set into array
+                player2ChartValueArray.add(new Entry(0,0));
+                player2ChartValueArray.add(new Entry(0,1));
+                player2ChartValueArray.add(new Entry(0,2));
+                player2ChartValueArray.add(new Entry(0,3));
+                player2ChartValueArray.add(new Entry(0,4));
+                player2ChartValueArray.add(new Entry(0,5));
+                //Update radar chart with empty data to display blank radar chart
+                playerRadarChart.notifyDataSetChanged();
+                playerRadarChart.invalidate();
             }
         });
 

@@ -9,9 +9,10 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
-/**
- * Created by The MACHINE on 4/24/2018.
- */
+
+
+// MYSPORTSFEED API SERVICE
+// Contains interface with calls to specific end points for player and team stats
 
 public interface MySportsFeedAPIService {
 

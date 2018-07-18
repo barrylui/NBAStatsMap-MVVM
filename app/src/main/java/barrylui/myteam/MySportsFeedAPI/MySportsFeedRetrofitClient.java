@@ -16,6 +16,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+
+//Retrofit client to interact with the mysportsapi
+//Team and player stats will be retrieved here and stored in the data singleton classes
 public class MySportsFeedRetrofitClient {
 
     private static MySportsFeedAPIService mySportsFeedAPIService;
@@ -69,6 +72,7 @@ public class MySportsFeedRetrofitClient {
                         //Calculate free throw percent
                         Double ftpercent = (ftm/fta)*100;
 
+                        //Put stats in the hashmap
                         playerStatsMap.put("Scoring", ppg);
                         playerStatsMap.put("Assists", apg);
                         playerStatsMap.put("Rebounding",rpg);
@@ -77,9 +81,11 @@ public class MySportsFeedRetrofitClient {
                         playerStatsMap.put("FTPercent",ftpercent);
 
 
+                        //Replace chars so different api calls match up with same name
+                        String firstName = response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getPlayer().getFirstName();
+                        firstName = firstName.replace(".", "");
                         //Get PlayerName
-                        String playerName = response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getPlayer().getFirstName() + " " +
-                                response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getPlayer().getLastName();
+                        String playerName = firstName + " " + response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getPlayer().getLastName();
 
                         //Load player name as key and HashMap with stats into singleton hashMap class for players
                         NBAPlayerDataSingleton.getInstance().getPlayerDataMap().put(playerName, playerStatsMap);
@@ -108,7 +114,8 @@ public class MySportsFeedRetrofitClient {
                         for(int j=0; j<15;j++){
                             //Create hashmap to store team stats data
                             HashMap<String, Object> statsMap = new HashMap<String, Object>();
-                            //Store team stats in hashmap
+
+                            //Get Team info and stats
                             String teamCity = response.body().getConferenceteamstandings().getConference().get(i).getTeamentry().get(j).getTeam().getCity();
                             String teamName = teamCity + "\n" + response.body().getConferenceteamstandings().getConference().get(i).getTeamentry().get(j).getTeam().getName();
                             String teamAbbrv = response.body().getConferenceteamstandings().getConference().get(i).getTeamentry().get(j).getTeam().getAbbreviation();
@@ -131,6 +138,7 @@ public class MySportsFeedRetrofitClient {
                             Double ftp = (ftm/fta)*100;
 
 
+                            //Store team stats and info in hashmap
                             statsMap.put("offense", ppg);
                             statsMap.put("defense",oppg);
                             statsMap.put("rebounds",rpg);
@@ -144,6 +152,7 @@ public class MySportsFeedRetrofitClient {
                             statsMap.put("teamCity", teamCity);
 
 
+                            //Store hashmap containing team info and stats into the NBA Team Data Singleton
                             //team abbr is key
                             //Hashmap with stats is value
                             NBATeamDataSingleton.getInstance().getTeamDataMap().put(teamAbbrv, statsMap);

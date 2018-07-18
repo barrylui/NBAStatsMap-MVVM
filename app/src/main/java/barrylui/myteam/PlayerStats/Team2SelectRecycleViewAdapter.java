@@ -14,7 +14,7 @@ import java.util.Stack;
 
 import barrylui.myteam.R;
 
-
+//Adapter class for Recyclerview to select a Team, once a team is chosen the team's roster will replace this recyclerview
 public class Team2SelectRecycleViewAdapter extends RecyclerView.Adapter<Team2SelectRecycleViewAdapter.Team2SelectViewHolder>{
     private static List<Map<String, ?>> mDataset;
     private static Stack<ImageView> ImageviewStack = new Stack<>();

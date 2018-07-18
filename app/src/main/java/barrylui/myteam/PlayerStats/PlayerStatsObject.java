@@ -1,5 +1,6 @@
 package barrylui.myteam.PlayerStats;
 
+//PlayerStatsObject class that will be observed by the livedata
 public class PlayerStatsObject {
     private double ppg;
     private double apg;

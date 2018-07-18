@@ -8,7 +8,7 @@ import java.util.Set;
 
 import barrylui.myteam.Data.NBAPlayerDataSingleton;
 
-
+//Viewmodel for PlayerStats module
 public class PlayerStatsViewModel extends ViewModel{
     public MutableLiveData<PlayerStatsObject> player1Stats;
     public MutableLiveData<PlayerStatsObject> player2Stats;
@@ -27,10 +27,10 @@ public class PlayerStatsViewModel extends ViewModel{
         return player2Stats;
     }
 
-
+    // Creates a playerStatsObject using the player's name as a parameter
     public PlayerStatsObject createPlayerStatsObject(String playerName){
-        if (playerName.equals("PJ Tucker")){
-            playerName = "P.J. Tucker";
+        if (playerName.equals(" Nene")){
+            playerName = "Nene Hilario";
         }
         //Retrieves data entry for specific player
         HashMap<String, Double> playerStatsMap = NBAPlayerDataSingleton.getInstance().getPlayerDataMap().get(playerName);
@@ -41,6 +41,11 @@ public class PlayerStatsViewModel extends ViewModel{
 
         return playerStats1Object;
     }
+
+    //Calculates player's ranking in each statistical category
+    //Loads all stats into arrays
+    //Performs binary search on each array to find ranking of each stat
+    //obtains ranking for each stat to use for radarChartValue
     /*
     public HashMap<String, Object> getPlayerStatRanking(PlayerStatsObject thePlayerStatsObject){
     //Do binary search with the playerStatsObject stats and stats in PlayerDataSingleton
