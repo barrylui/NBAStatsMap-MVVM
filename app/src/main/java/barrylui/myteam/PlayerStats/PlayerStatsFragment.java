@@ -21,9 +21,12 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.RadarData;
 import com.github.mikephil.charting.data.RadarDataSet;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import barrylui.myteam.Data.NBAPlayerDataSingleton;
 import barrylui.myteam.Data.NBATeamRosterSingleton;
 import barrylui.myteam.R;
 import barrylui.myteam.Data.NBATeamAssetsData;
@@ -47,6 +50,24 @@ public class PlayerStatsFragment extends Fragment {
     //Headers
     private TextView slot1TextView;
     private TextView slot2TextView;
+
+    //Player 1 stat fields
+    private TextView player1HeaderTextView;
+    private TextView player1PointsValueTextView;
+    private TextView player1AssistsValueTextView;
+    private TextView player1ReboundsValueTextView;
+    private TextView player1BlocksValueTextView;
+    private TextView player1StealsValueTextView;
+    private TextView player1FreeThrowValueTextView;
+    //Player 2 stat fields
+
+    private TextView player2HeaderTextView;
+    private TextView player2PointsValueTextView;
+    private TextView player2AssistsValueTextView;
+    private TextView player2ReboundsValueTextView;
+    private TextView player2BlocksValueTextView;
+    private TextView player2StealsValueTextView;
+    private TextView player2FreeThrowValueTextView;
 
     //Back to team selection buttons to change ui states
     private Button backToTeamSelectionButton1;
@@ -112,17 +133,80 @@ public class PlayerStatsFragment extends Fragment {
         //Bind views
         playerRadarChart = (RadarChart)view.findViewById(R.id.player_radar_chart);
 
+
         Team1TeamSelectRecyclerView = (RecyclerView)view.findViewById(R.id.team1_select_recycleview);
         Team2TeamSelectRecyclerView = (RecyclerView)view.findViewById(R.id.team2_select_recycleview);
 
         Team1RosterRecyclerView = (RecyclerView)view.findViewById(R.id.team1_player_select_recyclerview);
         Team2RosterReyclerView = (RecyclerView)view.findViewById(R.id.team2_player_select_recyclerview);
 
+        //Recyclerview / menu headers
         slot1TextView = (TextView)view.findViewById(R.id.slot1_header);
         slot2TextView = (TextView)view.findViewById(R.id.slot2_header);
 
+
+        //Player 1 Stat text fields
+        player1HeaderTextView = (TextView)view.findViewById(R.id.player1_header);
+        player1PointsValueTextView = (TextView)view.findViewById(R.id.player1_points_Value_textView);
+        player1AssistsValueTextView  = (TextView)view.findViewById(R.id.player1_assists_Value_textView);
+        player1ReboundsValueTextView  = (TextView)view.findViewById(R.id.player1_rebounds_Value_textView);
+        player1BlocksValueTextView  = (TextView)view.findViewById(R.id.player1_blocks_Value_textView);
+        player1StealsValueTextView = (TextView)view.findViewById(R.id.player1_Steals_Value_textView);
+        player1FreeThrowValueTextView  = (TextView)view.findViewById(R.id.player1_ft_Value_textView);
+
+        //Player 2 stat text fields
+        player2HeaderTextView = (TextView)view.findViewById(R.id.player2_header);
+        player2PointsValueTextView = (TextView)view.findViewById(R.id.player2_offenseValue_textView);
+        player2AssistsValueTextView  = (TextView)view.findViewById(R.id.player2_Assists_Value_textView);
+        player2ReboundsValueTextView  = (TextView)view.findViewById(R.id.player2_rebounds_Value_textView);
+        player2BlocksValueTextView  = (TextView)view.findViewById(R.id.player2_blocks_Value_textView);
+        player2StealsValueTextView = (TextView)view.findViewById(R.id.player2_steals_Value_textView);
+        player2FreeThrowValueTextView  = (TextView)view.findViewById(R.id.player2_ft_Value_textView);
+
+
         backToTeamSelectionButton1 = (Button)view.findViewById(R.id.slot1BacktoTeamButton);
         backToTeamSelectionButton2 = (Button)view.findViewById(R.id.slot2BacktoTeamButton);
+
+        //Get the viewModel
+        mViewModel = ViewModelProviders.of(this).get(PlayerStatsViewModel.class);
+
+        //Player 1 LiveData on changed method
+        //Binds text fields and radar chart to playerStatsData retrieved based on player selected
+        final Observer<PlayerStatsObject> player1StatsObserver = new Observer<PlayerStatsObject>(){
+            @Override
+            public void onChanged(@Nullable PlayerStatsObject thePlayer1StatsObject){
+                player1HeaderTextView.setText(thePlayer1StatsObject.getPlayerName());
+                player1PointsValueTextView.setText(String.valueOf(thePlayer1StatsObject.getPpg()));
+                player1AssistsValueTextView.setText(String.valueOf(thePlayer1StatsObject.getApg()));
+                player1ReboundsValueTextView.setText(String.valueOf(thePlayer1StatsObject.getRpg()));
+                player1BlocksValueTextView.setText(String.valueOf(thePlayer1StatsObject.getBpg()));
+                player1StealsValueTextView.setText(String.valueOf(thePlayer1StatsObject.getSpg()));
+
+                DecimalFormat decimalFormat = new DecimalFormat("#.#");
+                String freethrowpercentage = decimalFormat.format(thePlayer1StatsObject.getFtp());
+                player1FreeThrowValueTextView.setText(freethrowpercentage);
+            }
+        };
+        //Player 2 LiveData on changed method
+        //Binds text fields and radar chart to playerStatsData retrieved based on player selected
+        final Observer<PlayerStatsObject> player2StatsObserver = new Observer<PlayerStatsObject>(){
+            @Override
+            public void onChanged(@Nullable PlayerStatsObject thePlayer2StatsObject){
+                player2HeaderTextView.setText(thePlayer2StatsObject.getPlayerName());
+                player2PointsValueTextView.setText(String.valueOf(thePlayer2StatsObject.getPpg()));
+                player2AssistsValueTextView.setText(String.valueOf(thePlayer2StatsObject.getApg()));
+                player2ReboundsValueTextView.setText(String.valueOf(thePlayer2StatsObject.getRpg()));
+                player2BlocksValueTextView.setText(String.valueOf(thePlayer2StatsObject.getBpg()));
+                player2StealsValueTextView.setText(String.valueOf(thePlayer2StatsObject.getSpg()));
+
+                DecimalFormat decimalFormat = new DecimalFormat("#.#");
+                String freethrowpercentage = decimalFormat.format(thePlayer2StatsObject.getFtp());
+                player2FreeThrowValueTextView.setText(freethrowpercentage);
+            }
+        };
+
+        mViewModel.getPlayer1Stats().observe(this, player1StatsObserver);
+        mViewModel.getPlayer2Stats().observe(this, player2StatsObserver);
 
 
         //Hide Team Roster / Player Select recyclerView
@@ -211,6 +295,42 @@ public class PlayerStatsFragment extends Fragment {
                 //Show back to team selection button
                 backToTeamSelectionButton1.setVisibility(View.VISIBLE);
 
+                player1SelectAdapter.SetOnTeam1SelectClickListener(new Player1SelectRecyclerViewAdapter.OnPlayer1SelectClickListener() {
+                    @Override
+                    public void onPlayer1SelectClick(View view, int position, String playerName, boolean currentItemSelected) {
+                        //If the user taps a player that is currently selected, deselect the player and unbind the data from the text fields and radar chart
+                        if(currentItemSelected == true){
+                            //Clear text fields
+                            player1PointsValueTextView.setText(getString(R.string.empty_string));
+                            player1AssistsValueTextView.setText(getString(R.string.empty_string));
+                            player1ReboundsValueTextView.setText(getString(R.string.empty_string));
+                            player1BlocksValueTextView.setText(getString(R.string.empty_string));
+                            player1StealsValueTextView.setText(getString(R.string.empty_string));
+                            player1FreeThrowValueTextView.setText(getString(R.string.empty_string));
+                            //Clear player name
+                            player1HeaderTextView.setText(getString(R.string.player1));
+                            //Clear chartvaluearray
+                            player1ChartValueArray.clear();
+                            //Load empty data set into array
+                            player1ChartValueArray.add(new Entry(0,0));
+                            player1ChartValueArray.add(new Entry(0,1));
+                            player1ChartValueArray.add(new Entry(0,2));
+                            player1ChartValueArray.add(new Entry(0,3));
+                            player1ChartValueArray.add(new Entry(0,4));
+                            player1ChartValueArray.add(new Entry(0,5));
+                            //Update radar chart with empty data to display blank radar chart
+                            playerRadarChart.notifyDataSetChanged();
+                            playerRadarChart.invalidate();
+                        }
+                        //Else load the player's data and bind it to the text fields and radar chart
+                        else{
+                            PlayerStatsObject playerStats1Object = mViewModel.createPlayerStatsObject(playerName);
+                            mViewModel.getPlayer1Stats().setValue(playerStats1Object);
+
+                        }
+                    }
+                });
+
             }
         });
 
@@ -234,66 +354,45 @@ public class PlayerStatsFragment extends Fragment {
                 slot2TextView.setText(getString(R.string.slot2));
                 //Show back to team selection button
                 backToTeamSelectionButton2.setVisibility(View.VISIBLE);
+
+                player2SelectAdapter.SetOnTeam2SelectClickListener(new Player2SelectRecyclerViewAdapter.OnPlayer2SelectClickListener() {
+                    @Override
+                    public void onPlayer2SelectClick(View view, int position, String playerName, boolean currentItemSelected) {
+                        if(currentItemSelected == true){
+                            //Clear text fields
+                            player2PointsValueTextView.setText(getString(R.string.empty_string));
+                            player2AssistsValueTextView.setText(getString(R.string.empty_string));
+                            player2ReboundsValueTextView.setText(getString(R.string.empty_string));
+                            player2BlocksValueTextView.setText(getString(R.string.empty_string));
+                            player2StealsValueTextView.setText(getString(R.string.empty_string));
+                            player2FreeThrowValueTextView.setText(getString(R.string.empty_string));
+                            //Clear player name
+                            player2HeaderTextView.setText(getString(R.string.player1));
+                            //Clear chartvaluearray
+                            player2ChartValueArray.clear();
+                            //Load empty data set into array
+                            player2ChartValueArray.add(new Entry(0,0));
+                            player2ChartValueArray.add(new Entry(0,1));
+                            player2ChartValueArray.add(new Entry(0,2));
+                            player2ChartValueArray.add(new Entry(0,3));
+                            player2ChartValueArray.add(new Entry(0,4));
+                            player2ChartValueArray.add(new Entry(0,5));
+                            //Update radar chart with empty data to display blank radar chart
+                            playerRadarChart.notifyDataSetChanged();
+                            playerRadarChart.invalidate();
+                        }
+                        //Else load the player's data and bind it to the text fields and radar chart
+                        else{
+                            PlayerStatsObject playerStats2Object = mViewModel.createPlayerStatsObject(playerName);
+                            mViewModel.getPlayer2Stats().setValue(playerStats2Object);
+                        }
+                    }
+                });
             }
         });
 
-        //Get the viewModel
-        mViewModel = ViewModelProviders.of(this).get(PlayerStatsViewModel.class);
-
-        //Player 1 LiveData on changed method
-        //Binds text fields and radar chart to playerStatsData retrieved based on player selected
-        final Observer<PlayerStatsObject> player1StatsObserver = new Observer<PlayerStatsObject>(){
-            @Override
-            public void onChanged(@Nullable PlayerStatsObject thePlayer1StatsObject){
-
-            }
-        };
-        //Player 2 LiveData on changed method
-        //Binds text fields and radar chart to playerStatsData retrieved based on player selected
-        final Observer<PlayerStatsObject> player2StatsObserver = new Observer<PlayerStatsObject>(){
-            @Override
-            public void onChanged(@Nullable PlayerStatsObject thePlayer2StatsObject){
-
-            }
-        };
 
 
-
-
-        player1SelectAdapter.SetOnTeam1SelectClickListener(new Player1SelectRecyclerViewAdapter.OnPlayer1SelectClickListener() {
-            @Override
-            public void onPlayer1SelectClick(View view, int position, String playerName, boolean currentItemSelected) {
-                //If the user taps a player that is currently selected, deselect the player and unbind the data from the text fields and radar chart
-                if(currentItemSelected == true){
-                    //Clear text fields
-
-
-                    //Clear chartvaluearray
-                    player1ChartValueArray.clear();
-                    //Load empty data set into array
-                    player1ChartValueArray.add(new Entry(0,0));
-                    player1ChartValueArray.add(new Entry(0,1));
-                    player1ChartValueArray.add(new Entry(0,2));
-                    player1ChartValueArray.add(new Entry(0,3));
-                    player1ChartValueArray.add(new Entry(0,4));
-                    player1ChartValueArray.add(new Entry(0,5));
-                    //Update radar chart with empty data to display blank radar chart
-                    playerRadarChart.notifyDataSetChanged();
-                    playerRadarChart.invalidate();
-                }
-                //Else load the player's data and bind it to the text fields and radar chart
-                else{
-
-                }
-            }
-        });
-
-        player2SelectAdapter.SetOnTeam2SelectClickListener(new Player2SelectRecyclerViewAdapter.OnPlayer2SelectClickListener() {
-            @Override
-            public void onPlayer2SelectClick(View view, int position, String playerName, int color) {
-
-            }
-        });
 
 
         //Set-up blank radar chart

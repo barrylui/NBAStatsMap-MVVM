@@ -7,14 +7,16 @@ public class PlayerStatsObject {
     private double bpg;
     private double spg;
     private double ftp;
+    private String playerName;
 
-    public PlayerStatsObject (Double points, Double assists, Double rebounds, Double blocks, Double steals, Double freethrowpercent, String jerseyNum, String height, String age, String position){
+    public PlayerStatsObject (Double points, Double assists, Double rebounds, Double blocks, Double steals, Double freethrowpercent, String name){
         ppg = points;
         apg = assists;
         rpg = rebounds;
         bpg = blocks;
         spg = steals;
         ftp = freethrowpercent;
+        playerName = name;
     }
 
 
@@ -41,4 +43,6 @@ public class PlayerStatsObject {
     public double getFtp() {
         return ftp;
     }
+
+    public String getPlayerName() { return playerName;}
 }

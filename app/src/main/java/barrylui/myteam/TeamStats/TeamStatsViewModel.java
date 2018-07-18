@@ -28,6 +28,18 @@ public class TeamStatsViewModel extends ViewModel {
         return team2Stats;
     }
 
+    public TeamStatsObject createTeamStatsObject(String teamName, int color){
+        HashMap<String, Object> teamHashMap = NBATeamDataSingleton.getInstance().getTeamDataMap().get(teamName);
+
+        //Creates teamStatsObject using the data for the specific team
+        TeamStatsObject teamStats1Object = new TeamStatsObject((Double)teamHashMap.get("offense"), (Double)teamHashMap.get("defense"),
+                (Double)teamHashMap.get("rebounds"), (Double)teamHashMap.get("assists"), (Double)teamHashMap.get("tpm"),
+                (Double)teamHashMap.get("ftp"), color, (String)teamHashMap.get("wins"),
+                (String)teamHashMap.get("losses"), (String)teamHashMap.get("teamName"), teamName);
+
+        return teamStats1Object;
+    }
+
     //Method will take a teamStatsObject as a parameter
     //Method must iterate through TeamData HashMap and store each stat in an array.
     //Method will perform linear search through arrays to determine the team's ranking for each stat

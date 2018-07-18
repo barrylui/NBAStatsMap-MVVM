@@ -6,7 +6,7 @@ import java.util.HashMap;
 //The first key is the name of the player and the value is another hasmap
 //The nested Hashmap's keys are the stats and the values are the stat values
 public class NBAPlayerDataSingleton {
-    private HashMap<String, HashMap<String, ?>> playerDataMap =
+    private HashMap<String, HashMap<String, Double>> playerDataMap =
             new HashMap<>();
     private static NBAPlayerDataSingleton instance = null;
     private NBAPlayerDataSingleton(){}
@@ -18,7 +18,7 @@ public class NBAPlayerDataSingleton {
         return instance;
     }
 
-    public HashMap<String, HashMap<String, ?>> getPlayerDataMap() {
+    public HashMap<String, HashMap<String, Double>> getPlayerDataMap() {
         return playerDataMap;
     }
 }

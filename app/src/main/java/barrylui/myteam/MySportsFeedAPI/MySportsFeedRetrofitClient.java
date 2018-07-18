@@ -65,6 +65,7 @@ public class MySportsFeedRetrofitClient {
                         Double ftm = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getFtMade().getText());
                         Double fta = Double.parseDouble(response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getStats().getFtAtt().getText());
 
+
                         //Calculate free throw percent
                         Double ftpercent = (ftm/fta)*100;
 

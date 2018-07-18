@@ -109,13 +109,16 @@ public class Player1SelectRecyclerViewAdapter extends RecyclerView.Adapter<Playe
                         notifyItemChanged(selected_position);
                         notifyDataSetChanged();
                         //Interface call here to load data into textfields and chart
-                        //mItemClickListener.onPlayer1SelectClick(v, getLayoutPosition(), mDataset.get(getLayoutPosition()).getFullName(), true );
+                        mItemClickListener.onPlayer1SelectClick(v, getLayoutPosition(),
+                                mDataset.get(getLayoutPosition()).getFirstName() + " " + mDataset.get(getLayoutPosition()).getLastName(), true );
                     }
                     //select the player the usr selected
                     else{
                         selected_position = getAdapterPosition();
                         notifyItemChanged(selected_position);
                         notifyDataSetChanged();
+                        mItemClickListener.onPlayer1SelectClick(v, getLayoutPosition(),
+                                mDataset.get(getLayoutPosition()).getFirstName() + " " + mDataset.get(getLayoutPosition()).getLastName(), false);
                     }
                 }
             });

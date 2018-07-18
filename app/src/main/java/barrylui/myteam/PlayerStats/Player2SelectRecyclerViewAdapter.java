@@ -66,7 +66,7 @@ public class Player2SelectRecyclerViewAdapter extends RecyclerView.Adapter<Playe
     }
     //Interface method to communicate with main activity
     public interface OnPlayer2SelectClickListener {
-        public void onPlayer2SelectClick(View view, int position, String playerName, int color);
+        public void onPlayer2SelectClick(View view, int position, String playerName, boolean currentItemSelected);
     }
 
     public void SetOnTeam2SelectClickListener(final OnPlayer2SelectClickListener theClickListener){
@@ -101,12 +101,16 @@ public class Player2SelectRecyclerViewAdapter extends RecyclerView.Adapter<Playe
                         notifyItemChanged(selected_position);
                         notifyDataSetChanged();
                         //Interface call here to load data into textfields and chart
+                        mItemClickListener.onPlayer2SelectClick(v, getLayoutPosition(),
+                                mDataset.get(getLayoutPosition()).getFirstName()+ " " + mDataset.get(getLayoutPosition()).getLastName(), true);
                     }
                     //select the player the usr selected
                     else{
                         selected_position = getAdapterPosition();
                         notifyItemChanged(selected_position);
                         notifyDataSetChanged();
+                        mItemClickListener.onPlayer2SelectClick(v, getLayoutPosition(),
+                                mDataset.get(getLayoutPosition()).getFirstName()+ " " + mDataset.get(getLayoutPosition()).getLastName(), false);
                     }
                 }
             });

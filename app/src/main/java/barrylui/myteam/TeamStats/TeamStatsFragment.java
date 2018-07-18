@@ -458,13 +458,9 @@ public class TeamStatsFragment extends Fragment {
                 // Loads the team's data and binds it to the UI
                 else{
                     //Retrieves data entry for specific team
-                    HashMap<String, Object> teamHashMap = NBATeamDataSingleton.getInstance().getTeamDataMap().get(teamAbbrv);
-
                     //Creates teamStatsObject using the data for the specific team
-                    TeamStatsObject teamStats1Object = new TeamStatsObject((Double)teamHashMap.get("offense"), (Double)teamHashMap.get("defense"),
-                            (Double)teamHashMap.get("rebounds"), (Double)teamHashMap.get("assists"), (Double)teamHashMap.get("tpm"),
-                            (Double)teamHashMap.get("ftp"), color, (String)teamHashMap.get("wins"),
-                            (String)teamHashMap.get("losses"), (String)teamHashMap.get("teamName"), teamAbbrv);
+                    TeamStatsObject teamStats1Object = mViewModel.createTeamStatsObject(teamAbbrv, color);
+                    //Send data to viewmodel to update livedata and invoke ui changes
                     mViewModel.getTeam1Stats().setValue(teamStats1Object);
                 }
             }
@@ -509,13 +505,8 @@ public class TeamStatsFragment extends Fragment {
                 //Loads the team data and binds it to the UI
                 else{
                     //Retrieves data entry for specific team
-                    HashMap<String, Object> teamHashMap = NBATeamDataSingleton.getInstance().getTeamDataMap().get(teamAbbrv);
-
                     //Creates teamStatsObject using the data for the specific team
-                    TeamStatsObject teamStats2Object = new TeamStatsObject((Double)teamHashMap.get("offense"), (Double)teamHashMap.get("defense"),
-                            (Double)teamHashMap.get("rebounds"), (Double)teamHashMap.get("assists"), (Double)teamHashMap.get("tpm"),
-                            (Double)teamHashMap.get("ftp"), color, (String)teamHashMap.get("wins"),
-                            (String)teamHashMap.get("losses"), (String)teamHashMap.get("teamName"), teamAbbrv);
+                    TeamStatsObject teamStats2Object = mViewModel.createTeamStatsObject(teamAbbrv, color);
                     mViewModel.getTeam2Stats().setValue(teamStats2Object);
                 }
             }
