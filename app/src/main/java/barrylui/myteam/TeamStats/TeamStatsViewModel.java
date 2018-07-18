@@ -43,7 +43,7 @@ public class TeamStatsViewModel extends ViewModel {
     //Method will take a teamStatsObject as a parameter
     //Method must iterate through TeamData HashMap and store each stat in an array.
     //Method will perform linear search through arrays to determine the team's ranking for each stat
-    //Return a hashmap of Objects containing stats
+    //Return a hashmap of Objects containing stat rankings
     //Hashmap will have the stat category as the key and the ranking value as the value
     //Keys : offenseRadarValue. offenseRank, defenseRadarValue, defenseRank, AssistsRadarValue, AssistsRank,
     //      ReboundsRadarValue, ReboundsRank, ThreesRadarValue, ThreesRank, FreeThrowRadarValue, FreeThrowRank

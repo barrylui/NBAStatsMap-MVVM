@@ -110,11 +110,6 @@ public class TeamStatsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        //Clear chart data
-        team1ChartValuesArray.clear();
-        team2ChartValuesArray.clear();
-
         View view = inflater.inflate(R.layout.fragment_team_stats, container, false);
         //Bind views
 
@@ -168,35 +163,17 @@ public class TeamStatsFragment extends Fragment {
         labels.add("FT%");
         labels.add("3PT SCORING");
 
-        //Setup blank data for blank chart to be displayed
-            team1ChartValuesArray.add(new Entry(0,0));
-            team1ChartValuesArray.add(new Entry(0,1));
-            team1ChartValuesArray.add(new Entry(0,2));
-            team1ChartValuesArray.add(new Entry(0,3));
-            team1ChartValuesArray.add(new Entry(0,4));
-            team1ChartValuesArray.add(new Entry(0,5));
-
-            team2ChartValuesArray.add(new Entry(0,0));
-            team2ChartValuesArray.add(new Entry(0,1));
-            team2ChartValuesArray.add(new Entry(0,2));
-            team2ChartValuesArray.add(new Entry(0,3));
-            team2ChartValuesArray.add(new Entry(0,4));
-            team2ChartValuesArray.add(new Entry(0,5));
+        //Initialize blank data for radar chart
+        clearRadarArray(team1ChartValuesArray);
+        clearRadarArray(team2ChartValuesArray);
 
         //Setup radarchart settings and bind radar chart
         final RadarDataSet dataset1 = new RadarDataSet(team1ChartValuesArray,"Team 1");
         final RadarDataSet dataset2 = new RadarDataSet(team2ChartValuesArray, "Team 2");
 
         //Draw settings
-        dataset1.setFillAlpha(100);
-        dataset1.setLineWidth(4f);
-        dataset1.setDrawValues(false);
-        dataset1.setDrawFilled(true);
-
-        dataset2.setFillAlpha(100);
-        dataset2.setLineWidth(4f);
-        dataset2.setDrawValues(false);
-        dataset2.setDrawFilled(true);
+        setRadarDataSetSettings(dataset1);
+        setRadarDataSetSettings(dataset2);
 
         //Add datasets to radarChart
         final ArrayList<RadarDataSet> dataSets= new ArrayList<RadarDataSet>();
@@ -441,15 +418,8 @@ public class TeamStatsFragment extends Fragment {
                     team1ReboundsValue.setText(getString(R.string.empty_string));
                     team1ThreePointValue.setText(getString(R.string.empty_string));
                     team1FreeThrowValue.setText(getString(R.string.empty_string));
-                    //Clear chart
-                    team1ChartValuesArray.clear();
-                    //Empty chart data
-                    team1ChartValuesArray.add(new Entry(0,0));
-                    team1ChartValuesArray.add(new Entry(0,1));
-                    team1ChartValuesArray.add(new Entry(0,2));
-                    team1ChartValuesArray.add(new Entry(0,3));
-                    team1ChartValuesArray.add(new Entry(0,4));
-                    team1ChartValuesArray.add(new Entry(0,5));
+                    //Clear chart array
+                    clearRadarArray(team1ChartValuesArray);
                     //Notify chart to display empty chart
                     radarChart.notifyDataSetChanged();
                     radarChart.invalidate();
@@ -487,16 +457,8 @@ public class TeamStatsFragment extends Fragment {
                     team2ReboundsValue.setText(getString(R.string.empty_string));
                     team2ThreePointValue.setText(getString(R.string.empty_string));
                     team2FreeThrowValue.setText(getString(R.string.empty_string));
-
                     //Clear chart
-                    team2ChartValuesArray.clear();
-                    //Empty chart data
-                    team2ChartValuesArray.add(new Entry(0,0));
-                    team2ChartValuesArray.add(new Entry(0,1));
-                    team2ChartValuesArray.add(new Entry(0,2));
-                    team2ChartValuesArray.add(new Entry(0,3));
-                    team2ChartValuesArray.add(new Entry(0,4));
-                    team2ChartValuesArray.add(new Entry(0,5));
+                    clearRadarArray(team2ChartValuesArray);
                     //Notify chart to display empty chart
                     radarChart.notifyDataSetChanged();
                     radarChart.invalidate();
@@ -514,5 +476,25 @@ public class TeamStatsFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    public void setRadarDataSetSettings(RadarDataSet radarDataSet){
+        //Draw settings
+        radarDataSet.setFillAlpha(100);
+        radarDataSet.setLineWidth(4f);
+        radarDataSet.setDrawValues(false);
+        radarDataSet.setDrawFilled(true);
+    }
+
+    //Method to clear radar chart dataset
+    public void clearRadarArray(ArrayList<Entry> radarEntryArray){
+        radarEntryArray.clear();
+
+        radarEntryArray.add(new Entry(0, 0));
+        radarEntryArray.add(new Entry(0, 1));
+        radarEntryArray.add(new Entry(0, 2));
+        radarEntryArray.add(new Entry(0, 3));
+        radarEntryArray.add(new Entry(0, 4));
+        radarEntryArray.add(new Entry(0, 5));
     }
 }

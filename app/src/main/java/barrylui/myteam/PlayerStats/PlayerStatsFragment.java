@@ -23,10 +23,8 @@ import com.github.mikephil.charting.data.RadarDataSet;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import barrylui.myteam.Data.NBAPlayerDataSingleton;
 import barrylui.myteam.Data.NBATeamRosterSingleton;
 import barrylui.myteam.R;
 import barrylui.myteam.Data.NBATeamAssetsData;
@@ -60,8 +58,8 @@ public class PlayerStatsFragment extends Fragment {
     private TextView player1BlocksValueTextView;
     private TextView player1StealsValueTextView;
     private TextView player1FreeThrowValueTextView;
-    //Player 2 stat fields
 
+    //Player 2 stat fields
     private TextView player2HeaderTextView;
     private TextView player2PointsValueTextView;
     private TextView player2AssistsValueTextView;
@@ -80,12 +78,15 @@ public class PlayerStatsFragment extends Fragment {
     private ArrayList<String> labelsArrayForRadarChart;
     private RadarChart playerRadarChart;
 
+    //Contains data for teams
     private NBATeamAssetsData nbaTeamData = new NBATeamAssetsData();
+
     LinearLayoutManager team1LayoutManager;
     LinearLayoutManager team2LayoutManager;
     LinearLayoutManager playerOnTeam1LayoutManager;
     LinearLayoutManager playerOnTeam2LayoutManager;
 
+    //Recycleview adapters
     private Team1SelectRecycleViewAdapter team1selectAdapter = null;
     private Team2SelectRecycleViewAdapter team2selectAdapter = null;
     private Player1SelectRecyclerViewAdapter player1SelectAdapter = null;
@@ -125,10 +126,6 @@ public class PlayerStatsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //Clear data values
-        player1ChartValueArray.clear();
-        player2ChartValueArray.clear();
-
         View view = inflater.inflate(R.layout.fragment_player_stats, container, false);
 
         //Bind views
@@ -208,7 +205,6 @@ public class PlayerStatsFragment extends Fragment {
         mViewModel.getPlayer1Stats().observe(this, player1StatsObserver);
         mViewModel.getPlayer2Stats().observe(this, player2StatsObserver);
 
-
         //Hide Team Roster / Player Select recyclerView
         Team1RosterRecyclerView.setVisibility(View.INVISIBLE);
         Team2RosterReyclerView.setVisibility(View.INVISIBLE);
@@ -255,6 +251,8 @@ public class PlayerStatsFragment extends Fragment {
                 //Change header
                 slot1TextView.setText(getString(R.string.slot1));
 
+                //Clear chart and text fields of player data
+
                 player1PointsValueTextView.setText(getString(R.string.empty_string));
                 player1AssistsValueTextView.setText(getString(R.string.empty_string));
                 player1ReboundsValueTextView.setText(getString(R.string.empty_string));
@@ -264,14 +262,7 @@ public class PlayerStatsFragment extends Fragment {
                 //Clear player name
                 player1HeaderTextView.setText(getString(R.string.player1));
                 //Clear chartvaluearray
-                player1ChartValueArray.clear();
-                //Load empty data set into array
-                player1ChartValueArray.add(new Entry(0,0));
-                player1ChartValueArray.add(new Entry(0,1));
-                player1ChartValueArray.add(new Entry(0,2));
-                player1ChartValueArray.add(new Entry(0,3));
-                player1ChartValueArray.add(new Entry(0,4));
-                player1ChartValueArray.add(new Entry(0,5));
+                clearRadarArray(player1ChartValueArray);
                 //Update radar chart with empty data to display blank radar chart
                 playerRadarChart.notifyDataSetChanged();
                 playerRadarChart.invalidate();
@@ -292,6 +283,7 @@ public class PlayerStatsFragment extends Fragment {
                 //Change header
                 slot2TextView.setText(getString(R.string.slot1));
 
+                //Clear chart and text fields of player data
 
                 player2PointsValueTextView.setText(getString(R.string.empty_string));
                 player2AssistsValueTextView.setText(getString(R.string.empty_string));
@@ -302,14 +294,7 @@ public class PlayerStatsFragment extends Fragment {
                 //Clear player name
                 player2HeaderTextView.setText(getString(R.string.player1));
                 //Clear chartvaluearray
-                player2ChartValueArray.clear();
-                //Load empty data set into array
-                player2ChartValueArray.add(new Entry(0,0));
-                player2ChartValueArray.add(new Entry(0,1));
-                player2ChartValueArray.add(new Entry(0,2));
-                player2ChartValueArray.add(new Entry(0,3));
-                player2ChartValueArray.add(new Entry(0,4));
-                player2ChartValueArray.add(new Entry(0,5));
+                clearRadarArray(player2ChartValueArray);
                 //Update radar chart with empty data to display blank radar chart
                 playerRadarChart.notifyDataSetChanged();
                 playerRadarChart.invalidate();
@@ -353,14 +338,7 @@ public class PlayerStatsFragment extends Fragment {
                             //Clear player name
                             player1HeaderTextView.setText(getString(R.string.player1));
                             //Clear chartvaluearray
-                            player1ChartValueArray.clear();
-                            //Load empty data set into array
-                            player1ChartValueArray.add(new Entry(0,0));
-                            player1ChartValueArray.add(new Entry(0,1));
-                            player1ChartValueArray.add(new Entry(0,2));
-                            player1ChartValueArray.add(new Entry(0,3));
-                            player1ChartValueArray.add(new Entry(0,4));
-                            player1ChartValueArray.add(new Entry(0,5));
+                            clearRadarArray(player1ChartValueArray);
                             //Update radar chart with empty data to display blank radar chart
                             playerRadarChart.notifyDataSetChanged();
                             playerRadarChart.invalidate();
@@ -412,14 +390,7 @@ public class PlayerStatsFragment extends Fragment {
                             //Clear player name
                             player2HeaderTextView.setText(getString(R.string.player1));
                             //Clear chartvaluearray
-                            player2ChartValueArray.clear();
-                            //Load empty data set into array
-                            player2ChartValueArray.add(new Entry(0,0));
-                            player2ChartValueArray.add(new Entry(0,1));
-                            player2ChartValueArray.add(new Entry(0,2));
-                            player2ChartValueArray.add(new Entry(0,3));
-                            player2ChartValueArray.add(new Entry(0,4));
-                            player2ChartValueArray.add(new Entry(0,5));
+                            clearRadarArray(player2ChartValueArray);
                             //Update radar chart with empty data to display blank radar chart
                             playerRadarChart.notifyDataSetChanged();
                             playerRadarChart.invalidate();
@@ -433,11 +404,6 @@ public class PlayerStatsFragment extends Fragment {
                 });
             }
         });
-
-
-
-
-
         //Set-up blank radar chart
 
         //Labels to label axis on radar chart
@@ -449,49 +415,16 @@ public class PlayerStatsFragment extends Fragment {
         labelsArrayForRadarChart.add("Steals");
         labelsArrayForRadarChart.add("FT%");
 
-
-        //Prepare empty dataset for the radar chart
-        if(player1ChartValueArray.isEmpty()){
-            player1ChartValueArray.add(new Entry(0, 0));
-            player1ChartValueArray.add(new Entry(0, 1));
-            player1ChartValueArray.add(new Entry(0, 2));
-            player1ChartValueArray.add(new Entry(0, 3));
-            player1ChartValueArray.add(new Entry(0, 4));
-            player1ChartValueArray.add(new Entry(0, 5));
-        }
-
-        if(player2ChartValueArray.isEmpty()){
-            player2ChartValueArray.add(new Entry(0, 0));
-            player2ChartValueArray.add(new Entry(0, 1));
-            player2ChartValueArray.add(new Entry(0, 2));
-            player2ChartValueArray.add(new Entry(0, 3));
-            player2ChartValueArray.add(new Entry(0, 4));
-            player2ChartValueArray.add(new Entry(0, 5));
-        }
-
+        clearRadarArray(player1ChartValueArray);
+        clearRadarArray(player2ChartValueArray);
 
         //Bind data to dataset
         final RadarDataSet playerDataSet1 = new RadarDataSet(player1ChartValueArray, "Team 1");
         final RadarDataSet playerDataSet2 = new RadarDataSet(player2ChartValueArray, "Team 2");
 
         //Radar chart configuration
-
-        //Sets the alpha value (transparency) that is used for filling the line surface (0-255), default: 85, 255 = fully opaque, 0 = fully transparent
-        playerDataSet1.setFillAlpha(100);
-        //Set the line width for this DataSet (min = 0.2f, max = 10f); default 1f NOTE: thinner line == better performance, thicker line == worse performance
-        playerDataSet1.setLineWidth(4f);
-        playerDataSet1.setDrawValues(false);
-        //Set to true if the DataSet should be drawn filled (surface, area)
-        playerDataSet1.setDrawFilled(true);
-
-
-        //Sets the alpha value (transparency) that is used for filling the line surface (0-255), default: 85, 255 = fully opaque, 0 = fully transparent
-        playerDataSet2.setFillAlpha(100);
-        //Set the line width for this DataSet (min = 0.2f, max = 10f); default 1f NOTE: thinner line == better performance, thicker line == worse performance
-        playerDataSet2.setLineWidth(4f);
-        playerDataSet2.setDrawValues(false);
-        //Set to true if the DataSet should be drawn filled (surface, area)
-        playerDataSet2.setDrawFilled(true);
+        setRadarDataSetSettings(playerDataSet1);
+        setRadarDataSetSettings(playerDataSet2);
 
         //Array that will contain datasets for the radar chart
         final ArrayList<RadarDataSet> playerDataSets = new ArrayList<RadarDataSet>();
@@ -517,7 +450,29 @@ public class PlayerStatsFragment extends Fragment {
         playerRadarChart.notifyDataSetChanged();
         playerRadarChart.invalidate();
 
-
         return view;
+    }
+
+    //configures settings for radarchart
+    public void setRadarDataSetSettings(RadarDataSet radarDataSet){
+        //Sets the alpha value (transparency) that is used for filling the line surface (0-255), default: 85, 255 = fully opaque, 0 = fully transparent
+        radarDataSet.setFillAlpha(100);
+        //Set the line width for this DataSet (min = 0.2f, max = 10f); default 1f NOTE: thinner line == better performance, thicker line == worse performance
+        radarDataSet.setLineWidth(4f);
+        radarDataSet.setDrawValues(false);
+        //Set to true if the DataSet should be drawn filled (surface, area)
+        radarDataSet.setDrawFilled(true);
+    }
+
+    //Method to clear radar chart dataset
+    public void clearRadarArray(ArrayList<Entry> radarEntryArray){
+        radarEntryArray.clear();
+
+        radarEntryArray.add(new Entry(0, 0));
+        radarEntryArray.add(new Entry(0, 1));
+        radarEntryArray.add(new Entry(0, 2));
+        radarEntryArray.add(new Entry(0, 3));
+        radarEntryArray.add(new Entry(0, 4));
+        radarEntryArray.add(new Entry(0, 5));
     }
 }

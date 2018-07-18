@@ -46,6 +46,9 @@ public class PlayerStatsViewModel extends ViewModel{
     //Loads all stats into arrays
     //Performs binary search on each array to find ranking of each stat
     //obtains ranking for each stat to use for radarChartValue
+    // Must return hashmap containing stat rankings
+    //Hashmap will have the stat category as the key and the ranking value as the value
+
     /*
     public HashMap<String, Object> getPlayerStatRanking(PlayerStatsObject thePlayerStatsObject){
     //Do binary search with the playerStatsObject stats and stats in PlayerDataSingleton
