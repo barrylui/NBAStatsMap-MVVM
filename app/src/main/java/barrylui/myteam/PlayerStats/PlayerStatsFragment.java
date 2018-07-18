@@ -1,7 +1,10 @@
 package barrylui.myteam.PlayerStats;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,8 +53,8 @@ public class PlayerStatsFragment extends Fragment {
     private Button backToTeamSelectionButton2;
 
     //Radar chart
-    private ArrayList<Entry> playerentry1 = new ArrayList<>();
-    private ArrayList<Entry> playerentry2 = new ArrayList<>();
+    private ArrayList<Entry> player1ChartValueArray = new ArrayList<>();
+    private ArrayList<Entry> player2ChartValueArray = new ArrayList<>();
     private ArrayList<String> labelsArrayForRadarChart;
     private RadarChart playerRadarChart;
 
@@ -66,6 +69,7 @@ public class PlayerStatsFragment extends Fragment {
     private Player1SelectRecyclerViewAdapter player1SelectAdapter = null;
     private Player2SelectRecyclerViewAdapter player2SelectAdapter = null;
 
+    private PlayerStatsViewModel mViewModel;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -99,8 +103,8 @@ public class PlayerStatsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        playerentry1.clear();
-        playerentry2.clear();
+        player1ChartValueArray.clear();
+        player2ChartValueArray.clear();
 
         View view = inflater.inflate(R.layout.fragment_player_stats, container, false);
 
@@ -153,8 +157,6 @@ public class PlayerStatsFragment extends Fragment {
 
         team1selectAdapter.notifyDataSetChanged();
         team2selectAdapter.notifyDataSetChanged();
-
-
 
         //Back to team selection button
         backToTeamSelectionButton1.setOnClickListener(new View.OnClickListener() {
@@ -235,7 +237,68 @@ public class PlayerStatsFragment extends Fragment {
             }
         });
 
+        //Get the viewModel
+        mViewModel = ViewModelProviders.of(this).get(PlayerStatsViewModel.class);
 
+        //Player 1 LiveData on changed method
+        //Binds text fields and radar chart to playerStatsData retrieved based on player selected
+        final Observer<PlayerStatsObject> player1StatsObserver = new Observer<PlayerStatsObject>(){
+            @Override
+            public void onChanged(@Nullable PlayerStatsObject thePlayer1StatsObject){
+
+            }
+        };
+        //Player 2 LiveData on changed method
+        //Binds text fields and radar chart to playerStatsData retrieved based on player selected
+        final Observer<PlayerStatsObject> player2StatsObserver = new Observer<PlayerStatsObject>(){
+            @Override
+            public void onChanged(@Nullable PlayerStatsObject thePlayer2StatsObject){
+
+            }
+        };
+
+
+
+
+        player1SelectAdapter.SetOnTeam1SelectClickListener(new Player1SelectRecyclerViewAdapter.OnPlayer1SelectClickListener() {
+            @Override
+            public void onPlayer1SelectClick(View view, int position, String playerName, boolean currentItemSelected) {
+                //If the user taps a player that is currently selected, deselect the player and unbind the data from the text fields and radar chart
+                if(currentItemSelected == true){
+                    //Clear text fields
+
+
+                    //Clear chartvaluearray
+                    player1ChartValueArray.clear();
+                    //Load empty data set into array
+                    player1ChartValueArray.add(new Entry(0,0));
+                    player1ChartValueArray.add(new Entry(0,1));
+                    player1ChartValueArray.add(new Entry(0,2));
+                    player1ChartValueArray.add(new Entry(0,3));
+                    player1ChartValueArray.add(new Entry(0,4));
+                    player1ChartValueArray.add(new Entry(0,5));
+                    //Update radar chart with empty data to display blank radar chart
+                    playerRadarChart.notifyDataSetChanged();
+                    playerRadarChart.invalidate();
+                }
+                //Else load the player's data and bind it to the text fields and radar chart
+                else{
+
+                }
+            }
+        });
+
+        player2SelectAdapter.SetOnTeam2SelectClickListener(new Player2SelectRecyclerViewAdapter.OnPlayer2SelectClickListener() {
+            @Override
+            public void onPlayer2SelectClick(View view, int position, String playerName, int color) {
+
+            }
+        });
+
+
+        //Set-up blank radar chart
+
+        //Labels to label axis on radar chart
         labelsArrayForRadarChart = new ArrayList<String>();
         labelsArrayForRadarChart.add("Points");
         labelsArrayForRadarChart.add("Assists");
@@ -245,40 +308,54 @@ public class PlayerStatsFragment extends Fragment {
         labelsArrayForRadarChart.add("FT%");
 
 
-        if(playerentry1.isEmpty()){
-            playerentry1.add(new Entry(0, 0));
-            playerentry1.add(new Entry(0, 1));
-            playerentry1.add(new Entry(0, 2));
-            playerentry1.add(new Entry(0, 3));
-            playerentry1.add(new Entry(0, 4));
-            playerentry1.add(new Entry(0, 5));
+        //Prepare empty dataset for the radar chart
+        if(player1ChartValueArray.isEmpty()){
+            player1ChartValueArray.add(new Entry(0, 0));
+            player1ChartValueArray.add(new Entry(0, 1));
+            player1ChartValueArray.add(new Entry(0, 2));
+            player1ChartValueArray.add(new Entry(0, 3));
+            player1ChartValueArray.add(new Entry(0, 4));
+            player1ChartValueArray.add(new Entry(0, 5));
         }
 
-        if(playerentry2.isEmpty()){
-            playerentry2.add(new Entry(0, 0));
-            playerentry2.add(new Entry(0, 1));
-            playerentry2.add(new Entry(0, 2));
-            playerentry2.add(new Entry(0, 3));
-            playerentry2.add(new Entry(0, 4));
-            playerentry2.add(new Entry(0, 5));
+        if(player2ChartValueArray.isEmpty()){
+            player2ChartValueArray.add(new Entry(0, 0));
+            player2ChartValueArray.add(new Entry(0, 1));
+            player2ChartValueArray.add(new Entry(0, 2));
+            player2ChartValueArray.add(new Entry(0, 3));
+            player2ChartValueArray.add(new Entry(0, 4));
+            player2ChartValueArray.add(new Entry(0, 5));
         }
 
-        final RadarDataSet playerDataSet1 = new RadarDataSet(playerentry1, "Team 1");
-        final RadarDataSet playerDataSet2 = new RadarDataSet(playerentry2, "Team 2");
 
+        //Bind data to dataset
+        final RadarDataSet playerDataSet1 = new RadarDataSet(player1ChartValueArray, "Team 1");
+        final RadarDataSet playerDataSet2 = new RadarDataSet(player2ChartValueArray, "Team 2");
+
+        //Radar chart configuration
+
+        //Sets the alpha value (transparency) that is used for filling the line surface (0-255), default: 85, 255 = fully opaque, 0 = fully transparent
         playerDataSet1.setFillAlpha(100);
+        //Set the line width for this DataSet (min = 0.2f, max = 10f); default 1f NOTE: thinner line == better performance, thicker line == worse performance
         playerDataSet1.setLineWidth(4f);
         playerDataSet1.setDrawValues(false);
+        //Set to true if the DataSet should be drawn filled (surface, area)
         playerDataSet1.setDrawFilled(true);
 
+
+        //Sets the alpha value (transparency) that is used for filling the line surface (0-255), default: 85, 255 = fully opaque, 0 = fully transparent
         playerDataSet2.setFillAlpha(100);
+        //Set the line width for this DataSet (min = 0.2f, max = 10f); default 1f NOTE: thinner line == better performance, thicker line == worse performance
         playerDataSet2.setLineWidth(4f);
         playerDataSet2.setDrawValues(false);
+        //Set to true if the DataSet should be drawn filled (surface, area)
         playerDataSet2.setDrawFilled(true);
 
+        //Array that will contain datasets for the radar chart
         final ArrayList<RadarDataSet> playerDataSets = new ArrayList<RadarDataSet>();
         playerDataSets.add(playerDataSet1);
         playerDataSets.add(playerDataSet2);
+        //Bind data to radar chart
         RadarData thePlayerData = new RadarData(labelsArrayForRadarChart, playerDataSets);
         playerRadarChart.setData(thePlayerData);
 
@@ -294,6 +371,7 @@ public class PlayerStatsFragment extends Fragment {
         yAxis.setAxisMinValue(0);
         yAxis.setDrawLabels(false);
 
+        //Update
         playerRadarChart.notifyDataSetChanged();
         playerRadarChart.invalidate();
 

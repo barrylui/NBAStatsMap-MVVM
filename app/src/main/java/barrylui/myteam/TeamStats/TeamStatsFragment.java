@@ -424,7 +424,7 @@ public class TeamStatsFragment extends Fragment {
             @Override
             public void onItem1Click(View view, int position, String teamAbbrv, int color, boolean currentItemSelected) {
 
-                //If the user taps a team that is already selected, deselect the team and unbind the data
+                //If the user taps a team that is currently selected, deselect the team and unbind the data from the text fields and radar chart
                 if(currentItemSelected == true){
                     team1OffenseRank.setText(getString(R.string.empty_string));
                     team1DefenseRank.setText(getString(R.string.empty_string));
@@ -441,16 +441,16 @@ public class TeamStatsFragment extends Fragment {
                     team1ReboundsValue.setText(getString(R.string.empty_string));
                     team1ThreePointValue.setText(getString(R.string.empty_string));
                     team1FreeThrowValue.setText(getString(R.string.empty_string));
-
+                    //Clear chart
                     team1ChartValuesArray.clear();
-
+                    //Empty chart data
                     team1ChartValuesArray.add(new Entry(0,0));
                     team1ChartValuesArray.add(new Entry(0,1));
                     team1ChartValuesArray.add(new Entry(0,2));
                     team1ChartValuesArray.add(new Entry(0,3));
                     team1ChartValuesArray.add(new Entry(0,4));
                     team1ChartValuesArray.add(new Entry(0,5));
-
+                    //Notify chart to display empty chart
                     radarChart.notifyDataSetChanged();
                     radarChart.invalidate();
 
@@ -474,8 +474,9 @@ public class TeamStatsFragment extends Fragment {
         team2Adapter.SetOnItemClickListener(new Team2RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItem2Click(View view, int position, String teamAbbrv, int color, boolean currentItemSelected) {
-                //If the user taps a team that is already selected, deselect the team and unbind the data
+                //If the user taps a team that is currently selected, deselect the team and unbind the data from the text fields and radar chart
                 if(currentItemSelected == true){
+                    //Clear text fields
                     team2OffenseRank.setText(getString(R.string.empty_string));
                     team2DefenseRank.setText(getString(R.string.empty_string));
                     team2AssistsRank.setText(getString(R.string.empty_string));
@@ -484,7 +485,6 @@ public class TeamStatsFragment extends Fragment {
                     team2FreeThrowRank.setText(getString(R.string.empty_string));
                     team2TeamName.setText(getString(R.string.team2));
                     team2TeamName.setTextColor(getResources().getColor(R.color.white));
-
                     team2OffenseValue.setText(getString(R.string.empty_string));
                     team2DefenseValue.setText(getString(R.string.empty_string));
                     team2AssistsValue.setText(getString(R.string.empty_string));
@@ -492,15 +492,16 @@ public class TeamStatsFragment extends Fragment {
                     team2ThreePointValue.setText(getString(R.string.empty_string));
                     team2FreeThrowValue.setText(getString(R.string.empty_string));
 
+                    //Clear chart
                     team2ChartValuesArray.clear();
-
+                    //Empty chart data
                     team2ChartValuesArray.add(new Entry(0,0));
                     team2ChartValuesArray.add(new Entry(0,1));
                     team2ChartValuesArray.add(new Entry(0,2));
                     team2ChartValuesArray.add(new Entry(0,3));
                     team2ChartValuesArray.add(new Entry(0,4));
                     team2ChartValuesArray.add(new Entry(0,5));
-
+                    //Notify chart to display empty chart
                     radarChart.notifyDataSetChanged();
                     radarChart.invalidate();
 

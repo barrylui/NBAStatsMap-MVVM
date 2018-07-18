@@ -3,6 +3,8 @@ package barrylui.myteam.PlayerStats;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import java.util.HashMap;
+
 
 public class PlayerStatsViewModel extends ViewModel{
     public MutableLiveData<PlayerStatsObject> player1Stats;
@@ -21,4 +23,11 @@ public class PlayerStatsViewModel extends ViewModel{
         }
         return player2Stats;
     }
+
+    /*
+    public HashMap<String, Object> getPlayerStatRanking(PlayerStatsObject thePlayerStatsObject){
+
+    Do binary search with the playerStatsObject stats and stats in PlayerDataSingleton
+    }
+    */
 }
