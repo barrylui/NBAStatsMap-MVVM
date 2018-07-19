@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements SplashLoadingFrag
             switch (item.getItemId()) {
                 case R.id.navigation_team_stats:
                     if (getSupportFragmentManager().findFragmentById(R.id.frame_container) instanceof TeamStatsFragment){
-                        //do nothing
+                        //do nothing, the selected fragment is the current fragment
                         return true;
                     }
                     else {
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements SplashLoadingFrag
 
                 case R.id.navigation_player_stats:
                     if (getSupportFragmentManager().findFragmentById(R.id.frame_container) instanceof PlayerStatsFragment){
-                        //do nothing
+                        //do nothing, the selected fragment is the current fragment
                         return true;
                     }
                     else {
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements SplashLoadingFrag
                     }
                 case R.id.navigation_leaders:
                     if (getSupportFragmentManager().findFragmentById(R.id.frame_container) instanceof LeagueLeadersFragment){
-                        //do nothing
+                        //do nothing, the selected fragment is the current fragment
                         return true;
                     }
                     else {

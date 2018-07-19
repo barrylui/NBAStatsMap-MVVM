@@ -86,6 +86,14 @@ public class MySportsFeedRetrofitClient {
                         firstName = firstName.replace(".", "");
                         //Get PlayerName
                         String playerName = firstName + " " + response.body().getCumulativeplayerstats().getPlayerstatsentry().get(i).getPlayer().getLastName();
+                        if (playerName.equals("Damian Lee")){
+                            playerName = "Damion Lee";
+                        }
+
+                        if(playerName.equals("Guillermo Hernangomez")){
+                            playerName = "Willy Hernangomez";
+                        }
+
 
                         //Load player name as key and HashMap with stats into singleton hashMap class for players
                         NBAPlayerDataSingleton.getInstance().getPlayerDataMap().put(playerName, playerStatsMap);

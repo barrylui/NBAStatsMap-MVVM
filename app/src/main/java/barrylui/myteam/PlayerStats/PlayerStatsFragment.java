@@ -23,6 +23,7 @@ import com.github.mikephil.charting.data.RadarDataSet;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import barrylui.myteam.Data.NBATeamRosterSingleton;
@@ -98,12 +99,9 @@ public class PlayerStatsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    //private OnFragmentInteractionListener mListener;
-
     public PlayerStatsFragment() {
         // Required empty public constructor
     }
-
 
     public static PlayerStatsFragment newInstance(String param1, String param2) {
         PlayerStatsFragment fragment = new PlayerStatsFragment();
@@ -141,7 +139,6 @@ public class PlayerStatsFragment extends Fragment {
         slot1TextView = (TextView)view.findViewById(R.id.slot1_header);
         slot2TextView = (TextView)view.findViewById(R.id.slot2_header);
 
-
         //Player 1 Stat text fields
         player1HeaderTextView = (TextView)view.findViewById(R.id.player1_header);
         player1PointsValueTextView = (TextView)view.findViewById(R.id.player1_points_Value_textView);
@@ -159,10 +156,59 @@ public class PlayerStatsFragment extends Fragment {
         player2BlocksValueTextView  = (TextView)view.findViewById(R.id.player2_blocks_Value_textView);
         player2StealsValueTextView = (TextView)view.findViewById(R.id.player2_steals_Value_textView);
         player2FreeThrowValueTextView  = (TextView)view.findViewById(R.id.player2_ft_Value_textView);
-
-
+        //Back button to change UI state
         backToTeamSelectionButton1 = (Button)view.findViewById(R.id.slot1BacktoTeamButton);
         backToTeamSelectionButton2 = (Button)view.findViewById(R.id.slot2BacktoTeamButton);
+
+        //Set-up blank radar chart
+
+        //Labels to label axis on radar chart
+        labelsArrayForRadarChart = new ArrayList<String>();
+        labelsArrayForRadarChart.add("Points");
+        labelsArrayForRadarChart.add("Assists");
+        labelsArrayForRadarChart.add("Rebounds");
+        labelsArrayForRadarChart.add("Steals");
+        labelsArrayForRadarChart.add("Blocks");
+        labelsArrayForRadarChart.add("FT%");
+
+        clearRadarArray(player1ChartValueArray);
+        clearRadarArray(player2ChartValueArray);
+
+        //Bind data to dataset
+        final RadarDataSet playerDataSet1 = new RadarDataSet(player1ChartValueArray, "Team 1");
+        final RadarDataSet playerDataSet2 = new RadarDataSet(player2ChartValueArray, "Team 2");
+
+        playerDataSet1.setFillColor(getResources().getColor(R.color.colorHawksPrimary));
+        playerDataSet1.setColor(getResources().getColor(R.color.colorHawksPrimary));
+        setRadarDataSetSettings(playerDataSet1);
+
+        playerDataSet2.setColor(getResources().getColor(R.color.colorMagicPrimary));
+        playerDataSet2.setFillColor(getResources().getColor(R.color.colorMagicPrimary));
+        setRadarDataSetSettings(playerDataSet2);
+
+        //Array that will contain datasets for the radar chart
+        final ArrayList<RadarDataSet> playerDataSets = new ArrayList<RadarDataSet>();
+        playerDataSets.add(playerDataSet1);
+        playerDataSets.add(playerDataSet2);
+        //Bind data to radar chart
+        RadarData thePlayerData = new RadarData(labelsArrayForRadarChart, playerDataSets);
+        playerRadarChart.setData(thePlayerData);
+
+        //Disable description
+        Legend legend = playerRadarChart.getLegend();
+        playerRadarChart.setDescription("");
+        legend.setEnabled(false);
+
+        playerRadarChart.getXAxis().setTextColor(Color.WHITE);
+        YAxis yAxis = playerRadarChart.getYAxis();
+        yAxis.resetAxisMaxValue();
+        yAxis.setAxisMaxValue(100f);
+        yAxis.setAxisMinValue(0);
+        yAxis.setDrawLabels(false);
+
+        //Update radar chart
+        playerRadarChart.notifyDataSetChanged();
+        playerRadarChart.invalidate();
 
         //Get the viewModel
         mViewModel = ViewModelProviders.of(this).get(PlayerStatsViewModel.class);
@@ -172,6 +218,7 @@ public class PlayerStatsFragment extends Fragment {
         final Observer<PlayerStatsObject> player1StatsObserver = new Observer<PlayerStatsObject>(){
             @Override
             public void onChanged(@Nullable PlayerStatsObject thePlayer1StatsObject){
+                //Bind text views to appropriate stats
                 player1HeaderTextView.setText(thePlayer1StatsObject.getPlayerName());
                 player1PointsValueTextView.setText(String.valueOf(thePlayer1StatsObject.getPpg()));
                 player1AssistsValueTextView.setText(String.valueOf(thePlayer1StatsObject.getApg()));
@@ -182,6 +229,22 @@ public class PlayerStatsFragment extends Fragment {
                 DecimalFormat decimalFormat = new DecimalFormat("#.#");
                 String freethrowpercentage = decimalFormat.format(thePlayer1StatsObject.getFtp());
                 player1FreeThrowValueTextView.setText(freethrowpercentage);
+
+                //Clear RadarChart dataset
+                clearRadarArray(player1ChartValueArray);
+
+                //Add radar chart entry for player selected
+                HashMap<String, Double> playerRadarChartValuesMap = mViewModel.getPlayerStatRanking(thePlayer1StatsObject);
+                player1ChartValueArray.add(new Entry((float)(double)playerRadarChartValuesMap.get("PPG"), 0));
+                player1ChartValueArray.add(new Entry((float)(double)playerRadarChartValuesMap.get("APG"), 1));
+                player1ChartValueArray.add(new Entry((float)(double)playerRadarChartValuesMap.get("RPG"), 2));
+                player1ChartValueArray.add(new Entry((float)(double)playerRadarChartValuesMap.get("SPG"), 3));
+                player1ChartValueArray.add(new Entry((float)(double)playerRadarChartValuesMap.get("BPG"), 4));
+                player1ChartValueArray.add(new Entry((float)(double)playerRadarChartValuesMap.get("FTP"), 5));
+
+                //Update RadarChart
+                playerRadarChart.notifyDataSetChanged();
+                playerRadarChart.invalidate();
             }
         };
         //Player 2 LiveData on changed method
@@ -189,6 +252,7 @@ public class PlayerStatsFragment extends Fragment {
         final Observer<PlayerStatsObject> player2StatsObserver = new Observer<PlayerStatsObject>(){
             @Override
             public void onChanged(@Nullable PlayerStatsObject thePlayer2StatsObject){
+                //Bind text views to appropriate stats
                 player2HeaderTextView.setText(thePlayer2StatsObject.getPlayerName());
                 player2PointsValueTextView.setText(String.valueOf(thePlayer2StatsObject.getPpg()));
                 player2AssistsValueTextView.setText(String.valueOf(thePlayer2StatsObject.getApg()));
@@ -199,6 +263,22 @@ public class PlayerStatsFragment extends Fragment {
                 DecimalFormat decimalFormat = new DecimalFormat("#.#");
                 String freethrowpercentage = decimalFormat.format(thePlayer2StatsObject.getFtp());
                 player2FreeThrowValueTextView.setText(freethrowpercentage);
+
+                //Clear RadarChart dataset
+                clearRadarArray(player2ChartValueArray);
+
+                //Add radar chart entry for player selected
+                HashMap<String, Double> playerRadarChartValuesMap = mViewModel.getPlayerStatRanking(thePlayer2StatsObject);
+                player2ChartValueArray.add(new Entry((float)(double)playerRadarChartValuesMap.get("PPG"), 0));
+                player2ChartValueArray.add(new Entry((float)(double)playerRadarChartValuesMap.get("APG"), 1));
+                player2ChartValueArray.add(new Entry((float)(double)playerRadarChartValuesMap.get("RPG"), 2));
+                player2ChartValueArray.add(new Entry((float)(double)playerRadarChartValuesMap.get("SPG"), 3));
+                player2ChartValueArray.add(new Entry((float)(double)playerRadarChartValuesMap.get("BPG"), 4));
+                player2ChartValueArray.add(new Entry((float)(double)playerRadarChartValuesMap.get("FTP"), 5));
+
+                //Update RadarChart
+                playerRadarChart.notifyDataSetChanged();
+                playerRadarChart.invalidate();
             }
         };
 
@@ -253,20 +333,13 @@ public class PlayerStatsFragment extends Fragment {
 
                 //Clear chart and text fields of player data
 
-                player1PointsValueTextView.setText(getString(R.string.empty_string));
-                player1AssistsValueTextView.setText(getString(R.string.empty_string));
-                player1ReboundsValueTextView.setText(getString(R.string.empty_string));
-                player1BlocksValueTextView.setText(getString(R.string.empty_string));
-                player1StealsValueTextView.setText(getString(R.string.empty_string));
-                player1FreeThrowValueTextView.setText(getString(R.string.empty_string));
-                //Clear player name
-                player1HeaderTextView.setText(getString(R.string.player1));
+                //Clear text fields
+                clearTextFields(1);
                 //Clear chartvaluearray
                 clearRadarArray(player1ChartValueArray);
                 //Update radar chart with empty data to display blank radar chart
                 playerRadarChart.notifyDataSetChanged();
                 playerRadarChart.invalidate();
-
             }
         });
 
@@ -284,15 +357,8 @@ public class PlayerStatsFragment extends Fragment {
                 slot2TextView.setText(getString(R.string.slot1));
 
                 //Clear chart and text fields of player data
-
-                player2PointsValueTextView.setText(getString(R.string.empty_string));
-                player2AssistsValueTextView.setText(getString(R.string.empty_string));
-                player2ReboundsValueTextView.setText(getString(R.string.empty_string));
-                player2BlocksValueTextView.setText(getString(R.string.empty_string));
-                player2StealsValueTextView.setText(getString(R.string.empty_string));
-                player2FreeThrowValueTextView.setText(getString(R.string.empty_string));
-                //Clear player name
-                player2HeaderTextView.setText(getString(R.string.player1));
+                //Clear text fields
+                clearTextFields(2);
                 //Clear chartvaluearray
                 clearRadarArray(player2ChartValueArray);
                 //Update radar chart with empty data to display blank radar chart
@@ -328,16 +394,8 @@ public class PlayerStatsFragment extends Fragment {
                     public void onPlayer1SelectClick(View view, int position, String playerName, boolean currentItemSelected) {
                         //If the user taps a player that is currently selected, deselect the player and unbind the data from the text fields and radar chart
                         if(currentItemSelected == true){
-                            //Clear text fields
-                            player1PointsValueTextView.setText(getString(R.string.empty_string));
-                            player1AssistsValueTextView.setText(getString(R.string.empty_string));
-                            player1ReboundsValueTextView.setText(getString(R.string.empty_string));
-                            player1BlocksValueTextView.setText(getString(R.string.empty_string));
-                            player1StealsValueTextView.setText(getString(R.string.empty_string));
-                            player1FreeThrowValueTextView.setText(getString(R.string.empty_string));
-                            //Clear player name
-                            player1HeaderTextView.setText(getString(R.string.player1));
-                            //Clear chartvaluearray
+                            //Clear text fields and radar chart array
+                            clearTextFields(1);
                             clearRadarArray(player1ChartValueArray);
                             //Update radar chart with empty data to display blank radar chart
                             playerRadarChart.notifyDataSetChanged();
@@ -380,16 +438,8 @@ public class PlayerStatsFragment extends Fragment {
                     @Override
                     public void onPlayer2SelectClick(View view, int position, String playerName, boolean currentItemSelected) {
                         if(currentItemSelected == true){
-                            //Clear text fields
-                            player2PointsValueTextView.setText(getString(R.string.empty_string));
-                            player2AssistsValueTextView.setText(getString(R.string.empty_string));
-                            player2ReboundsValueTextView.setText(getString(R.string.empty_string));
-                            player2BlocksValueTextView.setText(getString(R.string.empty_string));
-                            player2StealsValueTextView.setText(getString(R.string.empty_string));
-                            player2FreeThrowValueTextView.setText(getString(R.string.empty_string));
-                            //Clear player name
-                            player2HeaderTextView.setText(getString(R.string.player1));
-                            //Clear chartvaluearray
+                            //Clear text fields and radar chart array
+                            clearTextFields(2);
                             clearRadarArray(player2ChartValueArray);
                             //Update radar chart with empty data to display blank radar chart
                             playerRadarChart.notifyDataSetChanged();
@@ -404,52 +454,6 @@ public class PlayerStatsFragment extends Fragment {
                 });
             }
         });
-        //Set-up blank radar chart
-
-        //Labels to label axis on radar chart
-        labelsArrayForRadarChart = new ArrayList<String>();
-        labelsArrayForRadarChart.add("Points");
-        labelsArrayForRadarChart.add("Assists");
-        labelsArrayForRadarChart.add("Rebounds");
-        labelsArrayForRadarChart.add("Blocks");
-        labelsArrayForRadarChart.add("Steals");
-        labelsArrayForRadarChart.add("FT%");
-
-        clearRadarArray(player1ChartValueArray);
-        clearRadarArray(player2ChartValueArray);
-
-        //Bind data to dataset
-        final RadarDataSet playerDataSet1 = new RadarDataSet(player1ChartValueArray, "Team 1");
-        final RadarDataSet playerDataSet2 = new RadarDataSet(player2ChartValueArray, "Team 2");
-
-        //Radar chart configuration
-        setRadarDataSetSettings(playerDataSet1);
-        setRadarDataSetSettings(playerDataSet2);
-
-        //Array that will contain datasets for the radar chart
-        final ArrayList<RadarDataSet> playerDataSets = new ArrayList<RadarDataSet>();
-        playerDataSets.add(playerDataSet1);
-        playerDataSets.add(playerDataSet2);
-        //Bind data to radar chart
-        RadarData thePlayerData = new RadarData(labelsArrayForRadarChart, playerDataSets);
-        playerRadarChart.setData(thePlayerData);
-
-        //Disable description
-        Legend legend = playerRadarChart.getLegend();
-        playerRadarChart.setDescription("");
-        legend.setEnabled(false);
-
-        playerRadarChart.getXAxis().setTextColor(Color.WHITE);
-        YAxis yAxis = playerRadarChart.getYAxis();
-        yAxis.resetAxisMaxValue();
-        yAxis.setAxisMaxValue(100);
-        yAxis.setAxisMinValue(0);
-        yAxis.setDrawLabels(false);
-
-        //Update
-        playerRadarChart.notifyDataSetChanged();
-        playerRadarChart.invalidate();
-
         return view;
     }
 
@@ -462,6 +466,31 @@ public class PlayerStatsFragment extends Fragment {
         radarDataSet.setDrawValues(false);
         //Set to true if the DataSet should be drawn filled (surface, area)
         radarDataSet.setDrawFilled(true);
+    }
+
+
+    //Resets text stats fields to empty strings and provides the appropriate empty header
+    public void clearTextFields(int slot){
+        if (slot == 1){
+            player1PointsValueTextView.setText(getString(R.string.empty_string));
+            player1AssistsValueTextView.setText(getString(R.string.empty_string));
+            player1ReboundsValueTextView.setText(getString(R.string.empty_string));
+            player1BlocksValueTextView.setText(getString(R.string.empty_string));
+            player1StealsValueTextView.setText(getString(R.string.empty_string));
+            player1FreeThrowValueTextView.setText(getString(R.string.empty_string));
+            //Clear player name
+            player1HeaderTextView.setText(getString(R.string.player1));
+        }
+        if (slot == 2){
+            player2PointsValueTextView.setText(getString(R.string.empty_string));
+            player2AssistsValueTextView.setText(getString(R.string.empty_string));
+            player2ReboundsValueTextView.setText(getString(R.string.empty_string));
+            player2BlocksValueTextView.setText(getString(R.string.empty_string));
+            player2StealsValueTextView.setText(getString(R.string.empty_string));
+            player2FreeThrowValueTextView.setText(getString(R.string.empty_string));
+            //Clear player name
+            player2HeaderTextView.setText(getString(R.string.player2));
+        }
     }
 
     //Method to clear radar chart dataset

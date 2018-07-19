@@ -28,11 +28,13 @@
             android:layout_width="50.6dp"
             android:layout_height="37dp"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"/>
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="4dp"/>
         <TextView
             android:paddingTop="0dp"
             android:paddingBottom="0dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop=".5dp"
+            android:layout_marginBottom="3dp"
             android:id="@+id/playerLastName"
             android:layout_below="@id/playerImage"
             android:textColor="@color/blacklightcomp"
