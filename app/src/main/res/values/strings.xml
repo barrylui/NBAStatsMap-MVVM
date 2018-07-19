@@ -27,8 +27,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="version_number">VERSION 2.0</string>
     <string name="whats_new">WHATS NEW?</string>
-    <string name="whats_new_content"></string>
+    <string name="whats_new_content">- New User Interface\n- View / Compare teams and players \n- Improved loading times on selection </string>
     <string name="whats_next">WHATS NEXT?</string>
-    <string name="whats_next_content"></string>
+    <string name="whats_next_content">- New NBA Season\n- Better data, better stats, better analysis\n- League leaders\n- Lots more to come</string>
     <string name="rateApp">RATE / REVIEW APP</string>
 </resources>

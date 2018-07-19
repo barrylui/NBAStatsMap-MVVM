@@ -164,11 +164,11 @@ public class PlayerStatsFragment extends Fragment {
 
         //Labels to label axis on radar chart
         labelsArrayForRadarChart = new ArrayList<String>();
-        labelsArrayForRadarChart.add("Points");
-        labelsArrayForRadarChart.add("Assists");
-        labelsArrayForRadarChart.add("Rebounds");
-        labelsArrayForRadarChart.add("Steals");
-        labelsArrayForRadarChart.add("Blocks");
+        labelsArrayForRadarChart.add("POINTS");
+        labelsArrayForRadarChart.add("ASSISTS");
+        labelsArrayForRadarChart.add("REBOUNDS");
+        labelsArrayForRadarChart.add("STEALS");
+        labelsArrayForRadarChart.add("BLOCKS");
         labelsArrayForRadarChart.add("FT%");
 
         clearRadarArray(player1ChartValueArray);
