@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/navigation_about"
+        android:icon="@drawable/ic_about"
+        android:title="@string/about" />
+
+    <item
         android:id="@+id/navigation_team_stats"
         android:icon="@drawable/ic_teamstats"
         android:title="@string/team" />
@@ -10,11 +15,6 @@
         android:id="@+id/navigation_player_stats"
         android:icon="@drawable/ic_playerstats"
         android:title="@string/player" />
-
-    <item
-        android:id="@+id/navigation_leaders"
-        android:icon="@drawable/ic_leaders"
-        android:title="@string/leaders" />
 
 
 </menu>

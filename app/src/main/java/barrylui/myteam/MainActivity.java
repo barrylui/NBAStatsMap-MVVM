@@ -13,7 +13,7 @@ import android.view.View;
 
 import java.io.Serializable;
 
-import barrylui.myteam.Leaders.LeagueLeadersFragment;
+import barrylui.myteam.About.AboutFragment;
 import barrylui.myteam.PlayerStats.PlayerStatsFragment;
 import barrylui.myteam.TeamStats.TeamStatsFragment;
 
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements SplashLoadingFrag
     //private static HashMap<String, HashMap<String, Double>> teamDataMap =
             //new HashMap<String, HashMap<String, Double>>();
     private static String TAG = "MainActivity";
-    private static TeamStatsFragment teanStatsFragment = new TeamStatsFragment();
+    private static AboutFragment aboutFragment = new AboutFragment();
 
 
     @Override
@@ -81,13 +81,13 @@ public class MainActivity extends AppCompatActivity implements SplashLoadingFrag
                         loadFragment(fragment);
                         return true;
                     }
-                case R.id.navigation_leaders:
-                    if (getSupportFragmentManager().findFragmentById(R.id.frame_container) instanceof LeagueLeadersFragment){
+                case R.id.navigation_about:
+                    if (getSupportFragmentManager().findFragmentById(R.id.frame_container) instanceof AboutFragment){
                         //do nothing, the selected fragment is the current fragment
                         return true;
                     }
                     else {
-                        fragment = new LeagueLeadersFragment();
+                        fragment = new AboutFragment();
                         loadFragment(fragment);
                         return true;
                     }
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements SplashLoadingFrag
     //Makes the bottom navigation bar visibile and loads the teamstats fragment
     public void fetchdataAndLaunch(){
         navigation.setVisibility(View.VISIBLE);
-        loadFragment(teanStatsFragment);
+        loadFragment(aboutFragment);
         //getWindow().clearFlags(FLAG_FULLSCREEN);
     }
 

@@ -158,40 +158,36 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="45dp"
+        android:layout_marginRight="60dp"
         android:textColor="@color/colorMagicPrimary"
         android:id="@+id/player2_offenseValue_textView"
-        android:text="0"
         android:layout_alignBottom="@id/points_display_textView" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="45dp"
+        android:layout_marginRight="60dp"
         android:textColor="@color/colorMagicPrimary"
         android:id="@+id/player2_Assists_Value_textView"
-        android:text="0"
         android:layout_alignBottom="@id/assists_display_textView" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="45dp"
+        android:layout_marginRight="60dp"
         android:textColor="@color/colorMagicPrimary"
         android:id="@+id/player2_rebounds_Value_textView"
-        android:text="0"
         android:layout_alignBottom="@id/rebounds_display_textView" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="45dp"
+        android:layout_marginRight="60dp"
         android:textColor="@color/colorMagicPrimary"
         android:id="@+id/player2_blocks_Value_textView"
-        android:text="0"
         android:layout_alignBottom="@id/blocks_display_textView" />
 
     <TextView
@@ -199,8 +195,7 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="45dp"
-        android:text="0"
+        android:layout_marginRight="60dp"
         android:textColor="@color/colorMagicPrimary"
         android:id="@+id/player2_steals_Value_textView"
         android:layout_alignBottom="@id/steals_display_textView" />
@@ -209,9 +204,8 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="45dp"
+        android:layout_marginRight="60dp"
         android:textColor="@color/colorMagicPrimary"
-        android:text="0"
         android:id="@+id/player2_ft_Value_textView"
         android:layout_alignBottom="@id/ft_display_textview" />
 
@@ -220,9 +214,8 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="45dp"
+        android:layout_marginLeft="60dp"
         android:textColor="@color/colorHawksPrimary"
-        android:text="0"
         android:id="@+id/player1_points_Value_textView"
         android:layout_alignBottom="@id/points_display_textView" />
 
@@ -231,10 +224,9 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="45dp"
+        android:layout_marginLeft="60dp"
         android:textColor="@color/colorHawksPrimary"
         android:id="@+id/player1_assists_Value_textView"
-        android:text="0"
         android:layout_alignBottom="@id/assists_display_textView" />
 
     <TextView
@@ -242,40 +234,36 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="45dp"
+        android:layout_marginLeft="60dp"
         android:textColor="@color/colorHawksPrimary"
         android:id="@+id/player1_rebounds_Value_textView"
-        android:text="0"
         android:layout_alignBottom="@id/rebounds_display_textView" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="45dp"
+        android:layout_marginLeft="60dp"
         android:textColor="@color/colorHawksPrimary"
         android:id="@+id/player1_blocks_Value_textView"
-        android:text="0"
         android:layout_alignBottom="@id/blocks_display_textView" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="45dp"
+        android:layout_marginLeft="60dp"
         android:textColor="@color/colorHawksPrimary"
         android:id="@+id/player1_Steals_Value_textView"
-        android:text="0"
         android:layout_alignBottom="@id/steals_display_textView" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="45dp"
+        android:layout_marginLeft="60dp"
         android:textColor="@color/colorHawksPrimary"
         android:id="@+id/player1_ft_Value_textView"
-        android:text="0"
         android:layout_alignBottom="@id/ft_display_textview" />
     <TextView
         android:layout_width="wrap_content"
@@ -287,7 +275,7 @@
         android:textStyle="bold"
         android:layout_above="@id/player1_points_Value_textView"
         android:gravity="center"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="25dp"
         android:layout_alignParentLeft="true"/>
     <TextView
         android:layout_width="wrap_content"
@@ -298,7 +286,7 @@
         android:id="@+id/player2_header"
         android:layout_above="@id/player2_offenseValue_textView"
         android:gravity="center"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="25dp"
         android:textStyle="bold"
         android:layout_alignParentRight="true"/>
 </RelativeLayout>
