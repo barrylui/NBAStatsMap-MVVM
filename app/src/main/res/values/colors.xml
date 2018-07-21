@@ -13,6 +13,7 @@
     <color name="blackDarkShade">#211a23</color>
     <color name="darkGray">#A9A9A9</color>
     <color name="blackgraycomp">#464646</color>
+    <color name="graycomp">#383838</color>
     <color name="blacklightcomp">#7F7E7E</color>
     <color name="colorBucksPrimary">#004A1A</color>
     <color name="colorBullsPrimary">#C91542</color>

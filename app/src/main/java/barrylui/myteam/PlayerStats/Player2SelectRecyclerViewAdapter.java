@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Stack;
 
 import barrylui.myteam.R;
-import barrylui.myteam.SuredBitsAPI.SuredBitsPlayerModel.PlayerInfoModel;
+import barrylui.myteam.Data.Repository.SuredBitsAPI.SuredBitsPlayerModel.PlayerInfoModel;
 
 
 public class Player2SelectRecyclerViewAdapter extends RecyclerView.Adapter<Player2SelectRecyclerViewAdapter.Player2SelectViewHolder>{

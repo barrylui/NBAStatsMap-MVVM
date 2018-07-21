@@ -26,10 +26,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import barrylui.myteam.Data.NBATeamRosterSingleton;
+import barrylui.myteam.Data.Local.NBATeamRosterSingleton;
 import barrylui.myteam.R;
-import barrylui.myteam.Data.NBATeamAssetsData;
-import barrylui.myteam.SuredBitsAPI.SuredBitsPlayerModel.PlayerInfoModel;
+import barrylui.myteam.Data.Local.NBATeamAssetsData;
+import barrylui.myteam.Data.Repository.SuredBitsAPI.SuredBitsPlayerModel.PlayerInfoModel;
 
 //Player Stats module
 //View and compare player stats and visualize player strengths and weaknesses

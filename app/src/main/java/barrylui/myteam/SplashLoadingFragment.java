@@ -12,11 +12,11 @@ import android.view.WindowManager;
 
 import java.util.HashMap;
 
-import barrylui.myteam.Data.NBATeamRosterSingleton;
-import barrylui.myteam.MySportsFeedAPI.MySportsFeedRetrofitClient;
-import barrylui.myteam.Data.NBAPlayerDataSingleton;
-import barrylui.myteam.Data.NBATeamDataSingleton;
-import barrylui.myteam.SuredBitsAPI.SuredBitsAPIRetrofitClient;
+import barrylui.myteam.Data.Local.NBATeamRosterSingleton;
+import barrylui.myteam.Data.Repository.MySportsFeedAPI.MySportsFeedRetrofitClient;
+import barrylui.myteam.Data.Local.NBAPlayerDataSingleton;
+import barrylui.myteam.Data.Local.NBATeamDataSingleton;
+import barrylui.myteam.Data.Repository.SuredBitsAPI.SuredBitsAPIRetrofitClient;
 
 public class SplashLoadingFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match

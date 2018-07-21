@@ -17,18 +17,18 @@
     <string name="slot1">PICK A TEAM TO VIEW PLAYERS</string>
     <string name="slot2">SELECT A PLAYER</string>
     <string name="backToTeam">BACK TO TEAM SELECTION</string>
-    <string name="dataDidNotLoad">DATA DID NOT LOAD.</string>
+    <string name="dataDidNotLoad">DATA DID NOT LOAD</string>
     <string name="empty_string">""</string>
     <string name="player1">PLAYER 1</string>
     <string name="player2">PLAYER 2</string>
-    <string name="dataDidNotLoadMsg">APPLICATION CLOSING.\n \nMAKE SURE YOU HAVE A VALID INTERNET CONNECTION AND TRY AGAIN</string>
+    <string name="dataDidNotLoadMsg">\nDATA OR NETWORK UNAVAILABLE\n\nAPPLICATION IS NOW CLOSING</string>
     <string name="dataDidNotLoadDialogButtonString">OK </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="version_number">VERSION 2.0</string>
     <string name="whats_new">WHATS NEW?</string>
-    <string name="whats_new_content">- New User Interface\n- View / Compare teams and players \n- Improved loading times on selection </string>
+    <string name="whats_new_content">- Brand new user interface\n- Compare stats for teams and players \n- Improved app responsiveness </string>
     <string name="whats_next">WHATS NEXT?</string>
-    <string name="whats_next_content">- New NBA Season\n- Better data, better stats, better analysis\n- League leaders\n- Lots more to come</string>
+    <string name="whats_next_content">- New NBA season\n- Better data, better stats, better analysis\n- League leaders\n- Player contracts\n- Lots more to come</string>
     <string name="rateApp">RATE / REVIEW APP</string>
 </resources>

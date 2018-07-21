@@ -3,12 +3,11 @@ package barrylui.myteam.PlayerStats;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 
-import barrylui.myteam.Data.NBAPlayerDataSingleton;
+import barrylui.myteam.Data.Local.NBAPlayerDataSingleton;
 
 //Viewmodel for PlayerStats module
 public class PlayerStatsViewModel extends ViewModel{

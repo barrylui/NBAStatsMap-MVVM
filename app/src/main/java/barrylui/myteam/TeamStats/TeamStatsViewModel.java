@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 
-import barrylui.myteam.Data.NBATeamDataSingleton;
+import barrylui.myteam.Data.Local.NBATeamDataSingleton;
 
 public class TeamStatsViewModel extends ViewModel {
     public MutableLiveData<TeamStatsObject> team1Stats;

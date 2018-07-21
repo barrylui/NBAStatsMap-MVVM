@@ -6,12 +6,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:id="@+id/aboutNBAStatsMapLogo"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/nbastatsmaplogo192"
-        android:layout_marginTop="8dp"/>
+        android:src="@drawable/statsmap512transparentlogo"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="0dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,17 +24,6 @@
         android:textColor="@color/blacklightcomp"
         android:layout_centerHorizontal="true"
         android:textSize="14sp"/>
-    <Button
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:text="@string/rateApp"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        android:id="@+id/rateAppButton"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/button_rounded_corners"
-        android:layout_marginBottom="12dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,7 +32,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="15dp"
         android:layout_below="@id/versionNumberTextView"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="12dp"
         android:textColor="@color/white"
         android:textSize="17sp"
         android:textStyle="bold"
@@ -56,7 +46,7 @@
         android:layout_marginLeft="35dp"
         android:layout_below="@id/whatsNewTextView"
         android:textColor="@color/white"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:textSize="14sp"/>
     <TextView
         android:layout_width="wrap_content"
@@ -69,10 +59,9 @@
         android:textStyle="bold"
         android:text="@string/whats_next"
         android:layout_below="@id/whatsNewContentTextView"
-        android:layout_marginTop="10dp"
-        />
+        android:layout_marginTop="5dp" />
     <TextView
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/whatsNextContentTextView"
@@ -81,5 +70,17 @@
         android:text="@string/whats_next_content"
         android:textColor="@color/white"
         android:textSize="14sp"/>
+    <Button
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:text="@string/rateApp"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:id="@+id/rateAppButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/rate_app_button_rounded_corners"
+        android:layout_marginBottom="15dp"/>
 
 </RelativeLayout>

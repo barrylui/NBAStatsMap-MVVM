@@ -84,8 +84,8 @@
 
     <com.github.mikephil.charting.charts.RadarChart
         android:id="@+id/player_radar_chart"
-        android:layout_width="260dp"
-        android:layout_height="260dp"
+        android:layout_width="265dp"
+        android:layout_height="265dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="0dp"
         android:layout_centerHorizontal="true"/>

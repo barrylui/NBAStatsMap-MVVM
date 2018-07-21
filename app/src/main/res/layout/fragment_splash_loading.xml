@@ -3,11 +3,11 @@
     android:layout_height="match_parent"
     android:id="@+id/splashscreen"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/statsMapBlue">
+    android:background="@color/black">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/statsmap512"
+        android:src="@drawable/statsmap512transparentlogo"
         android:layout_centerInParent="true"/>
 </RelativeLayout>
