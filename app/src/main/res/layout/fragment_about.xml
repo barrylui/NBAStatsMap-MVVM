@@ -10,7 +10,7 @@
         android:layout_height="250dp"
         android:id="@+id/aboutNBAStatsMapLogo"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/statsmap512transparentlogo"
+        android:src="@drawable/statsmap512new"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="0dp"/>
 
