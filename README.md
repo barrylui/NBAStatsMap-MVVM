@@ -1,5 +1,4 @@
-Welcome to NBA Stats Map!
-
+# NBA STATS MAP
 ![alt text](https://i.imgur.com/ebQwDUp.png)
 
 NBA Stats Map builds easy to understand radar charts for users to easily understand team and player strengths and weaknesses!
